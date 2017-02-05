@@ -1,0 +1,7 @@
+{
+  "name": "WebApp",
+  "short_name": "WebApp",
+  "description": "Final Project for 481 v1",
+  "start_url": "/dashboard",
+  "display": "standalone"
+}
