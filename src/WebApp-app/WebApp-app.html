@@ -10,6 +10,7 @@
 <link rel="import" href="../../src/WebApp-app/my-notes.html">
 <link rel="import" href="../../src/WebApp-app/my-vitals.html">
 <link rel="import" href="../../src/WebApp-app/my-contacts.html">
+<link rel="import" href="../../src/WebApp-app/my-login.html">
 
 <dom-module id="WebApp-app">
   <template>
@@ -46,9 +47,10 @@
       <iron-pages
           selected="[[page]]"
           attr-for-selected="name"
-          fallback-selection="dashboard"
+          fallback-selection="login"
           role="main">
         <my-dashboard name="dashboard"></my-dashboard>
+        <my-login name="login"></my-login>
         <my-notes name="notes"></my-notes>
         <my-contacts name="contacts"></my-contacts>
         <my-vitals name="vitals"></my-vitals>
@@ -81,7 +83,7 @@
       ],
 
       _routePageChanged: function(page) {
-        this.page = page || 'dashboard';
+        this.page = page || 'login';
       },
 
       _pageChanged: function(page) {
@@ -91,7 +93,7 @@
       },
 
       _showPage404: function() {
-        this.page = 'dashboard';
+        this.page = 'login';
       },
 
     });
