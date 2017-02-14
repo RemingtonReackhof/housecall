@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
@@ -36,31 +37,35 @@
           @apply(--layout-wrap);
           margin-top: 5px;
         }
+        .bold {
+          @apply(--shadow-elevation-24dp);
+        }
     </style>
 
   
     <div id="pages">
       <a href="/notes" tabindex="-1">
-        <paper-card name="notes" heading="Notes" style="height:600px;width:500px;">
-          <div class="card-content">Some content</div>
-          <div class="card-actions">
+        <paper-card id="notes" name="notes" heading="Notes" style="height:600px;width:500px;">
+          <div id="notes" class="card-content">Some content</div>
+          <div id="notes" class="card-actions">
           </div>
         </paper-card>
       </a>
 
       <div id="side">
         <a href="/contacts" tabindex="-1">
-          <paper-card name="contacts" heading="Contacts" style="height:290px;width:500px;margin-bottom:10px;margin-left:15px;">
-            <div class="card-content">Some content</div>
-            <div class="card-actions">
+          <paper-card id="contacts" name="contacts" heading="Contacts" style="height:290px;width:500px;margin-bottom:10px;margin-left:15px;">
+            <div id="contacts" class="card-content">Some content</div>
+            <div id="contacts" class="card-actions">
             </div>
           </paper-card>
         </a>
 
         <a href="/vitals" tabindex="-1">
-          <paper-card name="vitals" heading="Vitals" style="height:300px;width:500px;margin-left:15px;">
-            <div class="card-content">Some content</div>
-            <div class="card-actions">
+          <paper-card name="vitals" id="vitals" heading="Vitals" style="height:300px;width:500px;margin-left:15px;">
+            <div id="vitals" class="card-content">Some content</div>
+            <div id="vitals" class="card-actions">
+              <paper-button id="vitals" on-click="hello">HEllo</paper-button>
             </div>
           </paper-card>
         </a>
@@ -72,7 +77,24 @@
   <!-- Creates the element's prototype and registers it -->
   <script>
     Polymer({
-      is: 'my-dashboard'
+      is: 'my-dashboard',
+      listeners: {
+        'notes.mouseover': 'highlight',
+        'notes.mouseout': 'unhighlight',
+        'contacts.mouseover': 'highlight',
+        'contacts.mouseout': 'unhighlight',
+        'vitals.mouseover': 'highlight',
+        'vitals.mouseout': 'unhighlight',
+
+      },
+      highlight: function(e){
+        console.log(e);
+        this.$$('#' + e.target.id).toggleClass('bold', true);
+      },
+      unhighlight: function(e){
+        console.log(e);
+        this.$$('#' + e.target.id).toggleClass('bold', false);
+      },
     });
   </script>
 </dom-module>
