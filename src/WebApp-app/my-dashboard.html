@@ -35,7 +35,7 @@
         #side {
           @apply(--layout-vertical);
           @apply(--layout-wrap);
-          margin-top: 5px;
+          margin-top: 0px;
         }
         .bold {
           @apply(--shadow-elevation-24dp);
@@ -46,7 +46,7 @@
     <div id="pages">
       <a href="/notes" tabindex="-1">
         <paper-card id="notes" name="notes" heading="Notes" style="height:600px;width:500px;">
-          <div id="notes" class="card-content">Some content</div>
+          <div id="notes" class="card-content">Click here to visit the notes page. You can view and create notes here.</div>
           <div id="notes" class="card-actions">
           </div>
         </paper-card>
@@ -55,7 +55,7 @@
       <div id="side">
         <a href="/contacts" tabindex="-1">
           <paper-card id="contacts" name="contacts" heading="Contacts" style="height:290px;width:500px;margin-bottom:10px;margin-left:15px;">
-            <div id="contacts" class="card-content">Some content</div>
+            <div id="contacts" class="card-content">Click here to visit the contacts page. You can find a doctor to call here. </div>
             <div id="contacts" class="card-actions">
             </div>
           </paper-card>
@@ -63,9 +63,8 @@
 
         <a href="/vitals" tabindex="-1">
           <paper-card name="vitals" id="vitals" heading="Vitals" style="height:300px;width:500px;margin-left:15px;">
-            <div id="vitals" class="card-content">Some content</div>
+            <div id="vitals" class="card-content">Click here to monitor patient vitals.</div>
             <div id="vitals" class="card-actions">
-              <paper-button id="vitals" on-click="hello">HEllo</paper-button>
             </div>
           </paper-card>
         </a>
@@ -88,12 +87,12 @@
 
       },
       highlight: function(e){
-        console.log(e);
-        this.$$('#' + e.target.id).toggleClass('bold', true);
+        if(e.target.id != "")
+          this.$$('#' + e.target.id).toggleClass('bold', true);
       },
       unhighlight: function(e){
-        console.log(e);
-        this.$$('#' + e.target.id).toggleClass('bold', false);
+        if(e.target.id != "")
+          this.$$('#' + e.target.id).toggleClass('bold', false);
       },
     });
   </script>
