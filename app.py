@@ -18,8 +18,10 @@ mysql.init_app(app)
 app.secret_key = "<}2[\xb6f\x97\xf1\\%\x15\x99\xfa\x93@\xec\xd0=\x9a\xb5d\xe3\x92\x9c\x01<"
 
 # Register the controllers
+app.register_blueprint(controllers.index)
 app.register_blueprint(controllers.login) #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
-app.register_blueprint(controllers.user) #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
+app.register_blueprint(controllers.signup)
+#app.register_blueprint(controllers.user) #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
 
 
 # Listen on external IPs
