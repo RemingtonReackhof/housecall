@@ -11,12 +11,19 @@
       }
     </style>
 
-    <h1>Notes view</h1>
+    <h1 id="note-view">Notes view</h1>
   </template>
   <!-- Creates the element's prototype and registers it -->
   <script>
     Polymer({
-      is: 'my-notes'
+      is: 'my-notes',
+      listeners: {
+        'note-view.onload': 'toggleIt'
+      },
+      attatched: function () {
+        
+      },
+
     });
   </script>
 </dom-module>
