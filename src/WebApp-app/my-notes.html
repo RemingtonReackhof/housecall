@@ -1,4 +1,8 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 <dom-module id="my-notes">
   <!-- Defines the element's style and local DOM -->
@@ -9,9 +13,306 @@
 
         padding: 16px;
       }
+      #infoContainer {
+        position: relative;
+        width: 95%;
+        height: 40px;
+        left: 2.5%;
+        padding-bottom: 20px;
+      }
+      #patientInfoDiv {
+        /* Rectangle 2: */
+        float: left;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        width: 49%;
+        height: 40px;
+      }
+      #vitalsInfoDiv {
+        /* Rectangle 2: */
+        float: right;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        width: 49%;
+        height: 40px;
+      }
+      .buttonTitle {
+        position: relative;
+        text-align: center;
+        bottom: 20px;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        letter-spacing: 0;
+      }
+
+      #notesContainer {
+        /* Rectangle 2: */
+        position: relative;
+        width: 95%;
+        height: 40%;
+        left: 2.5%;
+        background: #E9E9E9;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .note {
+        /* Rectangle 2: */
+        position: relative;
+        margin: 10px;
+        padding-left: 10px;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .vitalsSnapshot {
+        position: relative;
+        margin: 10px;
+        padding-left: 10px;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .vitalsTitle {
+        float:left;
+        padding-right: 5px;
+      }
+
+      .instruction {
+        /* Rectangle 2: */
+        position: relative;
+        margin: 10px;
+        padding-left: 10px;
+        background: #FFB5B5;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .timeContainer {
+        float: right;
+        width: 20px;
+      }
+
+      .time {
+        position: relative;
+        right: 20px;
+      }
+
+      .content {
+        position: relative;
+        width: 90%;
+      }
+
+      #buttonsContainer {
+        position: relative;
+        width: 95%;
+        height: 40px;
+        left: 2.5%;
+        padding-top: 20px;
+      }
+
+      #createMessageContainer {
+        position: relative;
+        width: 95%;
+        left: 2.5%;
+        margin-top: 20px;
+        background: #E9E9E9;
+        border: 1px solid #979797;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      #textBox {
+        background: #FFFFFF;
+        border: 1px solid #979797;
+        margin: 10px;
+        height: 100px;
+      }
+
+      #textButtons {
+        position: relative;
+        margin: 10px;
+        height: 40px;
+      }
+
+      #messageType {
+        float: left;
+        width: 49%;
+      }
+
+      #noteType {
+        float: left;
+        width: 49%;
+        height: 40px;
+        background: #FFFFFF;
+        border: 1px solid #979797;
+        border-radius: 8px;
+      }
+
+      #instructionType {
+        float: right;
+        width: 49%;
+        height: 40px;
+        background: #FFB5B5;
+        border: 1px solid #979797;
+        border-radius: 8px;
+      }
+
+      #sendButton {
+        float: right;
+        width: 49%;
+        height: 40px;
+        background: #9BD977;
+        border: 1px solid #979797;
+        border-radius: 8px;
+      }
+
+      #skypeButton {
+        float: left;
+        width: 49%;
+        height: 40px;
+        background: #1EB0ED;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* Switch to: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+      }
+
+      #filterButton {
+        float: right;
+        width: 49%;
+        height: 40px;
+        /* Rectangle 2: */
+        background: #8FD567;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* Filter: All: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+      }
+
+      #endCall {
+        position: relative;
+        width: 95%;
+        height: 40px;
+        left: 2.5%;
+        margin-top: 20px;
+        /* Rectangle 2: */
+        background: #FF4545;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* End Call: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+      }
+
+      #endCallText {
+        position: relative; 
+        text-align: center; 
+        bottom: 30px
+      }
+
     </style>
 
-    <h1>Notes view</h1>
+    <div id = "infoContainer">
+      <div id = "patientInfoDiv">
+        <h3 class = "buttonTitle">Patient Information</h3>
+      </div>
+      <div id = "vitalsInfoDiv">
+        <h3 class = "buttonTitle">Vitals Information</h3>
+      </div>
+    </div>
+
+    <div id = "notesContainer">
+      <div id = "message-1" class = "note">
+        <div class = "timeContainer">
+          <p class = "time"> 1:37 </p>
+        </div>
+        <p class = "content"> Severe swelling on the right side of the chest suggests a pneumotherax caused
+            by blunt impact from the air bag. </p>
+      </div>
+      <div id = "message-2" class = "vitalsSnapshot">
+        <div class = "timeContainer">
+          <p class = "time"> 1:40 </p>
+        </div>
+        <h4 class = vitalsTitle> Vitals Snapshot: </h4>
+        <p class = "content"> BP: 145/90, Temp:  96.9, HR: 110 bpm </p>
+      </div>
+      <div id = "message-3" class = "instruction">
+        <div class = "timeContainer">
+          <p class = "time"> 1:52 </p>
+        </div>
+        <h4 class = "instructionTitle"> Intercostal Insertion </h4>
+        <p class = "content"> 1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine) </p>
+        <p class = "content"> 2.  Place sterile drapes around the area. </p>
+        <p class = "content"> 3.  Apply local anesthetic </p>
+        <p class = "content"> 4.  Insert trocar into the lung using the Seldering Technique (described below) </p>
+        <p class = "content"> 5.  Suture the trocar to the skin to prevent it from falling out. </p>
+        <p class = "content"> 6. Apply dressings to the area </p>
+      </div>
+    </div>
+
+    <div id = "buttonsContainer">
+      <div id = "patientInfoDiv">
+        <h4 class = "buttonTitle">Vitals Snapshot</h4>
+      </div>
+      <div id = "vitalsInfoDiv">
+        <h4 class = "buttonTitle">Attach Image</h4>
+      </div>
+    </div>
+
+    <div id = "createMessageContainer">
+      <div id = "textBox">
+      </div>
+      <div id = "textButtons">
+        <div id = "messageType">
+          <div id = "noteType">
+            <h4 class = "buttonTitle"> Note </h4>
+          </div>
+          <div id = "instructionType">
+            <h4 class = "buttonTitle"> Instruction </h4>
+          </div>
+        </div>
+        <div id = "sendButton">
+          <h4 class = "buttonTitle"> Send </h4>
+        </div>
+      </div>
+    </div>
+
+    <div id = "buttonsContainer">
+      <div id = "skypeButton">
+        <h4 class = "buttonTitle">Switch to Skype</h4>
+      </div>
+      <div id = "filterButton">
+        <h4 class = "buttonTitle">Filter: All</h4>
+      </div>
+    </div>
+
+    <div id = "endCall">
+      <h4 class = "buttonTitle">End Call</h4>
+    </div>
+
+    
   </template>
   <!-- Creates the element's prototype and registers it -->
   <script>
