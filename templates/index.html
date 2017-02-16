@@ -19,6 +19,23 @@
     <!-- <WebApp-app></WebApp-app> -->
     <p> hello </p>
 
+    <p id="content"></p>
+
+    <div class "signIn">        <!-- return false -->
+      <form onsubmit="index_create(); return false;" method="post">
+        <br>Username: <input type="text" name="email" id="index_email_input">
+        <br>Password: <input type="password" name="password" id="index_password_input">
+        <p><input type="submit" value="Login" id="index_submit"></p>
+        <p><input type="hidden" value="{{prevURL}}" name="prevURL" id="prevURL"></p>
+      </form>
+    </div>
+
+
+
+    {% block javascript %}
+    <script src="/static/js/index.js"></script>
+    {% endblock %}
+
 
   </body>
 </html>
