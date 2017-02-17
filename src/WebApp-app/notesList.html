@@ -1,0 +1,123 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<dom-module id="notesDisplay">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 16px;
+      }
+
+      .note {
+        position: relative;
+        width: 100%;
+        padding-left: 10px;
+        margin-bottom: 1%;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .vitalsSnapshot {
+        position: relative;
+        width: 100%;
+        padding-left: 10px;
+        margin-bottom: 1%;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .vitalsTitle {
+        position: relative;
+      }
+
+      .instruction {
+        /* Rectangle 2: */
+        position: relative;
+        width: 100%;
+        padding-left: 10px;
+        margin-bottom: 1%;
+        background: #FFB5B5;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .timeContainer {
+        float: right;
+        width: 20px;
+      }
+
+      .time {
+        position: relative;
+        right: 20px;
+      }
+
+      .content {
+        position: relative;
+        width: 90%;
+      }
+
+    </style>
+
+    <div> Employee list: </div>
+    <template is="dom-repeat" items="{{notesList}}">
+
+      <template is="dom-if" if="{{item.isNote}}">
+
+        <paper-card class = "note">
+          <div class = "timeContainer">
+            <p class = "time"> {{item.timeStamp}} </p>
+          </div>
+          <p class = "content"> {{item.content}} </p>
+        </paper-card>
+
+      </template>
+
+
+      <template is="dom-if" if="{{item.isInstruction}}">
+
+        <paper-card class = "instruction">
+          <div class = "timeContainer">
+            <p class = "time"> {{item.timeStamp}} </p>
+          </div>
+          <h4 class = "instructionTitle"> {{item.title}} </h4>
+          <p class = "content"> {{item.content}} </p>
+        </paper-card>
+        
+      </template>
+
+
+      <template is="dom-if" if="{{item.isVitalsSnapshot}}">
+
+        <paper-card class = "vitalsSnapshot">
+          <div class = "timeContainer">
+            <p class = "time"> {{item.timeStamp}} </p>
+          </div>
+          <h4 class = vitalsTitle> Vitals Snapshot: </h4>
+          <p class = "content"> {{item.content}} </p>
+        </paper-card>
+
+      </template>
+
+    </template>
+
+  </template>
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'notesDisplay',
+      ready: function() {
+        this.employees = [
+            {first: 'Bob', last: 'Smith'},
+            {first: 'Sally', last: 'Johnson'},
+            ...
+        ];
+      }
+    });
+  </script>
+</dom-module>

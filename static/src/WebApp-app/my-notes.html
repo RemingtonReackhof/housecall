@@ -3,6 +3,10 @@
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-group.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 
 <dom-module id="my-notes">
   <!-- Defines the element's style and local DOM -->
@@ -13,6 +17,7 @@
 
         padding: 16px;
       }
+
       #infoContainer {
         position: relative;
         width: 95%;
@@ -20,6 +25,7 @@
         left: 2.5%;
         padding-bottom: 20px;
       }
+
       #patientInfoDiv {
         /* Rectangle 2: */
         float: left;
@@ -30,6 +36,7 @@
         width: 49%;
         height: 40px;
       }
+
       #vitalsInfoDiv {
         /* Rectangle 2: */
         float: right;
@@ -40,6 +47,7 @@
         width: 49%;
         height: 40px;
       }
+
       .buttonTitle {
         position: relative;
         text-align: center;
@@ -55,6 +63,9 @@
         width: 95%;
         height: 40%;
         left: 2.5%;
+        padding-left: 1%;
+        padding-right: 1%;
+        padding-top: 1%;
         background: #E9E9E9;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -64,8 +75,9 @@
       .note {
         /* Rectangle 2: */
         position: relative;
-        margin: 10px;
+        width: 100%;
         padding-left: 10px;
+        margin-bottom: 1%;
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -74,8 +86,9 @@
 
       .vitalsSnapshot {
         position: relative;
-        margin: 10px;
+        width: 100%;
         padding-left: 10px;
+        margin-bottom: 1%;
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -83,15 +96,15 @@
       }
 
       .vitalsTitle {
-        float:left;
-        padding-right: 5px;
+        position: relative;
       }
 
       .instruction {
         /* Rectangle 2: */
         position: relative;
-        margin: 10px;
+        width: 100%;
         padding-left: 10px;
+        margin-bottom: 1%;
         background: #FFB5B5;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -121,6 +134,34 @@
         padding-top: 20px;
       }
 
+      #vitalsSnapshotButton {
+        /* Rectangle 2: */
+        float: left;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        width: 48%;
+        height: 40px;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        letter-spacing: 0;
+      }
+
+      #attachPhotoButton {
+        /* Rectangle 2: */
+        float: right;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        width: 48%;
+        height: 40px;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        letter-spacing: 0;
+      }
+
       #createMessageContainer {
         position: relative;
         width: 95%;
@@ -135,8 +176,8 @@
       #textBox {
         background: #FFFFFF;
         border: 1px solid #979797;
-        margin: 10px;
-        height: 100px;
+        margin: 1%;
+        width: 97%
       }
 
       #textButtons {
@@ -152,34 +193,47 @@
 
       #noteType {
         float: left;
-        width: 49%;
+        width: 48%;
         height: 40px;
         background: #FFFFFF;
         border: 1px solid #979797;
         border-radius: 8px;
+        text-align: center;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        letter-spacing: 0;
       }
 
       #instructionType {
         float: right;
-        width: 49%;
+        width: 48%;
         height: 40px;
         background: #FFB5B5;
         border: 1px solid #979797;
         border-radius: 8px;
+        text-align: center;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
       }
 
       #sendButton {
         float: right;
-        width: 49%;
+        width: 48%;
         height: 40px;
         background: #9BD977;
         border: 1px solid #979797;
         border-radius: 8px;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
       }
 
       #skypeButton {
         float: left;
-        width: 49%;
+        width: 48%;
         height: 40px;
         background: #1EB0ED;
         border: 1px solid #9B9B9B;
@@ -243,22 +297,22 @@
       </div>
     </div>
 
-    <div id = "notesContainer">
-      <div id = "message-1" class = "note">
+    <paper-card id = "notesContainer">
+      <paper-card id = "message-1" class = "note">
         <div class = "timeContainer">
           <p class = "time"> 1:37 </p>
         </div>
         <p class = "content"> Severe swelling on the right side of the chest suggests a pneumotherax caused
             by blunt impact from the air bag. </p>
-      </div>
-      <div id = "message-2" class = "vitalsSnapshot">
+      </paper-card>
+      <paper-card id = "message-2" class = "vitalsSnapshot">
         <div class = "timeContainer">
           <p class = "time"> 1:40 </p>
         </div>
         <h4 class = vitalsTitle> Vitals Snapshot: </h4>
         <p class = "content"> BP: 145/90, Temp:  96.9, HR: 110 bpm </p>
-      </div>
-      <div id = "message-3" class = "instruction">
+      </paper-card>
+      <paper-card id = "message-3" class = "instruction">
         <div class = "timeContainer">
           <p class = "time"> 1:52 </p>
         </div>
@@ -269,48 +323,34 @@
         <p class = "content"> 4.  Insert trocar into the lung using the Seldering Technique (described below) </p>
         <p class = "content"> 5.  Suture the trocar to the skin to prevent it from falling out. </p>
         <p class = "content"> 6. Apply dressings to the area </p>
-      </div>
-    </div>
+      </paper-card>
+    </paper-card>
 
     <div id = "buttonsContainer">
-      <div id = "patientInfoDiv">
-        <h4 class = "buttonTitle">Vitals Snapshot</h4>
-      </div>
-      <div id = "vitalsInfoDiv">
-        <h4 class = "buttonTitle">Attach Image</h4>
-      </div>
+      <paper-button id = "vitalsSnapshotButton"> Vitals Snapshot </paper-button>
+      <paper-button id = "attachPhotoButton"> Attach Image </paper-button>
     </div>
 
     <div id = "createMessageContainer">
-      <div id = "textBox">
-      </div>
+    	<iron-autogrow-textarea id = "textBox">
+	  	</iron-autogrow-textarea>
       <div id = "textButtons">
-        <div id = "messageType">
-          <div id = "noteType">
-            <h4 class = "buttonTitle"> Note </h4>
-          </div>
-          <div id = "instructionType">
-            <h4 class = "buttonTitle"> Instruction </h4>
-          </div>
-        </div>
-        <div id = "sendButton">
-          <h4 class = "buttonTitle"> Send </h4>
-        </div>
+	      <div id = "messageType">
+	        <paper-radio-group selected="noteButton">
+	          <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
+	          <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
+	        </paper-radio-group>
+	      </div>
+        <paper-button id = "sendButton" on-click = "sendMessage()"> Send </paper-button>
       </div>
     </div>
 
     <div id = "buttonsContainer">
-      <div id = "skypeButton">
-        <h4 class = "buttonTitle">Switch to Skype</h4>
-      </div>
-      <div id = "filterButton">
-        <h4 class = "buttonTitle">Filter: All</h4>
-      </div>
+      <paper-button id = "skypeButton"> Switch to Skype</paper-button>
+      <paper-button id = "filterButton"> Filter: All</paper-button>
     </div>
 
-    <div id = "endCall">
-      <h4 class = "buttonTitle">End Call</h4>
-    </div>
+    <paper-button id = "endCall"> End Call </paper-button>
 
   </template>
   <!-- Creates the element's prototype and registers it -->
@@ -325,5 +365,14 @@
       },
 
     });
+
+    function sendMessage(){
+    	var messageType = "noteType";
+
+ 		var text = document.getElementById("textBox");
+ 		var notesPad = document.getElementById("notesContainer");
+
+	}
+
   </script>
 </dom-module>

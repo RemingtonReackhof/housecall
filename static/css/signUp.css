@@ -1,0 +1,208 @@
+
+@font-face {
+    font-family: noir;
+    src: url(Noir_medium.otf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: noir;
+    src: url(Noir_regular.otf);
+}
+
+
+#body {
+ font-family: noir;
+ background: #EDEDF4;
+ 
+}
+
+.signIn {
+/* Rectangle 12: */ background: #EB7070; border: 1px solid; border-radius: 8px;
+ background: #EB7070;
+ height: 980px;
+ width: 939px;
+ margin:auto;
+ text-align: center;
+ color: white;
+ font-size: 30px;
+}
+
+input[type=submit] {
+    padding:5px 15px; 
+    background:#EDEDF4; 
+    border:0 none;
+    cursor:pointer;
+	width: 100px;
+	height: 40px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+	/* Button Background: */
+	border-radius: 4.5px;
+	/* Submit: */
+	font-family: Medium;
+	font-size: 16px;
+	color: #515050;
+	line-height: 18px;
+}
+
+button {
+/* Button Background: */
+background: #D8D8D8;
+border: 1px solid #979797;
+box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.20), inset 0px 2px 0px 0px #FFFFFF;
+border-radius: 6px;
+font-size: 20px;
+font-family: noir;
+height: 40px;
+width: 120px;
+}
+
+#signup_title_input {
+/* Rectangle 15: */
+opacity: 0.79;
+background: #ECE9E9;
+/* Dr.: */
+font-family: Medium;
+font-size: 18px;
+color: #4A4A4A;
+line-height: 18px;
+}
+
+#signup_firstName_input {
+/* Cell: */
+opacity: 0.78;
+background: #ECE9E9;
+/* Label: */
+font-family: Medium;
+font-size: 20px;
+color: #000000;
+line-height: 19px;
+}
+
+#signup_LastName_input {
+/* Cell: */
+opacity: 0.78;
+background: #ECE9E9;
+/* Label: */
+font-family: Medium;
+font-size: 20px;
+color: #000000;
+line-height: 19px;
+}
+
+#signup_skypeUserName_input {
+/* Cell: */
+opacity: 0.78;
+background: #ECE9E9;
+/* Label: */
+border: 1px solid #979797;
+font-family: Medium;
+font-size: 20px;
+color: #000000;
+line-height: 19px;
+}
+#signup_email_input {
+/* Cell: */
+opacity: 0.78;
+background: #ECE9E9;
+/* Label: */
+border: 1px solid #979797;
+font-family: Medium;
+font-size: 20px;
+color: #000000;
+line-height: 19px;
+}
+
+#signup_password_input {
+/* Cell: */
+opacity: 0.78;
+background: #ECE9E9;
+/* Label: */
+border: 1px solid #979797;
+font-family: Medium;
+font-size: 20px;
+color: #000000;
+line-height: 19px;
+}
+
+.signup {
+ color: white;
+ font-size: 24px;
+ text-align: center;
+  position: relative;
+ top: 80px;
+ text-decoration: none; 
+}
+
+.forgotPass {
+ color: white;
+position: relative;
+ top: 100px;
+ text-decoration: none; 
+
+}
+
+.title {
+ color: #5353B5;
+ font-size: 72px;
+ text-align: center;
+
+
+
+}
+
+
+/* Dropdown */
+
+.dropbtn {
+    background-color: #5353B5;
+    width: 250px;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+}
+#hospitalInput,#specInput {
+    border-box: box-sizing;
+    background-position: 14px 12px;
+    background-repeat: no-repeat;
+    font-size: 15px;
+    padding: 14px 20px 12px 45px;
+    border: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropChoices {
+   font-size: 15px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown a:hover {background-color: #ddd}
+
+.show {display:block;}
