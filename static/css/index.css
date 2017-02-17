@@ -1,0 +1,180 @@
+
+@font-face {
+    font-family: noir;
+    src: url(Noir_medium.otf);
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: noir;
+    src: url(Noir_regular.otf);
+}
+
+
+#body {
+ font-family: noir;
+ background: #EDEDF4;
+ 
+}
+
+.signIn {
+/* Rectangle 12: */ background: #EB7070; border: 1px solid; border-radius: 8px;
+ background: #EB7070;
+ height: 400px;
+ width: 400px;
+ margin:auto;
+ text-align: center;
+ color: white;
+
+}
+
+.inputs {
+ 
+
+}
+input[type=submit] {
+    padding:5px 15px; 
+    background:#EDEDF4; 
+    border:0 none;
+    cursor:pointer;
+	width: 100px;
+	height: 40px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px; 
+	/* Button Background: */
+	border-radius: 4.5px;
+	/* Submit: */
+	font-family: Medium;
+	font-size: 16px;
+	color: #515050;
+	line-height: 18px;
+}
+
+.signup {
+ color: white;
+ font-size: 24px;
+ text-align: center;
+  position: relative;
+ top: 90px;
+ text-decoration: none; 
+}
+
+.forgotPass {
+ color: white;
+position: relative;
+ top: 100px;
+ text-decoration: none; 
+
+}
+
+.title {
+ color: #5353B5;
+ font-size: 72px;
+ text-align: center;
+
+
+
+}
+
+/* 
+
+.outer-container {
+  height: 600px;
+  width: 500px;
+  background: #eee;
+  border: 5px solid #ccc;
+}
+.game-window {
+  height: 100%;
+  width: 300px;
+  background: #222;
+  border-right: 3px solid #53f;
+  float: left;
+}
+.status-window {
+  height: 100%;
+  width: 197px;
+  background: #feb;
+  float: right;
+}
+
+.hidden-text {
+  text-align: center;
+  display: none;
+  
+}
+
+.start-game {
+  width: 290px;
+  text-align: center;
+  color: white;
+  position: fixed;
+  left: 18px;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+.end-game {
+  display: none;
+  width: 290px;
+  text-align: center;
+  color: white;
+  position: fixed;
+  left: 18px;
+  font-family: Tahoma, Geneva, sans-serif;
+}
+
+#title
+{
+	font-size: 40px;
+}
+
+#createdBy
+{
+	font-size: 20px;
+}
+
+
+#space, #arrows
+{
+	font-size: 14px;
+}
+
+#yourScore
+{
+	font-size: 20px;
+}
+
+#col
+{
+	position: absolute;
+}
+
+#shield
+{
+	position: absolute;
+}
+
+
+.ship {
+  top: 530px;
+  left: 122px;
+  position: relative;
+  display: inline-block;
+}
+.rocket {
+  position: absolute;
+}
+.rocket img {
+  height: 40px;
+}
+.life {
+  position: relative;
+  left: 275px;
+  top: -50px;
+}
+.life img {
+  height: 20px;
+}
+.asteroid {
+  position: absolute;
+}
+ */
