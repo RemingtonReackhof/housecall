@@ -14,20 +14,27 @@ signup = Blueprint('signup', __name__, template_folder='templates') #, url_prefi
 def signup_route():
 
 	prevURL = request.referrer
-
+	print "at signup route"
 	if request.method == 'POST':
 
-		emailIn = request.form['email']
-		skypeUsernameIn = request.form['skypeUsername']
+		print "post"
+		try:
+			print request.form
+			emailIn = request.form['email']
+		except:
+			print "error"
+		skypeUsernameIn = request.form['skype_username']
 		passIn = request.form['password']
 		firstnameIn = request.form['firstname']
 		lastnameIn = request.form['lastname']
+
+		print emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn
 
 		# They'll click one of two buttons indicating if they are doctor or emt
 
 		# Hospital will have to be one from a drop down list
 
-		specialtyIn = request.form['specialty']
+		#specialtyIn = request.form['specialty']
 
 
 		prevURL = request.form.get("prevURL") #redirect address
