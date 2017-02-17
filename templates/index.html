@@ -1,10 +1,15 @@
+
+
 <!doctype html>
 <html lang="en">
   <head>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
-    <title>WebApp</title>
+    <title>Login</title>    
+
     <meta name="description" content="WebApp description">
 
     <!-- See https://goo.gl/OOhYW5 -->
@@ -15,19 +20,21 @@
     <link rel="import" href="/src/WebApp-app/WebApp-app.html"> -->
     
   </head>
-  <body class="fullbleed layout vertical"> <!--  style="background-color: #EDEDF4;"> -->
+  <body class="fullbleed layout vertical" id="body"> <!--  style="background-color: #EDEDF4;"> -->
     <!-- <WebApp-app></WebApp-app> -->
-    <p> hello </p>
-
+    <h3 class = "title">AmbulanceStream</h3>
     <p id="content"></p>
 
-    <div class "signIn">        <!-- return false -->
+    <div class = "signIn">        <!-- return false -->
       <form onsubmit="index_create(); return false;" method="post">
-        <br>Username: <input type="text" name="email" id="index_email_input">
-        <br>Password: <input type="password" name="password" id="index_password_input">
+        <br><br><input placeholder="email" type="email" name="email" id="index_email_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required autofocus></br></br>
+        <br><input placeholder="password" type="password" name="password" id="index_password_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required></br></br></br>
         <p><input type="submit" value="Login" id="index_submit"></p>
         <p><input type="hidden" value="{{prevURL}}" name="prevURL" id="prevURL"></p>
       </form>
+
+      <a class = "signup" href="signUp.html">Sign-Up Now!</a></br>
+      <a class = "forgotPass" href="forgotPass.html">Forgot Password?</a>
     </div>
 
 

@@ -19,6 +19,7 @@ def index_route():
 		print "here"
 		emailIn = request.form['email']
 		passIn = request.form['password'] #get input
+
 		prevURL = request.form.get("prevURL") #redirect address
 
 		# Check if Emt or Doctor
@@ -31,7 +32,7 @@ def index_route():
 		email = cur.fetchall()
 		print email
 		if len(email) == 0:
-			
+			print "wrong email"
 			flash("Incorrect email", "error_email")
 			return redirect(url_for('index.index_route'))
 
@@ -50,15 +51,19 @@ def index_route():
 		# 	flash("Incorrect username/password combination", "error_combo")
 		# 	return redirect(url_for('login.login_route'))
 
-		if passIn != email[0][4]:
+		if passIn != email[0][5]:
+			print "wrong password"
 			flash("Incorrect email/password combination", "error_combo")
 			return redirect(url_for('index.index_route'))
 
 		#if user/pass is valid
-		session['email'] = email[0][0] 
-		session['skype_username'] = email[0][1]
-		session['firstname'] = email[0][2]
-		session['lastname'] = email[0][3]
+		session['email'] = email[0][1] 
+		session['skype_username'] = email[0][2]
+		session['firstname'] = email[0][3]
+		session['lastname'] = email[0][4]
+		session['specialty'] = email[0][5]
+		session['hospital_id'] = email[0][6]
+		session['dr_or_emt'] = email[0][7]
 
 		#if prevURL != None:
 			#return redirect(prevURL)

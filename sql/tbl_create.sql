@@ -5,6 +5,7 @@ CREATE TABLE Hospital (
 );
 
 CREATE TABLE User (
+	user_id INT AUTO_INCREMENT,
 	email VARCHAR(40),
 	skype_username VARCHAR(30),
     firstname VARCHAR(20),
@@ -13,7 +14,7 @@ CREATE TABLE User (
     specialty VARCHAR(40),
     hospital_id INT,
     Doctor BOOLEAN,     # TRUE for doctor, FALSE for emt
-    PRIMARY KEY (email),
+    PRIMARY KEY (user_id),
     FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id)
     	ON DELETE CASCADE
 );
