@@ -352,12 +352,18 @@
 
     <paper-button id = "endCall"> End Call </paper-button>
 
-    
   </template>
   <!-- Creates the element's prototype and registers it -->
   <script>
     Polymer({
-      is: 'my-notes'
+      is: 'my-notes',
+      listeners: {
+        'note-view.onload': 'toggleIt'
+      },
+      attatched: function () {
+        
+      },
+
     });
 
     function sendMessage(){

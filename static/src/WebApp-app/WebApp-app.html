@@ -74,6 +74,10 @@
           type: String,
           value: 'WebApp-app',
         },
+        interval: {
+          type: Object,
+          value: {},
+        },
         page: {
           type: String,
           reflectToAttribute: true,
@@ -86,9 +90,24 @@
       ],
 
       _routePageChanged: function(page) {
+        if(this.page == 'notes' && page != 'notes'){
+          this.end_interval();
+        }
+        else if (page == 'notes' && this.page != 'notes') {
+          this.start_interval();
+        }
         this.page = page || 'login';
+        
       },
 
+      start_interval: function(){
+        this.interval = setInterval(function() {
+          console.log('it\'s been 5 seconds!');
+        }, 5000);
+      },
+      end_interval: function(){
+        clearInterval(this.interval);
+      },
       _pageChanged: function(page) {
         // Load page import on demand. Show 404 page if fails
         var resolvedPageUrl = this.resolveUrl('my-' + page + '.html');
