@@ -1,3 +1,4 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
 <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
@@ -11,6 +12,7 @@
 <link rel="import" href="../../src/WebApp-app/my-vitals.html">
 <link rel="import" href="../../src/WebApp-app/my-contacts.html">
 <link rel="import" href="../../src/WebApp-app/my-login.html">
+<link rel="import" href="../../src/WebApp-app/my-signup.html">
 
 <dom-module id="WebApp-app">
   <template>
@@ -40,9 +42,8 @@
       <paper-header-panel class="flex">
         <paper-toolbar>
           <div>Ambulance Stream</div>
-          <div hidden="true">Hello [[prop1]]</div>
           <a href="/dashboard" tabindex="-1">
-            <paper-button raised class="white">HOME</paper-button>
+            <paper-button raised class="white" id="home_button">HOME</paper-button>
           </a>
         </paper-toolbar>
       </paper-header-panel>
@@ -57,6 +58,7 @@
         <my-notes name="notes"></my-notes>
         <my-contacts name="contacts"></my-contacts>
         <my-vitals name="vitals"></my-vitals>
+        <my-signup name="signup"></my-signup>
       </iron-pages>
     </body>
 
@@ -90,6 +92,7 @@
       ],
 
       _routePageChanged: function(page) {
+        console.log(page);
         if(this.page == 'notes' && page != 'notes'){
           this.end_interval();
         }
@@ -97,6 +100,12 @@
           this.start_interval();
         }
         this.page = page || 'login';
+        if(this.page == 'login' || this.page == 'dashboard' || this.page == 'signup'){
+          $('#home_button').hide();
+        }
+        else{
+          $('#home_button').show();
+        }
         
       },
 

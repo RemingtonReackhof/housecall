@@ -21,30 +21,17 @@
     
   </head>
 
-<!--  <body class="fullbleed layout vertical">  style="background-color: #EDEDF4;"> 
-    <WebApp-app></WebApp-app> -->
   <body class="fullbleed layout vertical" id="body"> <!--  style="background-color: #EDEDF4;"> -->
-    <!-- <WebApp-app></WebApp-app> -->
-    <h3 class = "title">AmbulanceStream</h3>
-    <p id="content"></p>
-
-    <div class = "signIn">        <!-- return false -->
-      <form onsubmit="index_create(); return false;" method="post">
-        <br><br><input placeholder="email" type="email" name="email" id="index_email_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required autofocus></br></br>
-        <br><input placeholder="password" type="password" name="password" id="index_password_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required></br></br></br>
-        <p><input type="submit" value="Login" id="index_submit"></p>
-        <p><input type="hidden" value="{{prevURL}}" name="prevURL" id="prevURL"></p>
-      </form>
-
-      <a class = "signup" href="/signup">Sign-Up Now!</a></br>
-      <a class = "forgotPass" href="forgotPass.html">Forgot Password?</a>
-    </div>
-
-
-
-    {% block javascript %}
-    <script src="/static/js/index.js"></script>
-    {% endblock %}
+  <WebApp-app></WebApp-app>
+  {% if name %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        document.getElementsByTagName('webapp-app')[0].page = '{{name}}';
+      });
+    </script>
+  {% else %}
+    <h1>Hello, World!</h1>
+  {% endif %}
 
   </body>
 </html>
