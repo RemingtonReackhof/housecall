@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../js/index.js">></link>
+<link rel="import" href="../../css/index.css">></link>
 
 
 <dom-module id="my-login">
@@ -14,9 +15,9 @@
       }
     </style>
 
-    <h5 class = "title">Log In</h5>
+    <h5 class = "indexTitle" style="font-size:50px;">Log In</h5>
   
-    <div class = "signIn">        <!-- return false -->
+    <div class = "indexSignIn">        <!-- return false -->
       <form  method="post" action='/'>
         <br><br><input placeholder="email" type="email" name="email" id="index_email_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required autofocus></br></br>
         <br><input placeholder="password" type="password" name="password" id="index_password_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required></br></br></br>
@@ -26,8 +27,8 @@
         <p><input type="hidden" value="{{prevURL}}" name="prevURL" id="prevURL"></p>
       </form>
 
-      <a id='signup_button' class = "signup" href="/signup">Sign-Up Now!</a></br>
-      <a class = "forgotPass" href="forgotPass.html">Forgot Password?</a>
+      <a id='signup_button' class = "indexSignup" href="/signup">Sign-Up Now!</a></br>
+      <a class = "indexForgotPass" href="forgotPass.html">Forgot Password?</a>
     </div>
 
 
