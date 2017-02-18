@@ -21,31 +21,46 @@ def signup_route():
 	if request.method == 'POST':
 
 		print "post"
-		# try:
-		# 	print request.form
-		# 	emailIn = request.form['email']
-		# except:
-		# 	print "error"
+		try:
+			#emailIn = request.form['email']
+			emailIn = request.json.get('email')
+		except:
+			print "error"
 		# skypeUsernameIn = request.form['skype_username']
 		# passIn = request.form['password']
 		# firstnameIn = request.form['firstname']
 		# lastnameIn = request.form['lastname']
+		skypeUsernameIn = request.json.get('skype_username')
+		passIn = request.json.get('password')
+		firstnameIn = request.json.get('firstname')
+		lastnameIn = request.json.get('lastname')
+		hospitalIn = request.json.get('hospital')
+		specialtyIn = request.json.get('specialty')
+		doctorIn = request.json.get('doc')
+		if doctorIn == 0:
+			doctorIn = False
+		else:
+			doctorIn = True
+		print "after!!"
+		print "SHIT", emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn, hospitalIn, specialtyIn, doctorIn
 
-		emailIn = "email@umich.edu"
-		skypeUsernameIn = "username"
-		passIn = "ppppp"
-		firstnameIn = "greatest"
-		lastnameIn = "ever"
-		hospitalIn = "Med Inn Building"
-		specialtyIn = "Neurology"
-		doctorIn = True
+
+		# emailIn = "email@umich.edu"
+		# skypeUsernameIn = "username"
+		# passIn = "ppppp"
+		# firstnameIn = "greatest"
+		# lastnameIn = "ever"
+		# hospitalIn = "Med Inn Building"
+		# specialtyIn = "Neurology"
+		# doctorIn = True
 
 		#print emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn
 
 		# Get Hospital Id
+		print hospitalIn
 		cur = mysql.connection.cursor()
-		cur.execute("SELECT hospital_id FROM eecs481.Hospital WHERE name =  '"+hospitalIn+"'")
-		hospitalIdIn = cur.fetchall()
+		cur.execute("SELECT hospital_id FROM eecs481.Hospital WHERE name = %s", [hospitalIn])
+		hospitalIdIn = cur.fetchone()
 
 
 		# They'll click one of two buttons indicating if they are doctor or emt
@@ -63,16 +78,20 @@ def signup_route():
 		password_hash = m.hexdigest()
 
 		password = "$".join([algorithm,salt,password_hash])
-
+		print hospitalIdIn
 		#Insert user into table
+
 		cur = mysql.connection.cursor()
 		cur.execute("INSERT INTO eecs481.User (email, skype_username, firstname, lastname, password, specialty, hospital_id, Doctor) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", [emailIn, skypeUsernameIn, firstnameIn, lastnameIn, password, specialtyIn, hospitalIdIn, doctorIn])
 		mysql.connection.commit()
 
 		#Redirect to /login to try new credentials!
-		prevURL = request.form.get("prevURL") #redirect address
+		#prevURL = request.form.get("prevURL") #redirect address
 		#return redirect(redirect_url())
-		return redirect(url_for("index.index_route"))
+		#return render_template("index.html")
+		print "finshing"
+
+		return jsonify(message="Success!") 
 
 
-	return render_template("signup.html")
+	return render_template("index.html", name="signup")

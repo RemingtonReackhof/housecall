@@ -23,6 +23,15 @@
 
   <body class="fullbleed layout vertical" id="body"> <!--  style="background-color: #EDEDF4;"> -->
   <WebApp-app></WebApp-app>
+  {% if name %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        document.getElementsByTagName('webapp-app')[0].page = '{{name}}';
+      });
+    </script>
+  {% else %}
+    <h1>Hello, World!</h1>
+  {% endif %}
 
   </body>
 </html>

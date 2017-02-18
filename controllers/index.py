@@ -3,25 +3,32 @@ from extensions import mysql
 from flask import Flask, session, redirect, url_for, escape, request, flash
 import hashlib
 import uuid
+import ast
 
 
 index = Blueprint('index', __name__, template_folder='templates') #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
 
-@index.route('/', methods=['GET', 'POST'])
-def index_route():
 
+@index.route('/', methods=['GET'])
+def my_route():
+	print 'GETTING'
+	return render_template("index.html", name='login')
+
+@index.route('/', methods=['POST'])
+def index_route():
+	print "POSTING"
 	if "username" in session:
 	 	return redirect(url_for('main.main_route'))    ### Have to change
 
-	prevURL = request.referrer
+	# prevURL = request.referrer
 
 	if request.method == 'POST':
-		print "here"
+		
+		print request.data
+		request.form = ast.literal_eval(request.data)
 		emailIn = request.form['email']
 		passIn = request.form['password'] #get input
-
 		prevURL = request.form.get("prevURL") #redirect address
-
 		# Check if Emt or Doctor
 		#Emt = request.form['emt_button']
 		#Doctor = request.form['doctor_button']
@@ -42,10 +49,12 @@ def index_route():
 		user_pass = email[0][5] #usernames password info
 		print email[0]
 		print "USER_PASS", user_pass
+
 		user_pass = user_pass.split('$')
 
 		m = hashlib.new(algorithm)
 		m.update(user_pass[1] + passIn)
+		# m.update(user_pass[0] + passIn)
 		password_hash = m.hexdigest()
 		print "PASSWORD_HASH", password_hash
 		print "USER_PASS[2]", user_pass[2]
@@ -54,6 +63,11 @@ def index_route():
 		if password_hash != user_pass[2]:
 			flash("Incorrect username/password combination", "error_combo")
 			return redirect(url_for('index.index_route'))
+
+		#if passIn != user_pass[0]:
+		#	print "THIS FAILS"
+		#	flash("Incorrect username/password combination", "error_combo")
+		#	return redirect(url_for('index.index_route'))
 
 		# if passIn != email[0][5]:
 		# 	print "wrong password"
@@ -70,8 +84,8 @@ def index_route():
 		session['dr_or_emt'] = email[0][8]
 
 		print prevURL
-		if prevURL != None:
-			return redirect(prevURL)
-		return redirect(url_for('main.main_route'))
-
-	return render_template("index.html", prevURL=prevURL)
+		#if prevURL != None:
+		#	return redirect(prevURL)
+		#return redirect(url_for('main.main_route'))
+	return jsonify(message="Success!") 
+	#return render_template("index.html", prevURL=prevURL)
