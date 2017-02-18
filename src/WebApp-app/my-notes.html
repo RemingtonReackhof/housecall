@@ -7,6 +7,7 @@
 <link rel="import" href="../../bower_components/paper-radio-button/paper-radio-group.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="notes-list.html">
 
 <dom-module id="my-notes">
   <!-- Defines the element's style and local DOM -->
@@ -61,7 +62,7 @@
         /* Rectangle 2: */
         position: relative;
         width: 95%;
-        height: 40%;
+        height: 400px;
         left: 2.5%;
         padding-left: 1%;
         padding-right: 1%;
@@ -70,60 +71,6 @@
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
         border-radius: 8px;
-      }
-
-      .note {
-        /* Rectangle 2: */
-        position: relative;
-        width: 100%;
-        padding-left: 10px;
-        margin-bottom: 1%;
-        background: #FFFFFF;
-        border: 2px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-      }
-
-      .vitalsSnapshot {
-        position: relative;
-        width: 100%;
-        padding-left: 10px;
-        margin-bottom: 1%;
-        background: #FFFFFF;
-        border: 2px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-      }
-
-      .vitalsTitle {
-        position: relative;
-      }
-
-      .instruction {
-        /* Rectangle 2: */
-        position: relative;
-        width: 100%;
-        padding-left: 10px;
-        margin-bottom: 1%;
-        background: #FFB5B5;
-        border: 2px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-      }
-
-      .timeContainer {
-        float: right;
-        width: 20px;
-      }
-
-      .time {
-        position: relative;
-        right: 20px;
-      }
-
-      .content {
-        position: relative;
-        width: 90%;
       }
 
       #buttonsContainer {
@@ -298,6 +245,7 @@
     </div>
 
     <paper-card id = "notesContainer">
+    <!--
       <paper-card id = "message-1" class = "note">
         <div class = "timeContainer">
           <p class = "time"> 1:37 </p>
@@ -324,6 +272,10 @@
         <p class = "content"> 5.  Suture the trocar to the skin to prevent it from falling out. </p>
         <p class = "content"> 6. Apply dressings to the area </p>
       </paper-card>
+      -->
+
+      
+      <notes-list id = "notesList"></notes-list>
     </paper-card>
 
     <div id = "buttonsContainer">
@@ -341,7 +293,7 @@
 	          <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
 	        </paper-radio-group>
 	      </div>
-        <paper-button id = "sendButton" on-click = "sendMessage()"> Send </paper-button>
+        <paper-button id = "sendButton" > Send </paper-button>
       </div>
     </div>
 
@@ -357,16 +309,25 @@
   <!-- Creates the element's prototype and registers it -->
   <script>
     Polymer({
-      is: 'my-notes'
+      is: 'my-notes',
+      listeners: {
+      	"sendButton.click": 'sendMessage',
+      },
+
+      sendMessage: function (){
+
+ 		var textInput = document.getElementById("textBox").value;
+ 		document.getElementById("textBox").value = null;
+
+ 		if (textInput != null)
+ 			document.getElementById("notesList").addMessage("note", textInput, "");
+
+		}
     });
 
-    function sendMessage(){
-    	var messageType = "noteType";
+    
 
- 		var text = document.getElementById("textBox");
- 		var notesPad = document.getElementById("notesContainer");
 
-	}
 
   </script>
 </dom-module>

@@ -1,6 +1,7 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 
-<dom-module id="notesDisplay">
+<dom-module id="notes-list">
   <!-- Defines the element's style and local DOM -->
   <template>
     <style>
@@ -64,7 +65,6 @@
 
     </style>
 
-    <div> Employee list: </div>
     <template is="dom-repeat" items="{{notesList}}">
 
       <template is="dom-if" if="{{item.isNote}}">
@@ -92,7 +92,7 @@
       </template>
 
 
-      <template is="dom-if" if="{{item.isVitalsSnapshot}}">
+      <template is="dom-if" if="{{item.isSnapshot}}">
 
         <paper-card class = "vitalsSnapshot">
           <div class = "timeContainer">
@@ -110,14 +110,75 @@
   <!-- Creates the element's prototype and registers it -->
   <script>
     Polymer({
-      is: 'notesDisplay',
+      is: 'notes-list',
       ready: function() {
-        this.employees = [
-            {first: 'Bob', last: 'Smith'},
-            {first: 'Sally', last: 'Johnson'},
-            ...
+        this.notesList = [
+            {
+              id: 1, 
+              isNote: true, 
+              isInstruction: false, 
+              isSnapshot: false, 
+              title: "", 
+              timeStamp: "1:37", 
+              content: "Severe swelling on the right side of the chest suggests a pneumotherax caused by blunt impact from the air bag."
+            },
+            {
+              id: 2, 
+              isNote: false, 
+              isInstruction: false, 
+              isSnapshot: true, 
+              title: "", 
+              timeStamp: "1:40", 
+              content: "BP: 145/90, Temp:  96.9, HR: 110 bpm"
+            },
+            {
+              id: 3, 
+              isNote: false, 
+              isInstruction: true, 
+              isSnapshot: false, 
+              title: "Intercostal Insertion", 
+              timeStamp: "1:52", 
+              content: "1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine)\n 2.  Place sterile drapes around the area.\n 3.  Apply local anesthetic \n 4.  Insert trocar into the lung using the Seldering Technique (described below)\n 5.  Suture the trocar to the skin to prevent it from falling out. \n 6. Apply dressings to the area"
+            },
         ];
+      },
+
+      addMessage: function(messageType, messageContent, messageTitle) {
+        var currId = notesList.length + 1;
+        var currDate = new Date();
+        var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
++ currDate.getMinutes();
+        var isNewNote = false;
+        var isNewInstruction = false;
+        var isNewSnapshot = false
+
+        if (messageType == "note")
+        {
+          isNewNote = true;
+        }
+        else if (messageType == "instruction")
+        {
+          isNewInstruction = true;
+        }
+        else
+        {
+          isNewStanpshot = true;
+        }
+
+        var newMessage = {
+              id: currId, 
+              isNote: isNewNote, 
+              isInstruction: isNewInstruction, 
+              isSnapshot: isNewSnapshot, 
+              title: messageTitle, 
+              timeStamp: currTime, 
+              content: messageContent
+            }
+
+        this.push('notesList', newMessage);
+
       }
+
     });
   </script>
 </dom-module>
