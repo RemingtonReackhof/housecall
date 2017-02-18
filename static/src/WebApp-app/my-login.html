@@ -1,0 +1,114 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../js/index.js">></link>
+<link rel="import" href="../../css/index.css">></link>
+
+
+<dom-module id="my-login">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+
+    <h5 class = "indexTitle" style="font-size:50px;">Log In</h5>
+  
+    <div class = "indexSignIn">        <!-- return false -->
+      <form  method="post" action='/'>
+        <br><br><input placeholder="email" type="email" name="email" id="index_email_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required autofocus></br></br>
+        <br><input placeholder="password" type="password" name="password" id="index_password_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required></br></br></br>
+        <p><paper-button id="login_button" style="background-color: white;" value="Login" id="index_submit">
+        </paper-button>
+        </p>
+        <p><input type="hidden" value="{{prevURL}}" name="prevURL" id="prevURL"></p>
+      </form>
+
+      <a id='signup_button' class = "indexSignup" href="/signup">Sign-Up Now!</a></br>
+      <a class = "indexForgotPass" href="forgotPass.html">Forgot Password?</a>
+    </div>
+
+
+  </template>
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'my-login',
+      listeners:{
+        "login_button.click": "index_create",
+        "signup_button.click": "show_signup_page"
+      },
+      show_signup_page: function(){
+        document.getElementsByTagName('webapp-app')[0].page = 'signup';
+      },
+      index_create: function (){
+  
+          //url
+          //var url = base_url + '/login';
+
+          //user input
+          var data = this.get_index_input();
+
+          //prev url
+          var oldLocation = document.getElementById("prevURL").value;
+          if (oldLocation == "None") {
+            //oldLocation = base_url;
+            oldLocation = 'http://0.0.0.0:3000/';
+          }
+          
+          //send user input via ajax
+          make_ajax_call(data);
+          
+        },
+        
+
+        get_index_input: function (){
+
+          //grab user input
+          var email = document.getElementById("index_email_input").value;
+          var password = document.getElementById("index_password_input").value;
+
+          //make input json
+          var data = '{';
+          data = data + '"email": "'+email+'",';
+          data = data + '"password" : "'+password+'"}';  //key not being here vs. empty string
+          //login here?
+
+          return data;
+        }, 
+      });
+
+      function show_errors(xhr,status,error){
+          // var response = JSON.parse(xhr.responseText);
+          console.log(xhr.responseText);
+          var doc = document.getElementById("content");
+
+          var p = document.createElement("p");
+          var error_message = response.errors[0].message;
+          var text = document.createTextNode(error_message);
+          p.appendChild(text);
+          p.setAttribute("class", "error");
+          doc.appendChild(p);
+      };
+
+      function make_ajax_call(data) {
+        $.ajax({
+            //url: url,       // SHOULD BE window.location !!
+            url: 'http://localhost:3000/',
+            success:  function(data){
+              document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
+            },//window.location. assign??
+            error: function(xhr, status, error){
+              show_errors(xhr,status,error);
+            },  // show_errors and error
+            type: 'POST',
+            dataType: "json",
+            contentType : "application/json",
+            data: data,
+          });
+      }
+  </script>
+</dom-module>

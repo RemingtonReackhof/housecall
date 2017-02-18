@@ -1,0 +1,341 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../../bower_components/paper-styles/shadow.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
+<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-group.html">
+<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
+<link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="notes-list.html">
+
+<dom-module id="my-notes">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+    <style>
+      :host {
+        display: block;
+
+        padding: 16px;
+      }
+
+      #infoContainer {
+        position: relative;
+        width: 95%;
+        height: 40px;
+        left: 2.5%;
+        padding-bottom: 20px;
+      }
+
+      #patientInfoDiv {
+        /* Rectangle 2: */
+        float: left;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        width: 49%;
+        height: 40px;
+      }
+
+      #vitalsInfoDiv {
+        /* Rectangle 2: */
+        float: right;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        width: 49%;
+        height: 40px;
+      }
+
+      .buttonTitle {
+        position: relative;
+        text-align: center;
+        bottom: 20px;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        letter-spacing: 0;
+      }
+
+      #notesContainer {
+        /* Rectangle 2: */
+        position: relative;
+        width: 95%;
+        height: 400px;
+        left: 2.5%;
+        padding-left: 1%;
+        padding-right: 1%;
+        padding-top: 1%;
+        background: #E9E9E9;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      #buttonsContainer {
+        position: relative;
+        width: 95%;
+        height: 40px;
+        left: 2.5%;
+        padding-top: 20px;
+      }
+
+      #vitalsSnapshotButton {
+        /* Rectangle 2: */
+        float: left;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        width: 48%;
+        height: 40px;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        letter-spacing: 0;
+      }
+
+      #attachPhotoButton {
+        /* Rectangle 2: */
+        float: right;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        width: 48%;
+        height: 40px;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        letter-spacing: 0;
+      }
+
+      #createMessageContainer {
+        position: relative;
+        width: 95%;
+        left: 2.5%;
+        margin-top: 20px;
+        background: #E9E9E9;
+        border: 1px solid #979797;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      #textBox {
+        background: #FFFFFF;
+        border: 1px solid #979797;
+        margin: 1%;
+        width: 97%
+      }
+
+      #textButtons {
+        position: relative;
+        margin: 10px;
+        height: 40px;
+      }
+
+      #messageType {
+        float: left;
+        width: 49%;
+      }
+
+      #noteType {
+        float: left;
+        width: 48%;
+        height: 40px;
+        background: #FFFFFF;
+        border: 1px solid #979797;
+        border-radius: 8px;
+        text-align: center;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        letter-spacing: 0;
+      }
+
+      #instructionType {
+        float: right;
+        width: 48%;
+        height: 40px;
+        background: #FFB5B5;
+        border: 1px solid #979797;
+        border-radius: 8px;
+        text-align: center;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+      }
+
+      #sendButton {
+        float: right;
+        width: 48%;
+        height: 40px;
+        background: #9BD977;
+        border: 1px solid #979797;
+        border-radius: 8px;
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+      }
+
+      #skypeButton {
+        float: left;
+        width: 48%;
+        height: 40px;
+        background: #1EB0ED;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* Switch to: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+      }
+
+      #filterButton {
+        float: right;
+        width: 49%;
+        height: 40px;
+        /* Rectangle 2: */
+        background: #8FD567;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* Filter: All: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+      }
+
+      #endCall {
+        position: relative;
+        width: 95%;
+        height: 40px;
+        left: 2.5%;
+        margin-top: 20px;
+        /* Rectangle 2: */
+        background: #FF4545;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* End Call: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+      }
+
+      #endCallText {
+        position: relative; 
+        text-align: center; 
+        bottom: 30px
+      }
+
+    </style>
+
+    <div id = "infoContainer">
+      <div id = "patientInfoDiv">
+        <h3 class = "buttonTitle">Patient Information</h3>
+      </div>
+      <div id = "vitalsInfoDiv">
+        <h3 class = "buttonTitle">Vitals Information</h3>
+      </div>
+    </div>
+
+    <paper-card id = "notesContainer">
+    <!--
+      <paper-card id = "message-1" class = "note">
+        <div class = "timeContainer">
+          <p class = "time"> 1:37 </p>
+        </div>
+        <p class = "content"> Severe swelling on the right side of the chest suggests a pneumotherax caused
+            by blunt impact from the air bag. </p>
+      </paper-card>
+      <paper-card id = "message-2" class = "vitalsSnapshot">
+        <div class = "timeContainer">
+          <p class = "time"> 1:40 </p>
+        </div>
+        <h4 class = vitalsTitle> Vitals Snapshot: </h4>
+        <p class = "content"> BP: 145/90, Temp:  96.9, HR: 110 bpm </p>
+      </paper-card>
+      <paper-card id = "message-3" class = "instruction">
+        <div class = "timeContainer">
+          <p class = "time"> 1:52 </p>
+        </div>
+        <h4 class = "instructionTitle"> Intercostal Insertion </h4>
+        <p class = "content"> 1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine) </p>
+        <p class = "content"> 2.  Place sterile drapes around the area. </p>
+        <p class = "content"> 3.  Apply local anesthetic </p>
+        <p class = "content"> 4.  Insert trocar into the lung using the Seldering Technique (described below) </p>
+        <p class = "content"> 5.  Suture the trocar to the skin to prevent it from falling out. </p>
+        <p class = "content"> 6. Apply dressings to the area </p>
+      </paper-card>
+      -->
+
+      
+      <notes-list id = "notesList"></notes-list>
+    </paper-card>
+
+    <div id = "buttonsContainer">
+      <paper-button id = "vitalsSnapshotButton"> Vitals Snapshot </paper-button>
+      <paper-button id = "attachPhotoButton"> Attach Image </paper-button>
+    </div>
+
+    <div id = "createMessageContainer">
+    	<iron-autogrow-textarea id = "textBox">
+	  	</iron-autogrow-textarea>
+      <div id = "textButtons">
+	      <div id = "messageType">
+	        <paper-radio-group selected="noteButton">
+	          <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
+	          <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
+	        </paper-radio-group>
+	      </div>
+        <paper-button id = "sendButton" > Send </paper-button>
+      </div>
+    </div>
+
+    <div id = "buttonsContainer">
+      <paper-button id = "skypeButton"> Switch to Skype</paper-button>
+      <paper-button id = "filterButton"> Filter: All</paper-button>
+    </div>
+
+    <paper-button id = "endCall"> End Call </paper-button>
+
+  </template>
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'my-notes',
+      listeners: {
+<<<<<<< HEAD:src/WebApp-app/my-notes.html
+      	"sendButton.click": 'sendMessage',
+      },
+
+      sendMessage: function (){
+
+ 		var textInput = document.getElementById("textBox").value;
+ 		document.getElementById("textBox").value = null;
+
+ 		if (textInput != null)
+ 			document.getElementById("notesList").addMessage("note", textInput, "");
+
+		}
+=======
+        'note-view.onload': 'toggleIt'
+      },
+      attatched: function () {
+        
+      },
+
+>>>>>>> 483cad4f2b7259b2017a9af0a57d9601ef1fca73:static/src/WebApp-app/my-notes.html
+    });
+
+    
+
+
+
+  </script>
+</dom-module>

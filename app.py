@@ -1,12 +1,14 @@
 # app.py
 
 import os
-from flask import Flask, render_template, request, redirect, url_for, send_from_directory, escape
+from flask import Flask, render_template, request, redirect, url_for, send_from_directory, escape, jsonify
 from extensions import mysql
+from flask_restful import Resource, Api
 import controllers
 
 # Initialize Flask app with the template folder address
 app = Flask(__name__, template_folder='templates')
+api = Api(app)
 
 # Initialize MySQL database connector
 app.config['MYSQL_USER'] = 'root'
@@ -19,9 +21,18 @@ app.secret_key = "<}2[\xb6f\x97\xf1\\%\x15\x99\xfa\x93@\xec\xd0=\x9a\xb5d\xe3\x9
 
 # Register the controllers
 app.register_blueprint(controllers.index)
-#app.register_blueprint(controllers.login) #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
 app.register_blueprint(controllers.signup)
-#app.register_blueprint(controllers.user) #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
+app.register_blueprint(controllers.dashboard)
+app.register_blueprint(controllers.notes)
+app.register_blueprint(controllers.contacts)
+app.register_blueprint(controllers.vitals)
+
+#class HelloWorld(Resource):
+ #   def post(self):
+  #      return jsonify(hello='world')
+
+#api.add_resource(HelloWorld, '/')
+
 
 
 # Listen on external IPs
