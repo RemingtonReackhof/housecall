@@ -18,6 +18,20 @@ def my_route():
 
 	if request.method == 'POST':
 		print 'POSTING'
-		return jsonify(message="Success!") 
+		print request.data
+
+		data = ast.literal_eval(request.data)
+
+		if(data['messageTitle'] == ""):
+			data['messageTitle'] = "no title"
+
+		cur = mysql.connection.cursor()
+		cur.execute("INSERT INTO eecs481.Notes (is_note, is_instruction, is_snapshot, title, time_stamp, content) VALUES (%s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isSnapshot'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent']])
+		mysql.connection.commit()
+
+		cur.execute("SELECT note_id FROM eecs481.Notes WHERE content = %s", [data['messageContent']])
+		recent_note_id = max(cur.fetchall())
+		
+		return jsonify(note_id=recent_note_id) 
 
 	return render_template("index.html", name="notes")

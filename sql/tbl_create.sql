@@ -18,3 +18,5 @@ CREATE TABLE User (
     FOREIGN KEY (hospital_id) REFERENCES Hospital(hospital_id)
     	ON DELETE CASCADE
 );
+
+

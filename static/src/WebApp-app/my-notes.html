@@ -245,35 +245,6 @@
     </div>
 
     <paper-card id = "notesContainer">
-    <!--
-      <paper-card id = "message-1" class = "note">
-        <div class = "timeContainer">
-          <p class = "time"> 1:37 </p>
-        </div>
-        <p class = "content"> Severe swelling on the right side of the chest suggests a pneumotherax caused
-            by blunt impact from the air bag. </p>
-      </paper-card>
-      <paper-card id = "message-2" class = "vitalsSnapshot">
-        <div class = "timeContainer">
-          <p class = "time"> 1:40 </p>
-        </div>
-        <h4 class = vitalsTitle> Vitals Snapshot: </h4>
-        <p class = "content"> BP: 145/90, Temp:  96.9, HR: 110 bpm </p>
-      </paper-card>
-      <paper-card id = "message-3" class = "instruction">
-        <div class = "timeContainer">
-          <p class = "time"> 1:52 </p>
-        </div>
-        <h4 class = "instructionTitle"> Intercostal Insertion </h4>
-        <p class = "content"> 1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine) </p>
-        <p class = "content"> 2.  Place sterile drapes around the area. </p>
-        <p class = "content"> 3.  Apply local anesthetic </p>
-        <p class = "content"> 4.  Insert trocar into the lung using the Seldering Technique (described below) </p>
-        <p class = "content"> 5.  Suture the trocar to the skin to prevent it from falling out. </p>
-        <p class = "content"> 6. Apply dressings to the area </p>
-      </paper-card>
-      -->
-
       
       <notes-list id = "notesList"></notes-list>
     </paper-card>
@@ -310,7 +281,6 @@
     Polymer({
       is: 'my-notes',
       listeners: {
-<<<<<<< HEAD:src/WebApp-app/my-notes.html
       	"sendButton.click": 'sendMessage',
       },
 
@@ -323,14 +293,6 @@
  			document.getElementById("notesList").addMessage("note", textInput, "");
 
 		}
-=======
-        'note-view.onload': 'toggleIt'
-      },
-      attatched: function () {
-        
-      },
-
->>>>>>> 483cad4f2b7259b2017a9af0a57d9601ef1fca73:static/src/WebApp-app/my-notes.html
     });
 
     

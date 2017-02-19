@@ -1,0 +1,104 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="stylesheet" type="text/css" href="../../css/signUp.css">
+<script src="scripts/jquery.min.js"> </script>
+<script src="../../js/signup.js"></script>
+
+<dom-module id="my-signup">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+    <style>
+      :host {
+        display: block;
+
+        padding: 16px;
+      }
+    </style>
+
+  <title>Sign Up</title>
+
+
+<h3 class = "title"></br>AmbulanceStream</h3>
+
+  <p id="content"></p>
+
+  <div class  = "signIn">
+    <form onsubmit="signup_create(); return false;" method="post">
+      </br><div>I Am:</div></br>
+      <button type = "button" id = "emtButton" onclick = "emt();">An EMT</button>          <button type = "button" id = "doctorButton" onclick= "doctor();" >A Doctor</button>
+      <input type="hidden" id="buttonStatus"></input>
+      </br></br><div>My Name Is:</div>
+      </br><input placeholder="title" type="text" name="title" id="signup_title_input" style="height:40px;width:50px;font-size:12pt;text-align:center;">  <input placeholder="first name" type="text" name="firstName" id="signup_firstName_input" style="height:40px;width:200px;font-size:12pt;text-align:center;">  <input placeholder="last name" type="text" name="lastName" id="signup_lastName_input" style="height:40px;width:250px;font-size:12pt;text-align:center;">
+      </br></br><div>My Skype User Name Is:</div>
+      </br><input placeholder="username" type="text" name="skypeUserName" id="signup_skypeUserName_input" style="height:40px;width:250px;font-size:12pt;text-align:center;">
+      </br></br><div>My Email Is:</div>
+      </br><input placeholder="email" type="text" name="email" id="signup_email_input" style="height:40px;width:250px;font-size:12pt;text-align:center;">
+      </br></br><div>My Password Will Be:</div>
+      </br><input placeholder="password" type="password" name="password" id="signup_password_input" style="height:40px;width:250px;font-size:12pt;text-align:center;">
+      </br></br</br></br><div>The Hospital I Work at Is: </div><div id = "hospitalChoice"></div></br> 
+      <div class="dropdown">
+      <button onclick="return hospitalFunction();" class="dropbtn">Hospital List</button>
+        <div id="hospitalDropdown" class="dropdown-content">
+        <input type="text" placeholder="Search.." id="hospitalInput" onkeyup="hospitalfilterFunction()">
+          <div class = "dropChoices">
+          <a onclick = "javascript:hospitalSend(this.id);" id = "1" style = "cursor:pointer">University Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "2" style = "cursor:pointer">C.S. Mott's Children's Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "3" style = "cursor:pointer">Magnetic Resonance Imaging (MRI) at University Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "4" style = "cursor:pointer">Neurology at Mott's Children's Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "5" style = "cursor:pointer">Nephrology Clinic at Mott's Children's Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "6" style = "cursor:pointer">Medical Procedures Unit at University Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "7" style = "cursor:pointer">Med Inn Building</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "8" style = "cursor:pointer">Pulmonary Clinic at Mott's Children's Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "9" style = "cursor:pointer">Neurology Clinic at Taubman Center</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "10" style = "cursor:pointer">Ultrasound at University Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "11" style = "cursor:pointer">Gastroenterology at Mott's Children's Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "12" style = "cursor:pointer">University Hospital Psychiatric Emergency Service</a> <!-- Spelt Wrong -->
+          <a onclick = "javascript:hospitalSend(this.id);" id = "13" style = "cursor:pointer">U of M Hospital</a> <!-- Should be full name for searching? -->
+          <a onclick = "javascript:hospitalSend(this.id);" id = "14" style = "cursor:pointer">Department of Radiation Oncology</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "15" style = "cursor:pointer">Von Voigtlander Women's Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "16" style = "cursor:pointer">Urology Clinic at Taubman Center</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "17" style = "cursor:pointer">Emergency Room at University Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "18" style = "cursor:pointer">Multidisciplinary Developmental Evaluation Clinic (M-DEC)</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "19" style = "cursor:pointer">Department of Pediatrics and Communicable Diseases</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "20" style = "cursor:pointer">Apheresis Procedure Unit at University Hospital</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "21" style = "cursor:pointer">VA Ann Arbor Healthcare System</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "22" style = "cursor:pointer">Henry Ford Health System</a> 
+          <a onclick = "javascript:hospitalSend(this.id);" id = "23" style = "cursor:pointer">St. Joseph Mercy Ann Arbor</a> 
+          <a onclick = "javascript:hospitalSend(this.id);" id = "24" style = "cursor:pointer">Select Specialty Hospital - Ann Arbor</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "25" style = "cursor:pointer">Michigan Heart & Vascular Institute</a>
+          <a onclick = "javascript:hospitalSend(this.id);" id = "26" style = "cursor:pointer">South Main Orthopaedics</a> <!-- Spelt Wrong -->
+          </div>
+        </div>
+      </div>
+      
+      </br></br</br></br><div>My Specialty Is:</div><div id = "specChoice"></div></br> 
+      <div class="dropdown">
+      <button onclick="return specFunction();" class="dropbtn">Specialties</button>
+        <div id="specDropdown" class="dropdown-content">
+        <input type="text" placeholder="Search.." id="specInput" onkeyup="specfilterFunction()">
+          <div class = "dropChoices">
+          <a onclick = "javascript:specSend(this.id);" id = "card" style = "cursor:pointer">Cardiology</a>
+          <a onclick = "javascript:specSend(this.id);" id = "orth" style = "cursor:pointer">Orthopedic Surgery</a>
+          <a onclick = "javascript:specSend(this.id);" id = "gas" style = "cursor:pointer">Gastroenterology</a>
+          <a onclick = "javascript:specSend(this.id);" id = "derm" style = "cursor:pointer">Dermatology</a>
+          <a onclick = "javascript:specSend(this.id);" id = "anes" style = "cursor:pointer">Anesthesiology</a>
+          <a onclick = "javascript:specSend(this.id);" id = "plas" style = "cursor:pointer">Plastic Surgery</a>
+          </div>
+        </div>
+      </div>
+      
+      
+      <p><input type="submit" value="Sign Up" id="login_submit"></p>
+      <p><input type="hidden" value="{{prevURL}}" name="prevURL" id="prevURL"></p>
+    </form>
+  </div>
+
+
+
+  </template>
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+    Polymer({
+      is: 'my-signup'
+    });
+  </script>
+</dom-module>

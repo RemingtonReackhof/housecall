@@ -111,7 +111,19 @@
 
       start_interval: function(){
         this.interval = setInterval(function() {
-          console.log('it\'s been 5 seconds!');
+            $.ajax({
+                url: '/getNote',
+                success: function(e){alert(e);},
+                error: function(e){alert("We didn't do it!")},
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify({'note_id': last_note_id}),
+            });
+
+
+            document.getElementById("notesList").addMessage("note", textInput, "");
+
         }, 5000);
       },
       end_interval: function(){
