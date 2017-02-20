@@ -27,11 +27,11 @@ app.register_blueprint(controllers.notes)
 app.register_blueprint(controllers.contacts)
 app.register_blueprint(controllers.vitals)
 
-#class HelloWorld(Resource):
- #   def post(self):
-  #      return jsonify(hello='world')
+class HelloWorld(Resource):
+    def get(self):
+        return jsonify(hello='world')
 
-#api.add_resource(HelloWorld, '/')
+api.add_resource(HelloWorld, '/getNote')
 
 
 

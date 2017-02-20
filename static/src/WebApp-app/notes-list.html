@@ -62,7 +62,6 @@
         position: relative;
         width: 90%;
       }
-
     </style>
 
     <template is="dom-repeat" items="{{notesList}}">
@@ -109,9 +108,13 @@
   </template>
   <!-- Creates the element's prototype and registers it -->
   <script>
+    var last_note_id = 0;
+
     Polymer({
       is: 'notes-list',
+
       ready: function() {
+        this.last_note_id = 0;
         this.notesList = [
             {
               id: 1, 
@@ -164,6 +167,19 @@
         {
           isNewStanpshot = true;
         }
+
+        $.ajax({
+          url: '/notes',
+          success: function(e){
+            last_note_id = e.note_id[0];
+            console.log(last_note_id);
+          },
+          error: function(){alert("We didn't do it!")},
+          type: 'POST',
+          dataType: 'json',
+          contentType: "application/json",
+          data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString()}),
+        });
 
         var newMessage = {
               id: currId, 
