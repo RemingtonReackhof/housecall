@@ -22,21 +22,21 @@ def my_route():
 		if note_id == '1':
 			print 'note id is 1'
 			cur = mysql.connection.cursor()
-			cur.execute("SELECT note_id,content,time_stamp FROM eecs481.Notes  ORDER BY note_id DESC LIMIT 1;")
+			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_snapshot FROM eecs481.Notes  ORDER BY note_id DESC LIMIT 1;")
 			content = cur.fetchone()
 			print content
 
 		else:
 			print 'note id is greater than 1'
 			cur = mysql.connection.cursor()
-			cur.execute("SELECT note_id,content,time_stamp FROM eecs481.Notes WHERE note_id = '"+note_id+"'")
+			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_snapshot FROM eecs481.Notes WHERE note_id = '"+note_id+"'")
 			content = cur.fetchone()
 			print content
 
 		if content is None:
 			return jsonify(successful=False)
 		else:
-			return jsonify(successful=True, content=content[1], time_stamp=content[2],note_id=content[0])
+			return jsonify(successful=True, content=content[1], time_stamp=content[2],note_id=content[0], is_note=content[3], is_instruction=content[4], is_snapshot=content[5])
 
 
 	if request.method == 'POST':
