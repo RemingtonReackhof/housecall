@@ -112,19 +112,21 @@
       start_interval: function(){
         this.interval = setInterval(function() {
             $.ajax({
-                url: '/getNote',
-                success: function(e){alert(e);},
+                url: '/notes',
+                success: function(e){
+                  if(e.successful){
+                    document.getElementById("notesList").addMessage(true, "note", e.content, '', e.time_stamp);
+                    last_note_id = e.note_id;
+                  }
+                },
                 error: function(e){alert("We didn't do it!")},
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json",
-                data: JSON.stringify({'note_id': last_note_id}),
+                data: {'note_id': last_note_id+1},
             });
 
-
-            document.getElementById("notesList").addMessage("note", textInput, "");
-
-        }, 5000);
+        }, 1000);
       },
       end_interval: function(){
         clearInterval(this.interval);

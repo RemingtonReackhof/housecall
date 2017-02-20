@@ -5,6 +5,7 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from extensions import mysql
 from flask_restful import Resource, Api
 import controllers
+import ast
 
 # Initialize Flask app with the template folder address
 app = Flask(__name__, template_folder='templates')
@@ -26,13 +27,6 @@ app.register_blueprint(controllers.dashboard)
 app.register_blueprint(controllers.notes)
 app.register_blueprint(controllers.contacts)
 app.register_blueprint(controllers.vitals)
-
-class HelloWorld(Resource):
-    def get(self):
-        return jsonify(hello='world')
-
-api.add_resource(HelloWorld, '/getNote')
-
 
 
 # Listen on external IPs

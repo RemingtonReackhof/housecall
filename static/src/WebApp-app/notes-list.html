@@ -146,11 +146,11 @@
         ];
       },
 
-      addMessage: function(messageType, messageContent, messageTitle) {
+      addMessage: function(fromDB, messageType, messageContent, messageTitle, messageTimestamp) {
         var currId = notesList.length + 1;
         var currDate = new Date();
         var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
-+ currDate.getMinutes();
++ (currDate.getMinutes() < 10 ? '0' +currDate.getMinutes()  : currDate.getMinutes());
         var isNewNote = false;
         var isNewInstruction = false;
         var isNewSnapshot = false
@@ -168,20 +168,20 @@
           isNewStanpshot = true;
         }
 
-        $.ajax({
-          url: '/notes',
-          success: function(e){
-            last_note_id = e.note_id[0];
-            console.log(last_note_id);
-          },
-          error: function(){alert("We didn't do it!")},
-          type: 'POST',
-          dataType: 'json',
-          contentType: "application/json",
-          data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString()}),
-        });
-
-        var newMessage = {
+        if(!fromDB){
+          console.log('adding something to DB');
+           $.ajax({
+            url: '/notes',
+            success: function(e){
+              last_note_id = e.note_id[0];
+            },
+            error: function(){alert("We didn't do it!")},
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString()}),
+          });
+          var newMessage = {
               id: currId, 
               isNote: isNewNote, 
               isInstruction: isNewInstruction, 
@@ -189,8 +189,21 @@
               title: messageTitle, 
               timeStamp: currTime, 
               content: messageContent
+          }
+        }
+        else{
+          var newMessage = {
+              id: currId, 
+              isNote: isNewNote, 
+              isInstruction: isNewInstruction, 
+              isSnapshot: isNewSnapshot, 
+              title: messageTitle, 
+              timeStamp: messageTimestamp, 
+              content: messageContent
             }
 
+        }
+        
         this.push('notesList', newMessage);
 
       }
