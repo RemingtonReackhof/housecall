@@ -1,5 +1,13 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+
+<link rel="import" href="../../bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
+<link rel="import" href="../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <dom-module id="notes-list">
   <!-- Defines the element's style and local DOM -->
@@ -7,14 +15,13 @@
     <style>
       :host {
         display: block;
-        padding: 16px;
       }
 
       .note {
         position: relative;
         width: 100%;
         padding-left: 10px;
-        margin-bottom: 1%;
+        margin: 10px;
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -25,7 +32,7 @@
         position: relative;
         width: 100%;
         padding-left: 10px;
-        margin-bottom: 1%;
+        margin-bottom: 10px;
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -41,7 +48,7 @@
         position: relative;
         width: 100%;
         padding-left: 10px;
-        margin-bottom: 1%;
+        margin-bottom: 10px;
         background: #FFB5B5;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -62,9 +69,50 @@
         position: relative;
         width: 90%;
       }
+
+      :host {
+        height: 375px;
+        display: flex;
+        flex-direction: column-reverse;
+      }
+      
+      iron-list {
+       flex: 1 1 auto;
+      }
+
+      #ironList #items.iron-list{
+        padding: 10px;
+        margin: 0;
+        position: absolute;
+        top: 0;
+        will-change: transform;
+      }
+
+
+@media only screen and (-webkit-max-device-pixel-ratio: 1) {
+.iron-list-0 {
+  will-change: transform;
+}
+
+}
+
+.iron-list-0 #items.iron-list {
+  ;
+        position: relative;
+}
+
+.iron-list-0:not([grid]) #items.iron-list  > * {
+  width: 100%;
+}
+
+.iron-list-0 #items.iron-list  > * {
+  box-sizing: border-box;
+        
+}
+
     </style>
 
-    <template is="dom-repeat" items="{{notesList}}">
+    <iron-list id = ironList items="{{notesList}}" --iron-list-items-container = "{margin: 10px;}"">
 
       <template is="dom-if" if="{{item.isNote}}">
 
@@ -103,7 +151,7 @@
 
       </template>
 
-    </template>
+    </iron-list>
 
   </template>
   <!-- Creates the element's prototype and registers it -->
