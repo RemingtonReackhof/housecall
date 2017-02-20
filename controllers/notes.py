@@ -8,13 +8,40 @@ import ast
 
 notes = Blueprint('notes', __name__, template_folder='templates') #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
 
+@notes.route('/notes/<note_id>', methods=['GET'])
+def get_note():
+	print 'in here!'
+	return jsonify(hello='world')
+
+
 
 @notes.route('/notes', methods=['GET', 'POST'])
 def my_route():
 
 	if request.method == 'GET':
 		print 'GETTING'
-		return render_template("index.html", name='notes')
+		content = {}
+		note_id = request.args['note_id']
+
+		if note_id == '1':
+			print 'note id is 1'
+			cur = mysql.connection.cursor()
+			cur.execute("SELECT note_id,content,time_stamp FROM eecs481.Notes  ORDER BY note_id DESC LIMIT 1;")
+			content = cur.fetchone()
+			print content
+
+		else:
+			print 'note id is greater than 1'
+			cur = mysql.connection.cursor()
+			cur.execute("SELECT note_id,content,time_stamp FROM eecs481.Notes WHERE note_id = '"+note_id+"'")
+			content = cur.fetchone()
+			print content
+
+		if content is None:
+			return jsonify(successful=False)
+		else:
+			return jsonify(successful=True, content=content[1], time_stamp=content[2],note_id=content[0])
+
 
 	if request.method == 'POST':
 		print 'POSTING'
