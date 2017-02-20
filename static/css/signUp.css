@@ -19,12 +19,13 @@
 .signIn {
 /* Rectangle 12: */ background: #EB7070; border: 1px solid; border-radius: 8px;
  background: #EB7070;
- height: 1030px;
+ height: 1200px;
  width: 939px;
  margin:auto;
  text-align: center;
  color: white;
  font-size: 30px;
+ margin-bottom: 50px;
 }
 
 input[type=submit] {
@@ -73,18 +74,18 @@ line-height: 18px;
 opacity: 0.78;
 background: #ECE9E9;
 /* Label: */
-font-family: Medium;
+font-family: noir;
 font-size: 20px;
 color: #000000;
 line-height: 19px;
 }
 
-#signup_LastName_input {
+#signup_lastName_input {
 /* Cell: */
 opacity: 0.78;
 background: #ECE9E9;
 /* Label: */
-font-family: Medium;
+font-family: noir;
 font-size: 20px;
 color: #000000;
 line-height: 19px;
@@ -96,7 +97,7 @@ opacity: 0.78;
 background: #ECE9E9;
 /* Label: */
 border: 1px solid #979797;
-font-family: Medium;
+font-family: noir;
 font-size: 20px;
 color: #000000;
 line-height: 19px;
@@ -107,7 +108,7 @@ opacity: 0.78;
 background: #ECE9E9;
 /* Label: */
 border: 1px solid #979797;
-font-family: Medium;
+font-family: noir;
 font-size: 20px;
 color: #000000;
 line-height: 19px;
@@ -119,7 +120,7 @@ opacity: 0.78;
 background: #ECE9E9;
 /* Label: */
 border: 1px solid #979797;
-font-family: Medium;
+font-family: noir;
 font-size: 20px;
 color: #000000;
 line-height: 19px;
@@ -144,8 +145,10 @@ position: relative;
 
 .title {
  color: #5353B5;
- font-size: 72px;
+ font-size: 50px;
  text-align: center;
+ margin-top: 0px;
+ margin-bottom: 0px;
 }
 
 

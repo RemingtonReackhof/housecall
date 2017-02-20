@@ -21,7 +21,7 @@
       <form  method="post" action='/'>
         <br><br><input placeholder="email" type="email" name="email" id="index_email_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required autofocus></br></br>
         <br><input placeholder="password" type="password" name="password" id="index_password_input" style="height:40px;width:300px;font-size:12pt;text-align:center;" required></br></br></br>
-        <p><paper-button id="login_button" style="background-color: white;" value="Login" id="index_submit">
+        <p><paper-button id="login_button" style="background-color: #5353B5;" value="Login" id="index_submit">Login
         </paper-button>
         </p>
         <p><input type="hidden" value="{{prevURL}}" name="prevURL" id="prevURL"></p>
@@ -60,7 +60,9 @@
           }
           
           //send user input via ajax
-          make_ajax_call(data);
+          if(data){
+            make_ajax_call(data);
+          }
           
         },
         
@@ -75,6 +77,9 @@
           var data = '{';
           data = data + '"email": "'+email+'",';
           data = data + '"password" : "'+password+'"}';  //key not being here vs. empty string
+
+          if(email == '' || password == '')
+            return false;
           //login here?
 
           return data;
