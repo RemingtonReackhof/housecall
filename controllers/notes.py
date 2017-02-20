@@ -8,17 +8,13 @@ import ast
 
 notes = Blueprint('notes', __name__, template_folder='templates') #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
 
-@notes.route('/notes/<note_id>', methods=['GET'])
-def get_note():
-	print 'in here!'
-	return jsonify(hello='world')
-
-
-
 @notes.route('/notes', methods=['GET', 'POST'])
 def my_route():
 
 	if request.method == 'GET':
+		if len(request.args) == 0:
+			return render_template("index.html", name="notes")
+
 		print 'GETTING'
 		content = {}
 		note_id = request.args['note_id']
