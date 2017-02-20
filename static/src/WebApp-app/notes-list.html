@@ -18,10 +18,9 @@
       }
 
       .note {
-        position: relative;
         width: 100%;
         padding-left: 10px;
-        margin: 10px;
+        padding-bottom: 10px;
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -74,45 +73,26 @@
         height: 375px;
         display: flex;
         flex-direction: column-reverse;
+        align-items: space-around;
       }
       
       iron-list {
-       flex: 1 1 auto;
+       
       }
 
-      #ironList #items.iron-list{
+      .ironList #items.iron-list{
         padding: 10px;
-        margin: 0;
-        position: absolute;
-        top: 0;
+        margin: 10;
+        position: relative;
+        top: 20;
         will-change: transform;
       }
-
-
-@media only screen and (-webkit-max-device-pixel-ratio: 1) {
-.iron-list-0 {
-  will-change: transform;
-}
-
-}
-
-.iron-list-0 #items.iron-list {
-  ;
-        position: relative;
-}
-
-.iron-list-0:not([grid]) #items.iron-list  > * {
-  width: 100%;
-}
-
-.iron-list-0 #items.iron-list  > * {
-  box-sizing: border-box;
         
 }
 
     </style>
 
-    <iron-list id = ironList items="{{notesList}}" --iron-list-items-container = "{margin: 10px;}"">
+    <iron-list id = ironList class = ironList items="{{notesList}}">
 
       <template is="dom-if" if="{{item.isNote}}">
 
@@ -125,8 +105,7 @@
 
       </template>
 
-
-      <template is="dom-if" if="{{item.isInstruction}}">
+     <template is="dom-if" if="{{item.isInstruction}}">
 
         <paper-card class = "instruction">
           <div class = "timeContainer">
@@ -134,7 +113,7 @@
           </div>
           <h4 class = "instructionTitle"> {{item.title}} </h4>
           <p class = "content"> {{item.content}} </p>
-        </paper-card>
+        </paper-card></br>
         
       </template>
 
@@ -162,31 +141,30 @@
       is: 'notes-list',
 
       ready: function() {
-        this.last_note_id = 0;
         this.notesList = [
             {
               id: 1, 
-              isNote: true, 
-              isInstruction: false, 
-              isSnapshot: false, 
+              isNote: 1, 
+              isInstruction: 0, 
+              isSnapshot: 0, 
               title: "", 
               timeStamp: "1:37", 
               content: "Severe swelling on the right side of the chest suggests a pneumotherax caused by blunt impact from the air bag."
             },
             {
               id: 2, 
-              isNote: false, 
-              isInstruction: false, 
-              isSnapshot: true, 
+              isNote: 0, 
+              isInstruction: 0, 
+              isSnapshot: 1, 
               title: "", 
               timeStamp: "1:40", 
               content: "BP: 145/90, Temp:  96.9, HR: 110 bpm"
             },
             {
               id: 3, 
-              isNote: false, 
-              isInstruction: true, 
-              isSnapshot: false, 
+              isNote: 0, 
+              isInstruction: 1, 
+              isSnapshot: 0, 
               title: "Intercostal Insertion", 
               timeStamp: "1:52", 
               content: "1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine)\n 2.  Place sterile drapes around the area.\n 3.  Apply local anesthetic \n 4.  Insert trocar into the lung using the Seldering Technique (described below)\n 5.  Suture the trocar to the skin to prevent it from falling out. \n 6. Apply dressings to the area"
@@ -254,8 +232,17 @@
         
         this.push('notesList', newMessage);
 
-      }
+        /*if (this.height > 375)*/
+        this.scrollToBottom();
 
-    });
+      },
+
+    scrollToBottom: function() {
+      Polymer.RenderStatus.afterNextRender(this, () => {
+        this.$.ironList.scrollTop = this.$.ironList.scrollHeight;
+      });
+    }
+
+})
   </script>
 </dom-module>

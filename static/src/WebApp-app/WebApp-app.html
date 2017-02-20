@@ -115,7 +115,11 @@
                 url: '/notes',
                 success: function(e){
                   if(e.successful){
-                    document.getElementById("notesList").addMessage(true, "note", e.content, '', e.time_stamp);
+                    var type = "note";
+                    if (e.is_instruction) { type = "instruction";}
+                    else if (e.is_status) { type = "status";}
+
+                    document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
                     last_note_id = e.note_id;
                   }
                 },

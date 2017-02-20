@@ -4,7 +4,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-radio-button/paper-radio-button.html">
-<link rel="import" href="../../bower_components/paper-radio-button/paper-radio-group.html">
+<link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="notes-list.html">
@@ -135,13 +135,14 @@
 
       #messageType {
         float: left;
-        width: 49%;
+        width: 48%;
+        height: 40px;
       }
 
       #noteType {
         float: left;
-        width: 48%;
-        height: 40px;
+        width: 45%;
+        height: 15px;
         background: #FFFFFF;
         border: 1px solid #979797;
         border-radius: 8px;
@@ -153,8 +154,8 @@
 
       #instructionType {
         float: right;
-        width: 48%;
-        height: 40px;
+        width: 45%;
+        height: 15px;
         background: #FFB5B5;
         border: 1px solid #979797;
         border-radius: 8px;
@@ -258,12 +259,10 @@
     	<iron-autogrow-textarea id = "textBox">
 	  	</iron-autogrow-textarea>
       <div id = "textButtons">
-	      <div id = "messageType">
-	        <paper-radio-group selected="noteButton">
-	          <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
-	          <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
-	        </paper-radio-group>
-	      </div>
+        <paper-radio-group id = "messageType" selected="noteButton">
+          <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
+          <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
+        </paper-radio-group>
         <paper-button id = "sendButton" > Send </paper-button>
       </div>
     </div>
@@ -286,17 +285,16 @@
 
       sendMessage: function (){
 
- 		var textInput = document.getElementById("textBox").value;
- 		document.getElementById("textBox").value = null;
+   		var textInput = document.getElementById("textBox").value;
+   		document.getElementById("textBox").value = null;
 
- 		if (textInput != null)
- 			document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
-
+   		if (textInput != null)
+      {
+        console.log("added message");
+        document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
+      }
 		}
-<<<<<<< HEAD
 
-=======
->>>>>>> 9540994588fe309a756d7035f9f495ba456dc960
     });
 
     
