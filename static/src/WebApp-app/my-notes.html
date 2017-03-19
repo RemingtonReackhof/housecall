@@ -285,14 +285,14 @@
 
       sendMessage: function (){
 
-   		var textInput = document.getElementById("textBox").value;
-   		document.getElementById("textBox").value = null;
+   		 var textInput = document.getElementById("textBox").value;
+   		 document.getElementById("textBox").value = null;
 
-   		if (textInput != null)
-      {
-        console.log("added message");
-        document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
-      }
+   		 if (textInput != null)
+        {
+          console.log("added message");
+          document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
+        }
 		}
 
     });

@@ -93,10 +93,13 @@
 
       _routePageChanged: function(page) {
         console.log(page);
-        if(this.page == 'notes' && page != 'notes'){
+        if((this.page == 'notes' && page != 'notes') || (this.page == 'dashboard' && page != 'dashboard')){
           this.end_interval();
         }
-        else if (page == 'notes' && this.page != 'notes') {
+        if (page == 'notes' && this.page != 'notes') {
+          this.start_interval();
+        }
+        else if (page == 'dashboard' && this.page != 'dashboard') {
           this.start_interval();
         }
         this.page = page || 'login';
@@ -110,6 +113,7 @@
       },
 
       start_interval: function(){
+        console.log("starting interval");
         this.interval = setInterval(function() {
             $.ajax({
                 url: '/notes',
@@ -119,6 +123,7 @@
                     if (e.is_instruction) { type = "instruction";}
                     else if (e.is_status) { type = "status";}
 
+                    document.getElementById("my-notesList").addMessage(true, type, e.content, '', e.time_stamp);
                     document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
                     last_note_id = e.note_id;
                   }
@@ -134,6 +139,7 @@
         }, 1000);
       },
       end_interval: function(){
+        console.log("ending interval");
         clearInterval(this.interval);
       },
       _pageChanged: function(page) {
