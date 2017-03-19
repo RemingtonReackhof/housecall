@@ -45,6 +45,9 @@
           <a href="/dashboard" tabindex="-1">
             <paper-button raised class="white" id="home_button">HOME</paper-button>
           </a>
+          <a href="/" tabindex="-1">
+            <paper-button raised class="white" id="logoutButton">LOGOUT</paper-button>
+          </a>
         </paper-toolbar>
       </paper-header-panel>
 
@@ -90,6 +93,13 @@
       observers: [
         '_routePageChanged(routeData.page)',
       ],
+      listeners: {
+        "logoutButton.click": 'logout',
+      },
+
+      logout: function(){
+        alert('logging out');
+      },
 
       _routePageChanged: function(page) {
         console.log(page);
