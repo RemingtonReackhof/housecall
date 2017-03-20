@@ -11,5 +11,18 @@ dashboard = Blueprint('dashboard', __name__, template_folder='templates') #, url
 
 @dashboard.route('/dashboard', methods=['GET'])
 def my_route():
-	print 'GETTING'
+	#print 'GETTING'
+
+	username = request.args.get("username")
+	if username is None:    
+		if "username" not in session:
+			return redirect(url_for("index.index_route"))
+		username = session['username']
+
 	return render_template("index.html", name='dashboard')
+
+# @dashboard.route('/logout', methods=['GET', 'POST'])
+# def my_logout():
+# 	if request.method == 'POST':
+# 		session.clear()
+# 		return redirect(url_for('index.my_route'))

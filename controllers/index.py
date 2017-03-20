@@ -11,12 +11,12 @@ index = Blueprint('index', __name__, template_folder='templates') #, url_prefix=
 
 @index.route('/', methods=['GET'])
 def my_route():
-	print 'GETTING'
+	#print 'GETTING'
 	return render_template("index.html", name='login')
 
 @index.route('/', methods=['POST'])
 def index_route():
-	print "POSTING"
+	#print "POSTING"
 	if "username" in session:
 	 	return redirect(url_for('main.main_route'))    ### Have to change
 
@@ -24,7 +24,7 @@ def index_route():
 
 	if request.method == 'POST':
 		
-		print request.data
+		#print request.data
 		request.form = ast.literal_eval(request.data)
 		emailIn = request.form['email']
 		passIn = request.form['password'] #get input
@@ -40,15 +40,15 @@ def index_route():
 		#print email
 		if len(email) == 0:
 			print "wrong email"
-			flash("Incorrect email", "error_email")
+			#flash("Incorrect email", "error_email")
 			return redirect(url_for('index.index_route'))
 
 		#Salt and hash check
 		algorithm = 'sha512'
 
 		user_pass = email[0][5] #usernames password info
-		print email[0]
-		print "USER_PASS", user_pass
+		#print email[0]
+		#print "USER_PASS", user_pass
 
 		user_pass = user_pass.split('$')
 
@@ -56,12 +56,12 @@ def index_route():
 		m.update(user_pass[1] + passIn)
 		# m.update(user_pass[0] + passIn)
 		password_hash = m.hexdigest()
-		print "PASSWORD_HASH", password_hash
-		print "USER_PASS[2]", user_pass[2]
+		#print "PASSWORD_HASH", password_hash
+		#print "USER_PASS[2]", user_pass[2]
 
 		#Check if passed in password matches actual password
 		if password_hash != user_pass[2]:
-			flash("Incorrect username/password combination", "error_combo")
+			#flash("Incorrect username/password combination", "error_combo")
 			return redirect(url_for('index.index_route'))
 
 		#if passIn != user_pass[0]:
@@ -82,8 +82,9 @@ def index_route():
 		session['specialty'] = email[0][6]
 		session['hospital_id'] = email[0][7]
 		session['dr_or_emt'] = email[0][8]
+		print session
 
-		print prevURL
+		#print prevURL
 		#if prevURL != None:
 		#	return redirect(prevURL)
 		#return redirect(url_for('main.main_route'))
