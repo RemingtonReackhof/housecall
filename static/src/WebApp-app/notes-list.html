@@ -20,7 +20,7 @@
       .note {
         width: 100%;
         padding-left: 10px;
-        padding-bottom: 10px;
+        margin-bottom: 10px;
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -206,6 +206,71 @@
             dataType: 'json',
             contentType: "application/json",
             data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString()}),
+          });
+          var newMessage = {
+              id: currId, 
+              isNote: isNewNote, 
+              isInstruction: isNewInstruction, 
+              isSnapshot: isNewSnapshot, 
+              title: messageTitle, 
+              timeStamp: currTime, 
+              content: messageContent
+          }
+        }
+        else{
+          var newMessage = {
+              id: currId, 
+              isNote: isNewNote, 
+              isInstruction: isNewInstruction, 
+              isSnapshot: isNewSnapshot, 
+              title: messageTitle, 
+              timeStamp: messageTimestamp, 
+              content: messageContent
+            }
+
+        }
+        
+        this.push('notesList', newMessage);
+
+        /*if (this.height > 375)*/
+        this.scrollToBottom();
+
+      },
+
+      addImage: function(fromDB, messageType, messageContent, messageTimestamp) {
+        var currId = notesList.length + 1;
+        var currDate = new Date();
+        var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
++ (currDate.getMinutes() < 10 ? '0' +currDate.getMinutes()  : currDate.getMinutes());
+        var isNewNote = false;
+        var isNewInstruction = false;
+        var isNewImage = false
+
+        if (messageType == "note")
+        {
+          isNewNote = true;
+        }
+        else if (messageType == "instruction")
+        {
+          isNewInstruction = true;
+        }
+        else
+        {
+          isNewImage = true;
+        }
+
+        if(!fromDB){
+          console.log('adding something to DB');
+           $.ajax({
+            url: '/notes',
+            success: function(e){
+              last_note_id = e.note_id[0];
+            },
+            error: function(){alert("We didn't do it!")},
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isImage.toString()}),
           });
           var newMessage = {
               id: currId, 

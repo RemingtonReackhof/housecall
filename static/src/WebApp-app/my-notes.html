@@ -7,6 +7,9 @@
 <link rel="import" href="../../bower_components/paper-radio-group/paper-radio-group.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
+<link rel="import" href="../../bower_components/vaadin-upload/vaadin-upload.html">
+
+
 <link rel="import" href="notes-list.html">
 
 <dom-module id="my-notes">
@@ -19,34 +22,10 @@
         padding: 16px;
       }
 
-      #infoContainer {
+      #header {
         position: relative;
-        width: 95%;
-        height: 40px;
+        font-family: .SFNSText-Bold;
         left: 2.5%;
-        padding-bottom: 20px;
-      }
-
-      #patientInfoDiv {
-        /* Rectangle 2: */
-        float: left;
-        background: #FFFFFF;
-        border: 2px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-        width: 49%;
-        height: 40px;
-      }
-
-      #vitalsInfoDiv {
-        /* Rectangle 2: */
-        float: right;
-        background: #FFFFFF;
-        border: 2px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-        width: 49%;
-        height: 40px;
       }
 
       .buttonTitle {
@@ -81,33 +60,26 @@
         padding-top: 20px;
       }
 
-      #vitalsSnapshotButton {
-        /* Rectangle 2: */
-        float: left;
+      vaadin-upload.thick-border {
+        --primary-color: #0266C8;
+        --dark-primary-color: #063;
+        --light-primary-color: #6c9;
+        --error-color: darkred;
+
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        width: 95%;
         border-radius: 8px;
-        width: 48%;
-        height: 40px;
         font-family: .SFNSText-Bold;
-        font-size: 20px;
-        letter-spacing: 0;
+        left: 1%;
+        margin-left: 1%
+        margin-right: 1%;
+        margin-bottom: 1%;
       }
 
-      #attachPhotoButton {
-        /* Rectangle 2: */
-        float: right;
-        background: #FFFFFF;
-        border: 2px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-        width: 48%;
-        height: 40px;
-        font-family: .SFNSText-Bold;
-        font-size: 20px;
-        letter-spacing: 0;
-      }
+      vaadin-upload.thick-border[dragover] {
+        border-color: #396;
+     }
 
       #createMessageContainer {
         position: relative;
@@ -236,28 +208,17 @@
 
     </style>
 
-    <div id = "infoContainer">
-      <div id = "patientInfoDiv">
-        <h3 class = "buttonTitle">Patient Information</h3>
-      </div>
-      <div id = "vitalsInfoDiv">
-        <h3 class = "buttonTitle">Vitals Information</h3>
-      </div>
-    </div>
+    <h1 id = "header"> Notepad </h1>
 
     <paper-card id = "notesContainer">
       
       <notes-list id = "notesList"></notes-list>
     </paper-card>
 
-    <div id = "buttonsContainer">
-      <paper-button id = "vitalsSnapshotButton"> Vitals Snapshot </paper-button>
-      <paper-button id = "attachPhotoButton"> Attach Image </paper-button>
-    </div>
-
     <div id = "createMessageContainer">
     	<iron-autogrow-textarea id = "textBox">
 	  	</iron-autogrow-textarea>
+      <vaadin-upload class="thick-border" max-files="1"></vaadin-upload>
       <div id = "textButtons">
         <paper-radio-group id = "messageType" selected="noteButton">
           <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
@@ -294,6 +255,26 @@
           document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
         }
 		}
+
+    });
+
+    Polymer({
+      is: 'my-notes',
+      listeners: {
+        "attachPhotoButton.click": 'importPhoto',
+      },
+
+      importPhoto: function (){
+
+       var textInput = document.getElementById("textBox").value;
+       document.getElementById("textBox").value = null;
+
+       if (textInput != null)
+        {
+          console.log("added message");
+          document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
+        }
+    }
 
     });
 
