@@ -45,6 +45,9 @@
           <a href="/dashboard" tabindex="-1">
             <paper-button raised class="white" id="home_button">HOME</paper-button>
           </a>
+          <a href="/" tabindex="-1">
+            <paper-button raised class="white" id="logoutButton">LOGOUT</paper-button>
+          </a>
         </paper-toolbar>
       </paper-header-panel>
 
@@ -90,17 +93,27 @@
       observers: [
         '_routePageChanged(routeData.page)',
       ],
+      listeners: {
+        "logoutButton.click": 'logout',
+      },
+
+      logout: function(){
+        alert('logging out');
+      },
 
       _routePageChanged: function(page) {
         console.log(page);
-        if(this.page == 'notes' && page != 'notes'){
+        if((this.page == 'notes' && page != 'notes') || (this.page == 'dashboard' && page != 'dashboard')){
           this.end_interval();
         }
-        else if (page == 'notes' && this.page != 'notes') {
+        if (page == 'notes' && this.page != 'notes') {
+          this.start_interval();
+        }
+        else if (page == 'dashboard' && this.page != 'dashboard') {
           this.start_interval();
         }
         this.page = page || 'login';
-        if(this.page == 'login' || this.page == 'dashboard' || this.page == 'signup'){
+        if(this.page == 'login' || this.page == 'dashboard' || this.page == 'signup'|| this.page == 'static'){
           $('#home_button').hide();
         }
         else{
@@ -110,23 +123,33 @@
       },
 
       start_interval: function(){
+        console.log("starting interval");
         this.interval = setInterval(function() {
             $.ajax({
-                url: '/getNote',
-                success: function(e){alert(e);},
+                url: '/notes',
+                success: function(e){
+                  if(e.successful){
+                    var type = "note";
+                    if (e.is_instruction) { type = "instruction";}
+                    else if (e.is_status) { type = "status";}
+
+                    document.getElementById("my-notesList").addMessage(true, type, e.content, '', e.time_stamp);
+                    document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
+                    last_note_id = e.note_id;
+                  }
+                },
                 error: function(e){alert("We didn't do it!")},
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json",
-                data: JSON.stringify({'note_id': last_note_id}),
+                data: {'note_id': last_note_id+1},
             });
 
 
-            document.getElementById("notesList").addMessage("note", textInput, "");
-
-        }, 5000);
+        }, 1000);
       },
       end_interval: function(){
+        console.log("ending interval");
         clearInterval(this.interval);
       },
       _pageChanged: function(page) {

@@ -1,6 +1,5 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="stylesheet" type="text/css" href="../../css/signUp.css">
-<script src="scripts/jquery.min.js"> </script>
 <script src="../../js/signup.js"></script>
 
 <dom-module id="my-signup">
@@ -17,7 +16,7 @@
   <title>Sign Up</title>
 
 
-<h3 class = "title"></br>AmbulanceStream</h3>
+<h5 class = "title"></br>Sign Up</h5>
 
   <p id="content"></p>
 
@@ -27,7 +26,9 @@
       <button type = "button" id = "emtButton" onclick = "emt();">An EMT</button>          <button type = "button" id = "doctorButton" onclick= "doctor();" >A Doctor</button>
       <input type="hidden" id="buttonStatus"></input>
       </br></br><div>My Name Is:</div>
-      </br><input placeholder="title" type="text" name="title" id="signup_title_input" style="height:40px;width:50px;font-size:12pt;text-align:center;">  <input placeholder="first name" type="text" name="firstName" id="signup_firstName_input" style="height:40px;width:200px;font-size:12pt;text-align:center;">  <input placeholder="last name" type="text" name="lastName" id="signup_lastName_input" style="height:40px;width:250px;font-size:12pt;text-align:center;">
+      </br><input placeholder="title" type="text" name="title" id="signup_title_input" style="height:40px;width:50px;font-size:12pt;text-align:center;font-family: noir;">  
+      <input placeholder="first name" type="text" name="firstName" id="signup_firstName_input" style="height:40px;width:200px;font-size:12pt;text-align:center;">  
+      <input placeholder="last name" type="text" name="lastName" id="signup_lastName_input" style="height:40px;width:250px;font-size:12pt;text-align:center;">
       </br></br><div>My Skype User Name Is:</div>
       </br><input placeholder="username" type="text" name="skypeUserName" id="signup_skypeUserName_input" style="height:40px;width:250px;font-size:12pt;text-align:center;">
       </br></br><div>My Email Is:</div>
@@ -87,7 +88,7 @@
       </div>
       
       
-      <p><input type="submit" value="Sign Up" id="login_submit"></p>
+      <p><input type="submit" value="Sign Up" id="login_submit" style="font-family: noir;"></p>
       <p><input type="hidden" value="{{prevURL}}" name="prevURL" id="prevURL"></p>
     </form>
   </div>

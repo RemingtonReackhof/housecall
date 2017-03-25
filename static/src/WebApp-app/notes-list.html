@@ -1,5 +1,13 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+
+<link rel="import" href="../../bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
+<link rel="import" href="../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
+
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
 
 <dom-module id="notes-list">
   <!-- Defines the element's style and local DOM -->
@@ -7,14 +15,12 @@
     <style>
       :host {
         display: block;
-        padding: 16px;
       }
 
       .note {
-        position: relative;
         width: 100%;
         padding-left: 10px;
-        margin-bottom: 1%;
+        padding-bottom: 10px;
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -25,7 +31,7 @@
         position: relative;
         width: 100%;
         padding-left: 10px;
-        margin-bottom: 1%;
+        margin-bottom: 10px;
         background: #FFFFFF;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -41,7 +47,7 @@
         position: relative;
         width: 100%;
         padding-left: 10px;
-        margin-bottom: 1%;
+        margin-bottom: 10px;
         background: #FFB5B5;
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -62,9 +68,31 @@
         position: relative;
         width: 90%;
       }
+
+      :host {
+        height: 375px;
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: space-around;
+      }
+      
+      iron-list {
+       
+      }
+
+      .ironList #items.iron-list{
+        padding: 10px;
+        margin: 10;
+        position: relative;
+        top: 20;
+        will-change: transform;
+      }
+        
+}
+
     </style>
 
-    <template is="dom-repeat" items="{{notesList}}">
+    <iron-list id = ironList class = ironList items="{{notesList}}">
 
       <template is="dom-if" if="{{item.isNote}}">
 
@@ -77,8 +105,7 @@
 
       </template>
 
-
-      <template is="dom-if" if="{{item.isInstruction}}">
+     <template is="dom-if" if="{{item.isInstruction}}">
 
         <paper-card class = "instruction">
           <div class = "timeContainer">
@@ -86,7 +113,7 @@
           </div>
           <h4 class = "instructionTitle"> {{item.title}} </h4>
           <p class = "content"> {{item.content}} </p>
-        </paper-card>
+        </paper-card></br>
         
       </template>
 
@@ -103,7 +130,7 @@
 
       </template>
 
-    </template>
+    </iron-list>
 
   </template>
   <!-- Creates the element's prototype and registers it -->
@@ -114,31 +141,30 @@
       is: 'notes-list',
 
       ready: function() {
-        this.last_note_id = 0;
         this.notesList = [
             {
               id: 1, 
-              isNote: true, 
-              isInstruction: false, 
-              isSnapshot: false, 
+              isNote: 1, 
+              isInstruction: 0, 
+              isSnapshot: 0, 
               title: "", 
               timeStamp: "1:37", 
               content: "Severe swelling on the right side of the chest suggests a pneumotherax caused by blunt impact from the air bag."
             },
             {
               id: 2, 
-              isNote: false, 
-              isInstruction: false, 
-              isSnapshot: true, 
+              isNote: 0, 
+              isInstruction: 0, 
+              isSnapshot: 1, 
               title: "", 
               timeStamp: "1:40", 
               content: "BP: 145/90, Temp:  96.9, HR: 110 bpm"
             },
             {
               id: 3, 
-              isNote: false, 
-              isInstruction: true, 
-              isSnapshot: false, 
+              isNote: 0, 
+              isInstruction: 1, 
+              isSnapshot: 0, 
               title: "Intercostal Insertion", 
               timeStamp: "1:52", 
               content: "1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine)\n 2.  Place sterile drapes around the area.\n 3.  Apply local anesthetic \n 4.  Insert trocar into the lung using the Seldering Technique (described below)\n 5.  Suture the trocar to the skin to prevent it from falling out. \n 6. Apply dressings to the area"
@@ -146,11 +172,11 @@
         ];
       },
 
-      addMessage: function(messageType, messageContent, messageTitle) {
+      addMessage: function(fromDB, messageType, messageContent, messageTitle, messageTimestamp) {
         var currId = notesList.length + 1;
         var currDate = new Date();
         var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
-+ currDate.getMinutes();
++ (currDate.getMinutes() < 10 ? '0' +currDate.getMinutes()  : currDate.getMinutes());
         var isNewNote = false;
         var isNewInstruction = false;
         var isNewSnapshot = false
@@ -168,20 +194,20 @@
           isNewStanpshot = true;
         }
 
-        $.ajax({
-          url: '/notes',
-          success: function(e){
-            last_note_id = e.note_id[0];
-            console.log(last_note_id);
-          },
-          error: function(){alert("We didn't do it!")},
-          type: 'POST',
-          dataType: 'json',
-          contentType: "application/json",
-          data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString()}),
-        });
-
-        var newMessage = {
+        if(!fromDB){
+          console.log('adding something to DB');
+           $.ajax({
+            url: '/notes',
+            success: function(e){
+              last_note_id = e.note_id[0];
+            },
+            error: function(){alert("We didn't do it!")},
+            type: 'POST',
+            dataType: 'json',
+            contentType: "application/json",
+            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString()}),
+          });
+          var newMessage = {
               id: currId, 
               isNote: isNewNote, 
               isInstruction: isNewInstruction, 
@@ -189,12 +215,34 @@
               title: messageTitle, 
               timeStamp: currTime, 
               content: messageContent
+          }
+        }
+        else{
+          var newMessage = {
+              id: currId, 
+              isNote: isNewNote, 
+              isInstruction: isNewInstruction, 
+              isSnapshot: isNewSnapshot, 
+              title: messageTitle, 
+              timeStamp: messageTimestamp, 
+              content: messageContent
             }
 
+        }
+        
         this.push('notesList', newMessage);
 
-      }
+        /*if (this.height > 375)*/
+        this.scrollToBottom();
 
-    });
+      },
+
+    scrollToBottom: function() {
+      Polymer.RenderStatus.afterNextRender(this, () => {
+        this.$.ironList.scrollTop = this.$.ironList.scrollHeight;
+      });
+    }
+
+})
   </script>
 </dom-module>

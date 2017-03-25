@@ -17,10 +17,10 @@ def signup_route():
 		return redirect(url_for('main.main_route'))
 
 	prevURL = request.referrer
-	print "at signup route"
+	#print "at signup route"
 	if request.method == 'POST':
 
-		print "post"
+		#print "post"
 		try:
 			#emailIn = request.form['email']
 			emailIn = request.json.get('email')
@@ -41,8 +41,8 @@ def signup_route():
 			doctorIn = False
 		else:
 			doctorIn = True
-		print "after!!"
-		print "SHIT", emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn, hospitalIn, specialtyIn, doctorIn
+		#print "after!!"
+		#print "hello", emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn, hospitalIn, specialtyIn, doctorIn
 
 
 		# emailIn = "email@umich.edu"
@@ -57,7 +57,7 @@ def signup_route():
 		#print emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn
 
 		# Get Hospital Id
-		print hospitalIn
+		#print hospitalIn
 		cur = mysql.connection.cursor()
 		cur.execute("SELECT hospital_id FROM eecs481.Hospital WHERE name = %s", [hospitalIn])
 		hospitalIdIn = cur.fetchone()
@@ -78,7 +78,7 @@ def signup_route():
 		password_hash = m.hexdigest()
 
 		password = "$".join([algorithm,salt,password_hash])
-		print hospitalIdIn
+		#print hospitalIdIn
 		#Insert user into table
 
 		cur = mysql.connection.cursor()
@@ -89,7 +89,7 @@ def signup_route():
 		#prevURL = request.form.get("prevURL") #redirect address
 		#return redirect(redirect_url())
 		#return render_template("index.html")
-		print "finshing"
+		#print "finshing"
 
 		return jsonify(message="Success!") 
 

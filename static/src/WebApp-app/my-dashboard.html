@@ -1,8 +1,9 @@
-<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="notes-list.html">
 
 <dom-module id="my-dashboard">
   <!-- Defines the element's style and local DOM -->
@@ -17,18 +18,23 @@
           @apply(--layout-horizontal);
           @apply(--layout-wrap);
           flex: 0 0 auto; 
-          width: 1000px;
-          height: 600px;
+          width: 90%;
+          height: 80%;
           display:-webkit-box;
           -webkit-box-pack:center;
           -webkit-box-align:center;
           margin-top: 10px;
-          margin-left: 125px;
+          margin-left: 50px;
           margin-right: 50px;
         }
         #pages > paper-card {
           box-sizing: border-box;
-          max-width: 500px;
+          max-width: 70%;
+          margin: 4px;
+          flex: 0 0 auto;
+        }
+        #notes > paper-card {
+          box-sizing: border-box;
           margin: 4px;
           flex: 0 0 auto;
         }
@@ -46,8 +52,11 @@
     <div id="pages">
       <a href="/notes" tabindex="-1">
         <paper-card id="notes" name="notes" heading="Notes" style="height:600px;width:500px;">
-          <div id="notes" class="card-content">Click here to visit the notes page. You can view and create notes here.</div>
+          <div id="notes" class="card-content">
+            <notes-list id = "my-notesList"></notes-list>
+          </div>
           <div id="notes" class="card-actions">
+           Click here to view notes details.
           </div>
         </paper-card>
       </a>

@@ -11,5 +11,13 @@ vitals = Blueprint('vitals', __name__, template_folder='templates') #, url_prefi
 
 @vitals.route('/vitals', methods=['GET'])
 def my_route():
-	print 'GETTING'
+	#print 'GETTING'
+
+	# if not logged in
+	username = request.args.get("username")
+	if username is None: 
+		if "username" not in session:
+			return redirect(url_for("index.index_route"))
+		username = session['username']
+
 	return render_template("index.html", name='vitals')
