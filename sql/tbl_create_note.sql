@@ -1,4 +1,4 @@
-CREATE TABLE Notes (
+CREATE TABLE eecs481.Notes (
     note_id INT AUTO_INCREMENT,
     is_note BOOLEAN,
     is_instruction BOOLEAN,
