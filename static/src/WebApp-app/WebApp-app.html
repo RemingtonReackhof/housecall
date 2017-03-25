@@ -103,13 +103,10 @@
 
       _routePageChanged: function(page) {
         console.log(page);
-        if((this.page == 'notes' && page != 'notes') || (this.page == 'dashboard' && page != 'dashboard')){
+        if((this.page == 'notes' || this.page == 'dashboard') && (page != 'notes' || page != 'dashboard')){
           this.end_interval();
         }
-        if (page == 'notes' && this.page != 'notes') {
-          this.start_interval();
-        }
-        else if (page == 'dashboard' && this.page != 'dashboard') {
+        if ((page == 'notes' || page == 'dashboard') && (this.page != 'notes' || this.page != 'dashboard')) {
           this.start_interval();
         }
         this.page = page || 'login';
@@ -133,7 +130,7 @@
                     if (e.is_instruction) { type = "instruction";}
                     else if (e.is_status) { type = "status";}
 
-                    document.getElementById("my-notesList").addMessage(true, type, e.content, '', e.time_stamp);
+                    //document.getElementById("my-notesList").addMessage(true, type, e.content, '', e.time_stamp);
                     document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
                     last_note_id = e.note_id;
                   }
@@ -142,7 +139,7 @@
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json",
-                data: {'note_id': last_note_id+1},
+                data: {'note_id': last_note_id+1, 'username':'emt@emt.com'},
             });
 
 

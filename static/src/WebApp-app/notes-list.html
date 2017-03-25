@@ -173,7 +173,8 @@
       },
 
       addMessage: function(fromDB, messageType, messageContent, messageTitle, messageTimestamp) {
-        var currId = notesList.length + 1;
+        console.log(this.notesList.length);
+        var currId = this.notesList.length + 1;
         var currDate = new Date();
         var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
 + (currDate.getMinutes() < 10 ? '0' +currDate.getMinutes()  : currDate.getMinutes());
@@ -205,32 +206,22 @@
             type: 'POST',
             dataType: 'json',
             contentType: "application/json",
-            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString()}),
+            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString(), 'username': 'emt@emt.com'}),
           });
-          var newMessage = {
-              id: currId, 
-              isNote: isNewNote, 
-              isInstruction: isNewInstruction, 
-              isSnapshot: isNewSnapshot, 
-              title: messageTitle, 
-              timeStamp: currTime, 
-              content: messageContent
-          }
-        }
-        else{
-          var newMessage = {
-              id: currId, 
-              isNote: isNewNote, 
-              isInstruction: isNewInstruction, 
-              isSnapshot: isNewSnapshot, 
-              title: messageTitle, 
-              timeStamp: messageTimestamp, 
-              content: messageContent
-            }
 
+        }
+        var newMessage = {
+          id: currId, 
+          isNote: isNewNote, 
+          isInstruction: isNewInstruction, 
+          isSnapshot: isNewSnapshot, 
+          title: messageTitle, 
+          timeStamp: currTime, 
+          content: messageContent
         }
         
         this.push('notesList', newMessage);
+        document.getElementById("my-notesList").push('notesList', newMessage);
 
         /*if (this.height > 375)*/
         this.scrollToBottom();

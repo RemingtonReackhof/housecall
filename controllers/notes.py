@@ -12,11 +12,12 @@ notes = Blueprint('notes', __name__, template_folder='templates') #, url_prefix=
 def my_route():
 
 	# if not logged in
-	username = request.args.get("username")
-	if username is None: 
-		if "username" not in session:
-			return redirect(url_for("index.index_route"))
-		username = session['username']
+	#username = request.args.get("username")
+	#if username is None: 
+	#	if "username" not in session:
+	#		return redirect(url_for("index.index_route"))
+	#	username = session['username']
+
 
 
 	if request.method == 'GET':
@@ -42,6 +43,7 @@ def my_route():
 			print content
 
 		if content is None:
+			print "Failing here!"
 			return jsonify(successful=False)
 		else:
 			return jsonify(successful=True, content=content[1], time_stamp=content[2],note_id=content[0], is_note=content[3], is_instruction=content[4], is_snapshot=content[5])
