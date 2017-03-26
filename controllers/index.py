@@ -35,7 +35,7 @@ def index_route():
 
 		#Check if username exists
 		cur = mysql.connection.cursor()
-		cur.execute("SELECT * FROM eecs481.User WHERE email = '"+emailIn+"'")
+		cur.execute("SELECT * FROM User WHERE email = '"+emailIn+"'")
 		email = cur.fetchall()
 		#print email
 		if len(email) == 0:
@@ -88,5 +88,7 @@ def index_route():
 		#if prevURL != None:
 		#	return redirect(prevURL)
 		#return redirect(url_for('main.main_route'))
+
 	return jsonify(message="Success!", user_type=session['dr_or_emt'], username=session['email']) 
+
 	#return render_template("index.html", prevURL=prevURL)

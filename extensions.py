@@ -1,4 +1,4 @@
-from flask.ext.mysqldb import MySQL
+from flask_mysqldb import *
 
 # Create MySQL object. We create it here to avoid
 # circular dependencies that would occur if we created in
