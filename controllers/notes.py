@@ -11,12 +11,12 @@ notes = Blueprint('notes', __name__, template_folder='templates') #, url_prefix=
 @notes.route('/notes', methods=['GET', 'POST'])
 def my_route():
 
-	# if not logged in
-	username = request.args.get("username")
-	if username is None: 
-		if "username" not in session:
-			return redirect(url_for("index.index_route"))
-		username = session['username']
+# 	# if not logged in
+# 	username = request.args.get("username")
+# 	if username is None: 
+# 		if "username" not in session:
+# 			return redirect(url_for("index.index_route"))
+# 		username = session['username']
 
 
 	if request.method == 'GET':
