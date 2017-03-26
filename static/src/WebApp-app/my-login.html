@@ -3,6 +3,10 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../css/index.css">></link>
+
+<script type="text/javascript"> 
+  var user;
+</script>
 <script type="text/javascript" src="user_data.js"></script>
 
 
@@ -104,8 +108,15 @@
             //url: url,       // SHOULD BE window.location !!
             url: '/',
             success:  function(data){
-              user_data.user_type = data.user_type;
-              user_data.username = data.username;
+              console.log(user);
+              user.type = data.user_type;
+              user.username = data.username;
+              if(user.type == 'emt'){
+                $('#createMessageContainer').hide();
+              }
+              else{
+                $('#createMessageContainer').show();
+              }
               document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
             },//window.location. assign??
             error: function(xhr, status, error){

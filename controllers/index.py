@@ -84,11 +84,15 @@ def index_route():
 		session['dr_or_emt'] = email[0][8]
 		print session
 
+		usertype = 'emt'
+		if session['dr_or_emt']:
+			usertype = 'dr'
+
 		#print prevURL
 		#if prevURL != None:
 		#	return redirect(prevURL)
 		#return redirect(url_for('main.main_route'))
 
-	return jsonify(message="Success!", user_type=session['dr_or_emt'], username=session['email']) 
+	return jsonify(message="Success!", user_type=usertype, username=session['email']) 
 
 	#return render_template("index.html", prevURL=prevURL)
