@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../css/index.css">></link>
+<script type="text/javascript" src="user_data.js"></script>
 
 
 <dom-module id="my-login">
@@ -103,6 +104,8 @@
             //url: url,       // SHOULD BE window.location !!
             url: 'http://localhost:3000/',
             success:  function(data){
+              user_data.user_type = data.user_type;
+              user_data.username = data.username;
               document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
             },//window.location. assign??
             error: function(xhr, status, error){
