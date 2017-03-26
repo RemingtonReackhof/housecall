@@ -59,7 +59,7 @@ def signup_route():
 		# Get Hospital Id
 		#print hospitalIn
 		cur = mysql.connection.cursor()
-		cur.execute("SELECT hospital_id FROM eecs481.Hospital WHERE name = %s", [hospitalIn])
+		cur.execute("SELECT hospital_id FROM Hospital WHERE name = %s", [hospitalIn])
 		hospitalIdIn = cur.fetchone()
 
 
@@ -82,7 +82,7 @@ def signup_route():
 		#Insert user into table
 
 		cur = mysql.connection.cursor()
-		cur.execute("INSERT INTO eecs481.User (email, skype_username, firstname, lastname, password, specialty, hospital_id, Doctor) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", [emailIn, skypeUsernameIn, firstnameIn, lastnameIn, password, specialtyIn, hospitalIdIn, doctorIn])
+		cur.execute("INSERT INTO User (email, skype_username, firstname, lastname, password, specialty, hospital_id, Doctor) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", [emailIn, skypeUsernameIn, firstnameIn, lastnameIn, password, specialtyIn, hospitalIdIn, doctorIn])
 		mysql.connection.commit()
 
 		#Redirect to /login to try new credentials!
