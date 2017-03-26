@@ -57,7 +57,7 @@ def my_route():
 			data['messageTitle'] = "no title"
 
 		cur = mysql.connection.cursor()
-		cur.execute("INSERT INTO eecs481.Notes (is_note, is_instruction, is_snapshot, title, time_stamp, content) VALUES (%s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isSnapshot'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent']])
+		cur.execute("INSERT INTO Notes (is_note, is_instruction, is_snapshot, title, time_stamp, content) VALUES (%s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isSnapshot'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent']])
 		mysql.connection.commit()
 
 		cur.execute("SELECT note_id FROM Notes WHERE content = %s", [data['messageContent']])
