@@ -8,6 +8,8 @@
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../../bower_components/vaadin-upload/vaadin-upload.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+
 
 
 <link rel="import" href="notes-list.html">
@@ -58,6 +60,7 @@
         height: 40px;
         left: 2.5%;
         padding-top: 20px;
+        padding-bottom:20px;
       }
 
       vaadin-upload.thick-border {
@@ -101,20 +104,20 @@
 
       #textButtons {
         position: relative;
-        margin: 10px;
-        height: 40px;
+        margin: 1%;
+        height: 50px;
+        width: 98%;
       }
 
       #messageType {
-        float: left;
-        width: 48%;
-        height: 40px;
+        width: 49%;
+        height: 50px;
+        margin-right: 1%;
       }
 
       #noteType {
-        float: left;
-        width: 45%;
-        height: 15px;
+        width: 49%;
+        margin-right: 2%;
         background: #FFFFFF;
         border: 1px solid #979797;
         border-radius: 8px;
@@ -125,9 +128,7 @@
       }
 
       #instructionType {
-        float: right;
-        width: 45%;
-        height: 15px;
+        width: 49%;
         background: #FFB5B5;
         border: 1px solid #979797;
         border-radius: 8px;
@@ -139,9 +140,8 @@
       }
 
       #sendButton {
-        float: right;
-        width: 48%;
-        height: 40px;
+        width: 49%;
+        height: 50px;
         background: #9BD977;
         border: 1px solid #979797;
         border-radius: 8px;
@@ -149,12 +149,12 @@
         font-size: 20px;
         color: #FFFFFF;
         letter-spacing: 0;
+        text-align: center;
       }
 
       #skypeButton {
-        float: left;
-        width: 48%;
-        height: 40px;
+        width: 98%;
+        height: 50px;
         background: #1EB0ED;
         border: 1px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
@@ -164,12 +164,13 @@
         font-size: 20px;
         color: #FFFFFF;
         letter-spacing: 0;
+        text-align: center;
       }
 
       #filterButton {
-        float: right;
-        width: 49%;
-        height: 40px;
+        width: 98%;
+        height: 50px;
+        right: 0px;
         /* Rectangle 2: */
         background: #8FD567;
         border: 1px solid #9B9B9B;
@@ -180,14 +181,15 @@
         font-size: 20px;
         color: #FFFFFF;
         letter-spacing: 0;
+        text-align: center;
       }
 
       #endCall {
         position: relative;
         width: 95%;
-        height: 40px;
+        height: 50px;
         left: 2.5%;
-        margin-top: 20px;
+        margin-top: 10px;
         /* Rectangle 2: */
         background: #FF4545;
         border: 1px solid #9B9B9B;
@@ -206,6 +208,8 @@
         bottom: 30px
       }
 
+      <style is="custom-style" include="iron-flex"></style>
+
     </style>
 
     <h1 id = "header"> Notepad </h1>
@@ -219,18 +223,18 @@
     	<iron-autogrow-textarea id = "textBox">
 	  	</iron-autogrow-textarea>
       <vaadin-upload class="thick-border" max-files="1"></vaadin-upload>
-      <div id = "textButtons">
-        <paper-radio-group id = "messageType" selected="noteButton">
+      <div id = "textButtons" class = "layout horizontal">
+        <paper-radio-group id = "messageType"selected="noteButton" class = "layout horizontal">
           <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
           <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
         </paper-radio-group>
-        <paper-button id = "sendButton" > Send </paper-button>
+        <paper-button id = "sendButton"> Send </paper-button>
       </div>
     </div>
 
-    <div id = "buttonsContainer">
-      <paper-button id = "skypeButton"> Switch to Skype</paper-button>
-      <paper-button id = "filterButton"> Filter: All</paper-button>
+    <div id = "buttonsContainer" class = "layout horizontal">
+        <paper-button id = "skypeButton"> Switch to Skype</paper-button>
+        <paper-button id = "filterButton"> Filter: All</paper-button>
     </div>
 
     <paper-button id = "endCall"> End Call </paper-button>
