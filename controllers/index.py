@@ -35,7 +35,7 @@ def index_route():
 
 		#Check if username exists
 		cur = mysql.connection.cursor()
-		cur.execute("SELECT * FROM eecs481.User WHERE email = '"+emailIn+"'")
+		cur.execute("SELECT * FROM User WHERE email = '"+emailIn+"'")
 		email = cur.fetchall()
 		#print email
 		if len(email) == 0:

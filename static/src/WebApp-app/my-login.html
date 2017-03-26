@@ -55,7 +55,7 @@
           var oldLocation = document.getElementById("prevURL").value;
           if (oldLocation == "None") {
             //oldLocation = base_url;
-            oldLocation = 'http://0.0.0.0:3000/';
+            oldLocation = 'https://ambulancestream.herokuapp.com';
           }
           
           //send user input via ajax
@@ -101,7 +101,7 @@
       function make_ajax_call(data) {
         $.ajax({
             //url: url,       // SHOULD BE window.location !!
-            url: 'http://localhost:3000/',
+            url: '/',
             success:  function(data){
               document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
             },//window.location. assign??

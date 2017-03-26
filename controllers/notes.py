@@ -11,12 +11,12 @@ notes = Blueprint('notes', __name__, template_folder='templates') #, url_prefix=
 @notes.route('/notes', methods=['GET', 'POST'])
 def my_route():
 
-	# if not logged in
-	username = request.args.get("username")
-	if username is None: 
-		if "username" not in session:
-			return redirect(url_for("index.index_route"))
-		username = session['username']
+# 	# if not logged in
+# 	username = request.args.get("username")
+# 	if username is None: 
+# 		if "username" not in session:
+# 			return redirect(url_for("index.index_route"))
+# 		username = session['username']
 
 
 	if request.method == 'GET':
@@ -30,14 +30,14 @@ def my_route():
 		if note_id == '1':
 			print 'note id is 1'
 			cur = mysql.connection.cursor()
-			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_snapshot FROM eecs481.Notes  ORDER BY note_id DESC LIMIT 1;")
+			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_snapshot FROM Notes  ORDER BY note_id DESC LIMIT 1;")
 			content = cur.fetchone()
 			print content
 
 		else:
 			print 'note id is greater than 1'
 			cur = mysql.connection.cursor()
-			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_snapshot FROM eecs481.Notes WHERE note_id = '"+note_id+"'")
+			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_snapshot FROM Notes WHERE note_id = '"+note_id+"'")
 			content = cur.fetchone()
 			print content
 
@@ -57,10 +57,10 @@ def my_route():
 			data['messageTitle'] = "no title"
 
 		cur = mysql.connection.cursor()
-		cur.execute("INSERT INTO eecs481.Notes (is_note, is_instruction, is_snapshot, title, time_stamp, content) VALUES (%s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isSnapshot'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent']])
+		cur.execute("INSERT INTO Notes (is_note, is_instruction, is_snapshot, title, time_stamp, content) VALUES (%s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isSnapshot'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent']])
 		mysql.connection.commit()
 
-		cur.execute("SELECT note_id FROM eecs481.Notes WHERE content = %s", [data['messageContent']])
+		cur.execute("SELECT note_id FROM Notes WHERE content = %s", [data['messageContent']])
 		recent_note_id = max(cur.fetchall())
 		
 		return jsonify(note_id=recent_note_id) 
