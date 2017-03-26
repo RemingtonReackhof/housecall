@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="my-contacts">
+
   <!-- Defines the element's style and local DOM -->
   <template>
     <style>
@@ -11,19 +12,21 @@
       }
     </style>
 
-    <h1>Contacts page coming in our Beta release!</h1>
 
-    <script type="text/javascript" src="https://secure.skypeassets.com/i/scom/js/skype-uri.js"></script>
-    <div id="SkypeButton_Call_clockar_1">
+  <script type="text/javascript" src="http://www.skypeassets.com/i/scom/js/skype-uri.js"></script>
+  <div id="call_32">
      <script type="text/javascript">
-     Skype.ui({
-     "name": "call",
-     "element": "SkypeButton_Call_clockar_1",
-     "participants": ["clockar"],
-     "imageSize": 24
-     });
-     </script>
-    </div>
+          Skype.ui({
+              name: "call",
+              element: "call_32",
+              listParticipants: true,
+              participants: ["clockar"],
+              video: true,
+              imageSize: 32,
+              imageColor: "skype"
+          });
+      </script>
+  </div>
   </template>
 <<<<<<< HEAD
   <!-- Creates the element's prototype and registers it -->
