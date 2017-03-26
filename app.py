@@ -1,20 +1,24 @@
-# app.py
+import warnings
+from flask.exthook import ExtDeprecationWarning
+warnings.simplefilter('ignore', ExtDeprecationWarning)
+
+
 
 import os
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory, escape, jsonify
 from extensions import mysql
 from flask_restful import Resource, Api
 import controllers
-import ast
-
 # Initialize Flask app with the template folder address
 app = Flask(__name__, template_folder='templates')
 api = Api(app)
 
 # Initialize MySQL database connector
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'eecs481' ##???
+app.config['MYSQL_HOST'] = 'sql9.freemysqlhosting.net'
+app.config['MYSQL_USER'] = 'sql9165703'
+app.config['MYSQL_PASSWORD'] = 'KCZnhSwu6L'
+app.config['MYSQL_DB'] = 'sql9165703'
+
 mysql.init_app(app)
 
 # Super secret key   ??????
@@ -28,9 +32,17 @@ app.register_blueprint(controllers.notes)
 app.register_blueprint(controllers.contacts)
 app.register_blueprint(controllers.vitals)
 
+class HelloWorld(Resource):
+    def get(self):
+        return jsonify(hello='world')
 
-# Listen on external IPs
-# For us, listen to port 3000 so you can just run 'python app.py' to start the server
-if __name__ == '__main__':
-    # listen on external IPs
-    app.run(host='0.0.0.0', port=3000, debug=True)
+api.add_resource(HelloWorld, '/getNote')
+
+
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port)
+
+
+
