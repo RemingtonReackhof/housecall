@@ -37,10 +37,11 @@ def signup_route():
 		hospitalIn = request.json.get('hospital')
 		specialtyIn = request.json.get('specialty')
 		doctorIn = request.json.get('doc')
-		if doctorIn == 0:
-			doctorIn = False
-		else:
-			doctorIn = True
+
+		#if doctorIn == 0:
+		#	doctorIn = False
+		#else:
+		#	doctorIn = True
 		#print "after!!"
 		#print "hello", emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn, hospitalIn, specialtyIn, doctorIn
 
@@ -90,8 +91,11 @@ def signup_route():
 		#return redirect(redirect_url())
 		#return render_template("index.html")
 		#print "finshing"
+		usertype = 'emt'
+		if doctorIn == '1':
+			usertype = 'dr'
 
-		return jsonify(message="Success!") 
+		return jsonify(message="Success!", username=emailIn, user_type=usertype) 
 
 
 	return render_template("index.html", name="signup")

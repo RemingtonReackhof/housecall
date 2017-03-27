@@ -129,8 +129,6 @@
                     var type = "note";
                     if (e.is_instruction) { type = "instruction";}
                     else if (e.is_status) { type = "status";}
-
-                    //document.getElementById("my-notesList").addMessage(true, type, e.content, '', e.time_stamp);
                     document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
                     last_note_id = e.note_id;
                   }
