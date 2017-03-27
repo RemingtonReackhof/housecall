@@ -222,7 +222,7 @@
     <div id = "createMessageContainer">
     	<iron-autogrow-textarea id = "textBox">
 	  	</iron-autogrow-textarea>
-      <vaadin-upload class="thick-border" max-files="1"></vaadin-upload>
+      <vaadin-upload id = photoUpload class="thick-border" max-files="1" target = "../../images"></vaadin-upload>
       <div id = "textButtons" class = "layout horizontal">
         <paper-radio-group id = "messageType"selected="noteButton" class = "layout horizontal">
           <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
@@ -250,39 +250,35 @@
 
       sendMessage: function (){
 
-   		 var textInput = document.getElementById("textBox").value;
-   		 document.getElementById("textBox").value = null;
+       var photoInput = document.getElementById("photoUpload");
 
-   		 if (textInput != null)
-        {
-          console.log("added message");
-          document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
-        }
-		}
+       if (photoInput.files.length != 0)
+       {
+        // Upload photo
+          if (photoInput.files[0].complete)
+          {
+            // add to notesList and database
+            document.getElementById("notesList").addImage(false, "image", photoInput.files[0].uploadTarget, "", "");
+          }
 
-    });
+       }
+       else
+       {
+          var textInput = document.getElementById("textBox").value;
+         document.getElementById("textBox").value = null;
 
-    Polymer({
-      is: 'my-notes',
-      listeners: {
-        "attachPhotoButton.click": 'importPhoto',
-      },
+         if (textInput != null)
+          {
+            console.log("added message");
+            document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
+          }
+        
+       }
 
-      importPhoto: function (){
-
-       var textInput = document.getElementById("textBox").value;
-       document.getElementById("textBox").value = null;
-
-       if (textInput != null)
-        {
-          console.log("added message");
-          document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
-        }
-    }
+      }
+   		 
 
     });
-
-    
 
 
 
