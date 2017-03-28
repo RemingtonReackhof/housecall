@@ -225,7 +225,7 @@
 	  	</iron-autogrow-textarea>
       <vaadin-upload id = photoUpload class="thick-border" max-files="1" target = "../../images"></vaadin-upload>
       <div id = "textButtons" class = "layout horizontal">
-        <paper-radio-group id = "messageType"selected="noteButton" class = "layout horizontal">
+        <paper-radio-group id = "messageType" selected="noteButton" class = "layout horizontal">
           <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
           <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
         </paper-radio-group>
@@ -251,31 +251,59 @@
 
       sendMessage: function (){
 
-       var photoInput = document.getElementById("photoUpload");
+        var messageType = "";
+        var messageContent = "";
+        var messageTitle = "";
+        var shouldSend = false;
+        var textInput = document.getElementById("textBox").value;
+        document.getElementById("textBox").value = null;
 
-       if (photoInput.files.length != 0)
-       {
-        // Upload photo
-          if (photoInput.files[0].complete)
-          {
-            // add to notesList and database
-            document.getElementById("notesList").addImage(false, "image", photoInput.files[0].uploadTarget, "", "");
-          }
+        var photoInput = document.getElementById("photoUpload");
 
-       }
-       else
-       {
-          var textInput = document.getElementById("textBox").value;
-         document.getElementById("textBox").value = null;
+         if (photoInput.files.length != 0)
+         {
+          // Upload photo
+            if (photoInput.files[0].complete)
+            {
+              // add to notesList and database
+              messageType = "image";
+              messageContent = photoInput.files[0].name;
 
-         if (textInput != null)
-          {
+              if (textInput != null)
+              {
+                messageTitle = textInput;
+              }
+              shouldSend = true;
+            }
+
+         }
+         else
+         {
+           if (textInput != null)
+            {
+              var type = document.getElementById("messageType").selected;
+
+              if (type = noteButton)
+              {
+                messageType = "note";
+              }
+              else
+              {
+                messageType = "instruction"
+              }
+
+              messageContent = textInput;
+              shouldSend = true
+            }
+          
+         }
+
+         if (shouldSend)
+         {
+            document.getElementById("notesList").addMessage(false, messageType, messageContent, messageTitle, "");
             console.log("added message");
-            document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
-          }
+         }
         
-       }
-
       }
    		 
 
