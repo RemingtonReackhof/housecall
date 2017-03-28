@@ -27,21 +27,6 @@
         border-radius: 8px;
       }
 
-      .vitalsSnapshot {
-        position: relative;
-        width: 100%;
-        padding-left: 10px;
-        margin-bottom: 10px;
-        background: #FFFFFF;
-        border: 2px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-      }
-
-      .vitalsTitle {
-        position: relative;
-      }
-
       .instruction {
         /* Rectangle 2: */
         position: relative;
@@ -52,6 +37,22 @@
         border: 2px solid #9B9B9B;
         box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
         border-radius: 8px;
+      }
+
+      .imageMessage {
+        /* Rectangle 2: */
+        position: relative;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .image {
+
       }
 
       .timeContainer {
@@ -92,7 +93,21 @@
 
     </style>
 
-    <iron-list id = ironList class = ironList items="{{notesList}}">
+  <iron-list id ='ironList' class ='ironList' items="[[notesList]]" style="height:100%;width:100%">
+    <template style="height:100%;width:100%">
+    <div>
+
+      <template is="dom-if" if="{{item.isImage}}">
+
+        <paper-card class = "imageMessage">
+          <div class = "timeContainer">
+            <p class = "time"> {{item.timeStamp}} </p>
+          </div>
+          <h4 class = "imageTitle"> {{item.title}} </h4>
+          <img class = "image" src="/static/images/{{item.content}}" style="width:400px;height:200px;">
+        </paper-card>
+
+      </template>
 
       <template is="dom-if" if="{{item.isNote}}">
 
@@ -102,31 +117,20 @@
           </div>
           <p class = "content"> {{item.content}} </p>
         </paper-card>
+       </template>
 
-      </template>
-
-     <template is="dom-if" if="{{item.isInstruction}}">
-
+       <template is="dom-if" if="{{isInstruction(item)}}">
         <paper-card class = "instruction">
           <div class = "timeContainer">
             <p class = "time"> {{item.timeStamp}} </p>
           </div>
           <h4 class = "instructionTitle"> {{item.title}} </h4>
           <p class = "content"> {{item.content}} </p>
-        </paper-card></br>
-        
-      </template>
+        </paper-card></br>  
+        </template>
 
 
-      <template is="dom-if" if="{{item.isSnapshot}}">
-
-        <paper-card class = "vitalsSnapshot">
-          <div class = "timeContainer">
-            <p class = "time"> {{item.timeStamp}} </p>
-          </div>
-          <h4 class = vitalsTitle> Vitals Snapshot: </h4>
-          <p class = "content"> {{item.content}} </p>
-        </paper-card>
+      </div>
 
       </template>
 
@@ -136,6 +140,7 @@
   <!-- Creates the element's prototype and registers it -->
   <script>
     var last_note_id = 0;
+    var addingNote = false;
 
     Polymer({
       is: 'notes-list',
@@ -144,92 +149,46 @@
         this.notesList = [
             {
               id: 1, 
-              isNote: 1, 
-              isInstruction: 0, 
-              isSnapshot: 0, 
+              isNote: false, 
+              isInstruction: false, 
+              isImage: true, 
+              title: "Intercostal Insertion", 
+              timeStamp: "1:40", 
+              content: "selderingTechnique.jpg"
+            },
+            /*{
+              id: 1, 
+              isNote: true, 
+              isInstruction: false, 
+              isImage: false, 
               title: "", 
               timeStamp: "1:37", 
               content: "Severe swelling on the right side of the chest suggests a pneumotherax caused by blunt impact from the air bag."
             },
             {
               id: 2, 
-              isNote: 0, 
-              isInstruction: 0, 
-              isSnapshot: 1, 
+              isNote: false, 
+              isInstruction: false, 
+              isImage: true, 
               title: "", 
               timeStamp: "1:40", 
-              content: "BP: 145/90, Temp:  96.9, HR: 110 bpm"
+              content: "selderingTechnique"
             },
             {
               id: 3, 
-              isNote: 0, 
-              isInstruction: 1, 
-              isSnapshot: 0, 
+              isNote: false, 
+              isInstruction: true, 
+              isImage: false, 
               title: "Intercostal Insertion", 
               timeStamp: "1:52", 
               content: "1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine)\n 2.  Place sterile drapes around the area.\n 3.  Apply local anesthetic \n 4.  Insert trocar into the lung using the Seldering Technique (described below)\n 5.  Suture the trocar to the skin to prevent it from falling out. \n 6. Apply dressings to the area"
-            },
+            },*/
         ];
       },
 
       addMessage: function(fromDB, messageType, messageContent, messageTitle, messageTimestamp) {
         console.log(this.notesList.length);
         var currId = this.notesList.length + 1;
-        var currDate = new Date();
-        var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
-+ (currDate.getMinutes() < 10 ? '0' +currDate.getMinutes()  : currDate.getMinutes());
-        var isNewNote = false;
-        var isNewInstruction = false;
-        var isNewSnapshot = false
-
-        if (messageType == "note")
-        {
-          isNewNote = true;
-        }
-        else if (messageType == "instruction")
-        {
-          isNewInstruction = true;
-        }
-        else
-        {
-          isNewStanpshot = true;
-        }
-
-        if(!fromDB){
-          console.log('adding something to DB');
-           $.ajax({
-            url: '/notes',
-            success: function(e){
-              last_note_id = e.note_id[0];
-            },
-            error: function(){alert("We didn't do it!")},
-            type: 'POST',
-            dataType: 'json',
-            contentType: "application/json",
-            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isNewSnapshot.toString(), 'username': 'emt@emt.com'}),
-          });
-
-        }
-        var newMessage = {
-          id: currId, 
-          isNote: isNewNote, 
-          isInstruction: isNewInstruction, 
-          isSnapshot: isNewSnapshot, 
-          title: messageTitle, 
-          timeStamp: currTime, 
-          content: messageContent
-        }
-        
-        this.push('notesList', newMessage);
-        document.getElementById("my-notesList").push('notesList', newMessage);
-
-        /*if (this.height > 375)*/
-        this.scrollToBottom();
-
-      },
-
-      addImage: function(fromDB, messageType, messageContent, messageTimestamp) {
-        var currId = notesList.length + 1;
         var currDate = new Date();
         var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
 + (currDate.getMinutes() < 10 ? '0' +currDate.getMinutes()  : currDate.getMinutes());
@@ -255,42 +214,53 @@
            $.ajax({
             url: '/notes',
             success: function(e){
+              console.log('adding something to DB id is ' + last_note_id);
               last_note_id = e.note_id[0];
+              console.log('adding something to DB new id is ' + last_note_id);
             },
-            error: function(){alert("We didn't do it!")},
+            error: function(){},
             type: 'POST',
             dataType: 'json',
             contentType: "application/json",
-            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isSnapshot':isImage.toString()}),
+            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isImage':isNewImage.toString(), 'username': 'emt@emt.com'}),
           });
-          var newMessage = {
-              id: currId, 
-              isNote: isNewNote, 
-              isInstruction: isNewInstruction, 
-              isSnapshot: isNewSnapshot, 
-              title: messageTitle, 
-              timeStamp: currTime, 
-              content: messageContent
-          }
+
         }
         else{
-          var newMessage = {
-              id: currId, 
-              isNote: isNewNote, 
-              isInstruction: isNewInstruction, 
-              isSnapshot: isNewSnapshot, 
-              title: messageTitle, 
-              timeStamp: messageTimestamp, 
-              content: messageContent
-            }
-
+          console.log('added from DB');
+        }
+        var newMessage = {
+          id: currId, 
+          isNote: isNewNote, 
+          isInstruction: isNewInstruction, 
+          isImage: isNewImage, 
+          title: messageTitle, 
+          timeStamp: currTime, 
+          content: messageContent
         }
         
         this.push('notesList', newMessage);
+        document.getElementById("my-notesList").push('notesList', newMessage);
 
         /*if (this.height > 375)*/
         this.scrollToBottom();
 
+      },
+
+      isNote: function(item){
+        console.log('In an iff');
+        console.log(item);
+        return item.isNote == true;
+      },
+      isInstruction: function(item){
+        console.log('In an iff');
+        console.log(item);
+        return item.isInstruction == true;
+      },
+      isSnapshot: function(item){
+        console.log('In an iff');
+        console.log(item);
+        return item.isSnapshot == true;
       },
 
     scrollToBottom: function() {

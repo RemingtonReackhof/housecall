@@ -122,6 +122,7 @@
       start_interval: function(){
         console.log("starting interval");
         this.interval = setInterval(function() {
+          if(!addingNote){
             $.ajax({
                 url: '/notes',
                 success: function(e){
@@ -129,19 +130,21 @@
                     var type = "note";
                     if (e.is_instruction) { type = "instruction";}
                     else if (e.is_status) { type = "status";}
-
-                    //document.getElementById("my-notesList").addMessage(true, type, e.content, '', e.time_stamp);
-                    document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
-                    last_note_id = e.note_id;
+                    console.log('added from interval id before is ' + last_note_id);
+                    if(last_note_id != e.note_id){
+                      document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
+                      last_note_id = e.note_id;
+                      console.log('added from interval id after is ' + last_note_id);
+                    }
                   }
                 },
-                error: function(e){alert("We didn't do it!")},
+                error: function(e){},
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json",
                 data: {'note_id': last_note_id+1, 'username':'emt@emt.com'},
             });
-
+          }
 
         }, 1000);
       },

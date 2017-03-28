@@ -104,6 +104,14 @@ function signup_create(){
         url: '/signup',
         success:  function(data){
             console.log('success');
+            user.type = data.user_type;
+            user.username = data.username;
+            if(user.type == 'emt'){
+              $('#createMessageContainer').hide();
+            }
+            else{
+              $('#createMessageContainer').show();
+            }
             document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
         },//window.location. assign??
         error: function(xhr, status, error){

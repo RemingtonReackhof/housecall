@@ -1,169 +1,180 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
 <dom-module id="my-contacts">
 
   <!-- Defines the element's style and local DOM -->
+  <body>
   <template>
-    <style>
-      :host {
+  <style type="text/css">
+    @font-face {
+        font-family: noir;
+        src: url(Noir_medium.otf);
+        font-weight: bold;
+    }
+
+    @font-face {
+        font-family: noir;
+        src: url(Noir_regular.otf);
+    }
+    #body {
+     font-family: noir;
+     background: #EDEDF4;
+    }
+
+    #header {
+        font-family: noir;
+        font-size: 48px;
+        text-align: center;
+    }
+
+    #skypeButtons > * {
+        max-width: 450px;
+        padding: 10px;
+        font-family: noir;
+        color: white;
+        font-size: 25px;
+        text-align: center;
+        margin: 0 auto;
+        background-color: #EC7070;
+        border: 5px solid #EDEDF4;
+        border-radius: 5px;
+    }
+
+    #contactsInputByName {
         display: block;
+        margin: 0 auto;
+        font-family: noir;
+        text-align: center;
+        padding: 5px;
+        font-size: 25px;
+    }
+    #contactsInputBySpecialty {
+        display: block;
+        margin: 0 auto;
+        font-family: noir;
+        text-align: center;
+        padding: 5px;
+        font-size: 20px;
+    }
 
-        padding: 16px;
-      }
-    </style>
+/* Dropdown */
 
+#contactsDropdown {
+    max-height:300px;
+    overflow:auto;/* to get scroll */
+    float: center;
+    width: 218px;
+}
 
-  <script type="text/javascript" src="http://www.skypeassets.com/i/scom/js/skype-uri.js"></script>
-  <div id="call_32">
-     <script type="text/javascript">
-          Skype.ui({
-              name: "call",
-              element: "call_32",
-              listParticipants: true,
-              participants: ["clockar"],
-              video: true,
-              imageSize: 32,
-              imageColor: "skype"
-          });
-      </script>
-  </div>
-  </template>
-<<<<<<< HEAD
-  <!-- Creates the element's prototype and registers it -->
- <!-- JQuery. Skype for Web requires JQuery to work. -->
-  <!-- Bootstrap layouts and themes. Totally optional, but it makes the examples look much nicer :) -->
-  <link rel="stylesheet" type="text/css" href="../../assets/metro/css/metro-bootstrap.min.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  #center {
+      display: block;
+      margin: 0 auto;
 
- <!-- This is the Skype Web SDK -->
-<script type="text/javascript" src="//swx.cdn.skype.com/shared/v/1.1.23.0/SkypeBootstrap.js"></script>
-</head>
-<body>
-<div id="header"></div>
+  }
 
-<!-- Skype Web SDK Code by Tom Morgan | thoughtstuff.co.uk -->
-<!-- This is one of a number of examples showing how to use the Skype Web SDK. The full list is at skypewebsdk.com -->
-<!-- Disclaimer: use at your own risk. -->
-  
+  #clearFilters {
+    background-color: red;
+    color: white;
+    display: block;
+    margin: 0 auto;
+    width: 218px;
 
-    <div class="form-horizontal">
-      <div class="form-group">
-        <label for="username" class="col-sm-2 control-label">Username</label>
-        <div class="col-sm-10">
-          <input type="email" class="form-control" id="username" placeholder="Email">
+  }
+
+  </style>
+
+  <div id="header"></br>Displaying Doctors at The University of Michigan Hospital</div></br>
+  <input type="text" placeholder="Filter By Name..." id="contactsInputByName" onkeyup="contactsFilterFunctionByName()"></br>
+
+      <!-- <div class="contactsDropdown"> -->
+      <div id="center">
+      <button onclick="return contactsFunction();" class="contactsdropbtn" style="font-size:20px;text-align: center;margin:0 auto;display:block;">Filter By Specialty</button></br>
+        <div id="contactsDropdown" class="contactsdropdown-content">
+        <input type="text" placeholder="Specialty" id="contactsInputBySpecialty" onkeyup="contactsFilterFunctionBySpecialty()">
+          <div class = "dropChoices">
+          <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "genSurg" style = "cursor:pointer">General Surgery</a>
+          <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "Urology" style = "cursor:pointer">Urology</a>
+          <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "Radiology" style = "cursor:pointer">Radiology</a>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="password" class="col-sm-2 control-label">Password</label>
-        <div class="col-sm-10">
-          <input type="password" class="form-control" id="password" placeholder="Password">
+        <button onclick="return clearFilters();" id="clearFilters"> Clear Filters </button>
         </div>
-      </div>
+      <!-- </div> -->
+  <!-- <template is="imported-template" content="static/js/skype-uri.js" type="text/javascript"></template> -->
+  <div id = "skypeButtons">
+
+    <div id="SkypeButton1" >
+       <script type="text/javascript">
+            Skype.ui({
+                name: "call",
+                element: "SkypeButton1",
+                listParticipants: true,
+                participants: ["matthew.fox200"],
+                video: true,
+                imageSize: 32,
+                imageColor: "white",
+                topic: "Call Dr. Matthew Fox",
+                listTopic: true
+            });
+        </script> 
+        Click Below to Call <div class="name">Dr. Matthew Fox</div><div class="specialty">Urology</div>
     </div>
 
-    <div class="form-horizontal">
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button class="btn btn-default" id="btnLogIn">Log in</button>
-        </div>
-      </div>
 
-      <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-          <button class="btn btn-default" id="btnLogOut">Log out</button>
-        </div>
-      </div>
-    </div>
-
-    <div>
-      <span id="loginStatus"></span><hr/>
-
-      Contact List:
-      <ul id="lstContactList"></ul>
-<hr/>
-Group List:
-      <ul id="lstGroupList"></ul>
-
-    </div>
-
-  <div id="footer"></div>
-  
-  <!-- This is not needed for the samples to run, but adds standard headers and footers to the samples, to display title, instructions, about etc.
-       If you're taking this code and using it yourself, you can remove this.-->
-   <script type="text/javascript" src="../../assets/layoutcodesample-min.js"></script>
-  
-  <script type="text/javascript">
- // <!-- These variables are only needed for laying out the code sample, they are not part of the sample code. -->
-  var pageTitle = "Getting a User's Contact List";
-  var blogPostLocation = "http://blog.thoughtstuff.co.uk/2015/05/learn-skype-web-sdk-day-10-getting-the-contact-list/";
-  var githubLocation = "https://github.com/tomorgan/SkypeWebSDKSamples/blob/gh-pages/Contacts/1-GetContactList/index.htm";
-    var client;
-  $(function () {
-    'use strict';
-  Skype.initialize({
-            apiKey: 'SWX-BUILD-SDK',
-        }, function (api) {
-            client = new api.application();           
-      
-    // whenever client.state changes, display its value
-    client.signInManager.state.changed(function (state) {
-    $('#loginStatus').text("Login State: " + state);
-    });
-  
-        }, function (err) {
-            alert('Error loading Skype Web SDK: ' + err);
-        }); 
-    $('#btnLogIn').click(function () {
-        // start signing in
-        client.signInManager.signIn({
-          username: $('#username').val(),
-          password: $('#password').val()
-        }).then(function () {
-            //log in worked!
-            alert('Logged in!');
-            GetContactList();
-            GetGroupList();
+    <div id="SkypeButton2">
+       <script type="text/javascript">
+            Skype.ui({
+                name: "call",
+                element: "SkypeButton2",
+                listParticipants: true,
+                participants: ["zelin628"],
+                video: true,
+                imageSize: 32,
+                imageColor: "white"
+            });
             
-          }, function (error) {
-            //Something went wrong.
-            alert(error);
-          });
-      });
-    $('#btnLogOut').click(function () {
-        // start signing out
-        client.signInManager.signOut()
-        .then(function () {
-               //log out worked!
-               alert('Logged out!');
-             }, function (error) {
-                //Something went wrong.
-                alert(error);
-              });
-      });
-    function GetContactList()
-    {
-      client.personsAndGroupsManager.all.persons.added(function (contact) { 
-        contact.displayName.get().then(function (theName) {
-         $("#lstContactList").append('<li>' + contact.id() + " - " + theName + '</li>');
-       });
-      });
-      client.personsAndGroupsManager.all.persons.subscribe();
-    }
-    function GetGroupList()
-    {
-      client.personsAndGroupsManager.all.groups.added(function (group) {
-        group.name.get().then(function (theName) {
-          $('#lstGroupList').append('<li>' + theName + '</li');
-        });
-      });
-    }
-  });
-</script>
+            
+        </script>
+        Click Below to Call <div class="name">Dr. Garrett Zelin</div><div class="specialty">General Surgery</div>
+    </div>
 
-</body>
-=======
->>>>>>> b8c2de6917c980f02c61b5b684bcf8e550a86399
+    <div id="SkypeButton3">
+       <script type="text/javascript">
+            Skype.ui({
+                name: "call",
+                element: "SkypeButton3",
+                listParticipants: true,
+                participants: ["clockar"],
+                video: true,
+                imageSize: 32,
+                imageColor: "white"
+            });
+            
+            
+        </script>
+        Click Below to Call <div class="name">Dr. Colin Lockareff</div><div class="specialty">Radiology</div>
+    </div>
 
+    <div id="SkypeButton4">
+       <script type="text/javascript">
+            Skype.ui({
+                name: "call",
+                element: "SkypeButton4",
+                listParticipants: true,
+                participants: ["k.fedewa"],
+                video: true,
+                imageSize: 32,
+                imageColor: "white"
+            });
+            
+            
+        </script>
+        Click Below to Call <div class="name">Dr. Kayla Fedewa</div><div class="specialty">Radiology</div>
+    </div>
+
+  </div>
+
+  </br></br></template>
+  </body>
   <script>
     Polymer({
       is: 'my-contacts'
