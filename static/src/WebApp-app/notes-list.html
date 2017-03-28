@@ -93,7 +93,6 @@
 
     </style>
 
-<<<<<<< HEAD
   <iron-list id ='ironList' class ='ironList' items="[[notesList]]" style="height:100%;width:100%">
     <template style="height:100%;width:100%">
     <div>
@@ -141,6 +140,7 @@
   <!-- Creates the element's prototype and registers it -->
   <script>
     var last_note_id = 0;
+    var addingNote = false;
 
     Polymer({
       is: 'notes-list',
@@ -192,7 +192,7 @@
         var currDate = new Date();
         var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
 + (currDate.getMinutes() < 10 ? '0' +currDate.getMinutes()  : currDate.getMinutes());
-        var isNewNote = true;
+        var isNewNote = false;
         var isNewInstruction = false;
         var isNewImage = false
 
@@ -214,7 +214,9 @@
            $.ajax({
             url: '/notes',
             success: function(e){
+              console.log('adding something to DB id is ' + last_note_id);
               last_note_id = e.note_id[0];
+              console.log('adding something to DB new id is ' + last_note_id);
             },
             error: function(){},
             type: 'POST',
@@ -223,6 +225,9 @@
             data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isImage':isNewImage.toString(), 'username': 'emt@emt.com'}),
           });
 
+        }
+        else{
+          console.log('added from DB');
         }
         var newMessage = {
           id: currId, 

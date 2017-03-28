@@ -283,7 +283,7 @@
             {
               var type = document.getElementById("messageType").selected;
 
-              if (type = noteButton)
+              if (type == 'noteButton')
               {
                 messageType = "note";
               }
@@ -300,7 +300,9 @@
 
          if (shouldSend)
          {
+            addingNote = true;
             document.getElementById("notesList").addMessage(false, messageType, messageContent, messageTitle, "");
+            addingNote = false;
             console.log("added message");
          }
         
