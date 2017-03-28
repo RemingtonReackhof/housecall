@@ -92,34 +92,30 @@
 
     </style>
 
-    <iron-list id = ironList class = ironList items="{{notesList}}">
-
-      <template is="dom-if" if="{{item.isNote}}">
-
-        <paper-card class = "note">
+  <iron-list id ='ironList' class ='ironList' items="[[notesList]]" style="height:100%;width:100%">
+    <template style="height:100%;width:100%">
+    <div>
+      <template is="dom-if" if="{{isNote(item)}}">
+        <paper-card class = "note" if="{{isNote(item)}}">
           <div class = "timeContainer">
             <p class = "time"> {{item.timeStamp}} </p>
           </div>
           <p class = "content"> {{item.content}} </p>
         </paper-card>
+       </template>
 
-      </template>
-
-     <template is="dom-if" if="{{item.isInstruction}}">
-
+       <template is="dom-if" if="{{isInstruction(item)}}">
         <paper-card class = "instruction">
           <div class = "timeContainer">
             <p class = "time"> {{item.timeStamp}} </p>
           </div>
           <h4 class = "instructionTitle"> {{item.title}} </h4>
           <p class = "content"> {{item.content}} </p>
-        </paper-card></br>
-        
-      </template>
+        </paper-card></br>  
+        </template>
 
 
-      <template is="dom-if" if="{{item.isSnapshot}}">
-
+       <template is="dom-if" if="{{isSnapshot(item)}}">
         <paper-card class = "vitalsSnapshot">
           <div class = "timeContainer">
             <p class = "time"> {{item.timeStamp}} </p>
@@ -127,6 +123,8 @@
           <h4 class = vitalsTitle> Vitals Snapshot: </h4>
           <p class = "content"> {{item.content}} </p>
         </paper-card>
+        </template>
+      </div>
 
       </template>
 
@@ -144,27 +142,27 @@
         this.notesList = [
             {
               id: 1, 
-              isNote: 1, 
-              isInstruction: 0, 
-              isSnapshot: 0, 
+              isNote: true, 
+              isInstruction: false, 
+              isSnapshot: false, 
               title: "", 
               timeStamp: "1:37", 
               content: "Severe swelling on the right side of the chest suggests a pneumotherax caused by blunt impact from the air bag."
             },
             {
               id: 2, 
-              isNote: 0, 
-              isInstruction: 0, 
-              isSnapshot: 1, 
+              isNote: false, 
+              isInstruction: false, 
+              isSnapshot: true, 
               title: "", 
               timeStamp: "1:40", 
               content: "BP: 145/90, Temp:  96.9, HR: 110 bpm"
             },
             {
               id: 3, 
-              isNote: 0, 
-              isInstruction: 1, 
-              isSnapshot: 0, 
+              isNote: false, 
+              isInstruction: true, 
+              isSnapshot: false, 
               title: "Intercostal Insertion", 
               timeStamp: "1:52", 
               content: "1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine)\n 2.  Place sterile drapes around the area.\n 3.  Apply local anesthetic \n 4.  Insert trocar into the lung using the Seldering Technique (described below)\n 5.  Suture the trocar to the skin to prevent it from falling out. \n 6. Apply dressings to the area"
@@ -178,7 +176,7 @@
         var currDate = new Date();
         var currTime = "" + (currDate.getHours() <= 12 ? currDate.getHours() : currDate.getHours()-12) + ":" 
 + (currDate.getMinutes() < 10 ? '0' +currDate.getMinutes()  : currDate.getMinutes());
-        var isNewNote = false;
+        var isNewNote = true;
         var isNewInstruction = false;
         var isNewSnapshot = false
 
@@ -226,6 +224,22 @@
         /*if (this.height > 375)*/
         this.scrollToBottom();
 
+      },
+
+      isNote: function(item){
+        console.log('In an iff');
+        console.log(item);
+        return item.isNote == true;
+      },
+      isInstruction: function(item){
+        console.log('In an iff');
+        console.log(item);
+        return item.isInstruction == true;
+      },
+      isSnapshot: function(item){
+        console.log('In an iff');
+        console.log(item);
+        return item.isSnapshot == true;
       },
 
       addImage: function(fromDB, messageType, messageContent, messageTimestamp) {
