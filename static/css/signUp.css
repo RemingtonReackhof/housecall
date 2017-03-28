@@ -154,7 +154,7 @@ position: relative;
 
 /* Dropdown */
 
-.dropbtn {
+.dropbtn,.contactsdropbtn  {
     background-color: #5353B5;
     width: 250px;
     color: white;
@@ -162,6 +162,8 @@ position: relative;
     font-size: 16px;
     border: none;
     cursor: pointer;
+    display: table-cell;
+    vertical-align: middle;
 }
 
 .dropbtn:hover, .dropbtn:focus {
@@ -181,6 +183,10 @@ position: relative;
     position: relative;
     display: inline-block;
 }
+.contactsDropdown {
+    display: block;
+    margin: 0 auto;
+}
 
 .dropChoices {
    font-size: 15px;
@@ -195,7 +201,6 @@ position: relative;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-
 .dropdown-content a {
     color: black;
     padding: 12px 16px;
@@ -203,8 +208,26 @@ position: relative;
     display: block;
 }
 
-.dropdown a:hover {background-color: #ddd}
+.contactsdropdown-content {
+    display: none;
+    margin: 0 auto;
+    background-color: #f6f6f6;
+    min-width: 230px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.contactsdropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    margin: 0 auto;
+}
 
+.dropdown a:hover {background-color: #ddd}
+.show {display:block;}
+.contactsDropdown a:hover {background-color: #ddd}
 .show {display:block;}
 
 
