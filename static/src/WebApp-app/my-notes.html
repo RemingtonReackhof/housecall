@@ -223,9 +223,9 @@
     <div id = "createMessageContainer">
     	<iron-autogrow-textarea id = "textBox">
 	  	</iron-autogrow-textarea>
-      <vaadin-upload class="thick-border" max-files="1"></vaadin-upload>
+      <vaadin-upload id = photoUpload class="thick-border" max-files="1" target = "/static/images"></vaadin-upload>
       <div id = "textButtons" class = "layout horizontal">
-        <paper-radio-group id = "messageType"selected="noteButton" class = "layout horizontal">
+        <paper-radio-group id = "messageType" selected="noteButton" class = "layout horizontal">
           <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
           <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
         </paper-radio-group>
@@ -251,39 +251,63 @@
 
       sendMessage: function (){
 
-   		 var textInput = document.getElementById("textBox").value;
-   		 document.getElementById("textBox").value = null;
+        var messageType = "";
+        var messageContent = "";
+        var messageTitle = "";
+        var shouldSend = false;
+        var textInput = document.getElementById("textBox").value;
+        document.getElementById("textBox").value = null;
 
-   		 if (textInput != null)
-        {
-          console.log("added message");
-          document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
-        }
-		}
+        var photoInput = document.getElementById("photoUpload");
+
+         if (photoInput.files.length != 0)
+         {
+          // Upload photo
+            if (photoInput.files[0].complete)
+            {
+              // add to notesList and database
+              messageType = "image";
+              messageContent = photoInput.files[0].name;
+
+              if (textInput != null)
+              {
+                messageTitle = textInput;
+              }
+              shouldSend = true;
+            }
+
+         }
+         else
+         {
+           if (textInput != null)
+            {
+              var type = document.getElementById("messageType").selected;
+
+              if (type = noteButton)
+              {
+                messageType = "note";
+              }
+              else
+              {
+                messageType = "instruction"
+              }
+
+              messageContent = textInput;
+              shouldSend = true
+            }
+          
+         }
+
+         if (shouldSend)
+         {
+            document.getElementById("notesList").addMessage(false, messageType, messageContent, messageTitle, "");
+            console.log("added message");
+         }
+        
+      }
+   		 
 
     });
-
-    Polymer({
-      is: 'my-notes',
-      listeners: {
-        "attachPhotoButton.click": 'importPhoto',
-      },
-
-      importPhoto: function (){
-
-       var textInput = document.getElementById("textBox").value;
-       document.getElementById("textBox").value = null;
-
-       if (textInput != null)
-        {
-          console.log("added message");
-          document.getElementById("notesList").addMessage(false, "note", textInput, "", "");
-        }
-    }
-
-    });
-
-    
 
 
 
