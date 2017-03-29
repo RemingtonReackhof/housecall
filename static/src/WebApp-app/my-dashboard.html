@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="notes-list.html">
 
 <dom-module id="my-dashboard">
@@ -46,6 +47,15 @@
         .bold {
           @apply(--shadow-elevation-24dp);
         }
+        .note {
+          width: 100%;
+          padding-left: 10px;
+          margin-bottom: 10px;
+          background: #FFFFFF;
+          border: 2px solid #9B9B9B;
+          box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+          border-radius: 8px;
+      }
     </style>
 
   
@@ -64,8 +74,18 @@
       <div id="side">
         <a href="/contacts" tabindex="-1">
           <paper-card id="contacts" name="contacts" heading="Contacts" style="height:290px;width:500px;margin-bottom:10px;margin-left:15px;">
-            <div id="contacts" class="card-content">Click here to visit the contacts page. You can find a doctor to call here. </div>
-            <div id="contacts" class="card-actions">
+            <div id="contacts" class="card-content">
+              <iron-list id ='ironList' class ='ironList' items="[[contactsList]]" style="height:150px;width:100%">
+                <template>
+                  <div> 
+                    <paper-card class="note">
+                      <div class="name">{{item.name}}</div><div class="specialty">{{item.specialty}}</div>
+                    </paper-card>
+                  </div>
+                </template>
+              </iron-list>
+            </div>
+            <div id="contacts" class="card-actions">Click here to visit the contacts page. You can find a doctor to call here.
             </div>
           </paper-card>
         </a>
@@ -94,6 +114,14 @@
         'vitals.mouseover': 'highlight',
         'vitals.mouseout': 'unhighlight',
 
+      },
+      ready: function() {
+        this.contactsList = [
+            {name: 'Dr. Matthew Fox', specialty: 'Urology'},
+            {name: 'Dr. Garrett Zelin', specialty: 'General Surgery'},
+            {name: 'Dr. Colin Lockareff', specialty: 'Radiology'},
+            {name: 'Dr. Kayla Fedewa', specialty: 'Radiology'},
+        ];
       },
       highlight: function(e){
         if(e.target.id != "")
