@@ -118,6 +118,7 @@
                 $('#createMessageContainer').show();
               }
               document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
+              document.getElementsByTagName('webapp-app')[0].username = user.username;
             },//window.location. assign??
             error: function(xhr, status, error){
               show_errors(xhr,status,error);
