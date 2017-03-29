@@ -9,6 +9,10 @@ from flask import Flask, render_template, request, redirect, url_for, send_from_
 from extensions import mysql
 from flask_restful import Resource, Api
 import controllers
+
+UPLOAD_FOLDER = 'static/images/'
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
+
 # Initialize Flask app with the template folder address
 app = Flask(__name__, template_folder='templates')
 api = Api(app)
@@ -18,6 +22,7 @@ app.config['MYSQL_HOST'] = 'sql9.freemysqlhosting.net'
 app.config['MYSQL_USER'] = 'sql9165703'
 app.config['MYSQL_PASSWORD'] = 'KCZnhSwu6L'
 app.config['MYSQL_DB'] = 'sql9165703'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 mysql.init_app(app)
 
@@ -42,7 +47,7 @@ api.add_resource(HelloWorld, '/getNote')
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
-    app.run(host='0.0.0.0', port=port)
+    app.run(host='0.0.0.0', port=port, threaded=True)
 
 
 
