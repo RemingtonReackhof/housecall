@@ -53,8 +53,8 @@
           </a>
           <span style="flex: 1;"></span>
           <p class="needsLogin"> Welcome, {{username}}!</p>
-          <a href="/" tabindex="-1">
-            <paper-button raised class="white needsLogin" id="logoutButton" style="float: right;">LOGOUT</paper-button>
+          <a href="/login" tabindex="-1">
+            <paper-button raised class="white needsLogin" id="logoutButton">LOGOUT</paper-button>
           </a>
         </paper-toolbar>
       </paper-header-panel>
@@ -110,8 +110,8 @@
         "logoutButton.click": 'logout',
       },
 
-      logout: function(){
-        alert('logging out');
+      logout: function(){ 
+          this.page = 'login'
       },
 
       _routePageChanged: function(page) {
