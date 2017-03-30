@@ -60,7 +60,7 @@ def my_route():
 		if content is None:
 			return jsonify(successful=False)
 		else:
-			return jsonify(successful=True, content=content[1], time_stamp=content[2], note_id=content[0], is_note=content[3], is_instruction=content[4], is_snapshot=content[5])
+			return jsonify(successful=True, content=content[1], time_stamp=content[2], note_id=content[0], is_note=content[3], is_instruction=content[4], is_image=content[5])
 
 
 	if request.method == 'POST':	
@@ -98,6 +98,14 @@ def my_route():
 				filename = secure_filename(file.filename)
 				name_of_file = UPLOAD_FOLDER + filename
 				file.save(name_of_file)
+
+				cur = mysql.connection.cursor()
+				cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content) VALUES (%s, %s, %s, %s, %s, %s)", [ False, False, True, filename, '0:00', filename ])
+				mysql.connection.commit()
+
+				cur.execute("SELECT note_id FROM Notes WHERE content = %s", [filename])
+				recent_note_id = max(cur.fetchall())
+
 				return render_template("index.html", name="notes")
 
 
