@@ -21,7 +21,6 @@
     <style>
       :host {
         display: block;
-
         padding: 16px;
       }
 
@@ -288,10 +287,11 @@
         <fieldset>
           <input id= chooseFile type=file name=file>
         </fieldset> -->
-        <form method="post" enctype="multipart/form-data" onSubmit= "return uploadImageClicked()">
+        <!-- <form method="post" enctype="multipart/form-data" onSubmit= "return uploadImageClicked()">
           <input id = "chooseFile" type=file name=file>
           <input id= uploadButton type=submit name=upload>
-        </form>
+        </form> -->
+        <vaadin-upload class="thick-border"></vaadin-upload>
         <div id = "textButtons" class = "layout horizontal">
           <paper-radio-group id = "messageType" selected="noteButton" class = "layout horizontal">
             <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
@@ -436,6 +436,7 @@
    		 
       exportDocument: function (){
         var notepad = document.getElementById('notesContainer');
+        var notesList = document.getElementById('notesList');
         var textInputContainer = document.getElementById('createMessageContainer');
         var buttonsContainer = document.getElementById('theseAreMyButtons');
         var exportDocument = document.getElementById('exportDoc');
@@ -450,6 +451,9 @@
 
         printDoc.style.display = 'block';
         returnToCall.style.display = 'block';
+
+        notepad.style.height = null;
+        notesList.expandNotepad();
       },
 
       printDocument: function () {
@@ -472,6 +476,9 @@
 
         printDoc.style.display = 'none';
         returnToCall.style.display = 'none';
+
+        notepad.style.height = "400px";
+        notesList.collapseNotepad();
       },
 
     });

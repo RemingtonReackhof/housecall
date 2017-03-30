@@ -14,7 +14,8 @@
   <template>
     <style>
       :host {
-        display: block;
+        display: flex;
+        flex-direction: column;
       }
 
       .note {
@@ -71,8 +72,8 @@
       }
 
       :host {
-        height: 375px;
         display: flex;
+        height: 375px;
         flex-direction: column-reverse;
         align-items: space-around;
       }
@@ -124,7 +125,6 @@
           <div class = "timeContainer">
             <p class = "time"> {{item.timeStamp}} </p>
           </div>
-          <h4 class = "instructionTitle"> {{item.title}} </h4>
           <p class = "content"> {{item.content}} </p>
         </paper-card></br>  
         </template>
@@ -147,16 +147,8 @@
 
       ready: function() {
         this.notesList = [
+            
             {
-              id: 1, 
-              isNote: false, 
-              isInstruction: false, 
-              isImage: true, 
-              title: "Intercostal Insertion", 
-              timeStamp: "1:40", 
-              content: "selderingTechnique.jpg"
-            },
-            /*{
               id: 1, 
               isNote: true, 
               isInstruction: false, 
@@ -170,19 +162,73 @@
               isNote: false, 
               isInstruction: false, 
               isImage: true, 
-              title: "", 
+              title: "Intercostal Insertion", 
               timeStamp: "1:40", 
-              content: "selderingTechnique"
+              content: "selderingTechnique.jpg"
             },
             {
               id: 3, 
               isNote: false, 
               isInstruction: true, 
               isImage: false, 
-              title: "Intercostal Insertion", 
+              title: "", 
               timeStamp: "1:52", 
-              content: "1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine)\n 2.  Place sterile drapes around the area.\n 3.  Apply local anesthetic \n 4.  Insert trocar into the lung using the Seldering Technique (described below)\n 5.  Suture the trocar to the skin to prevent it from falling out. \n 6. Apply dressings to the area"
-            },*/
+              content: "1.  Clean the area of insertion (the 5th intercostal space slightly anterior to the mid axillary line) with antiseptic solution (iodine)"
+            },
+            {
+              id: 4, 
+              isNote: false, 
+              isInstruction: true, 
+              isImage: false, 
+              title: "", 
+              timeStamp: "1:52", 
+              content: "2.  Place sterile drapes around the area."
+            },
+            {
+              id: 5, 
+              isNote: false, 
+              isInstruction: true, 
+              isImage: false, 
+              title: "", 
+              timeStamp: "1:52", 
+              content: "3.  Apply local anesthetic"
+            },
+            {
+              id: 6, 
+              isNote: false, 
+              isInstruction: true, 
+              isImage: false, 
+              title: "", 
+              timeStamp: "1:52", 
+              content: "4.  Insert trocar into the lung using the Seldering Technique (described below)"
+            },
+            {
+              id: 7, 
+              isNote: false, 
+              isInstruction: true, 
+              isImage: false, 
+              title: "", 
+              timeStamp: "1:52", 
+              content: "5.  Suture the trocar to the skin to prevent it from falling out."
+            },
+            {
+              id: 8, 
+              isNote: false, 
+              isInstruction: true, 
+              isImage: false, 
+              title: "", 
+              timeStamp: "1:52", 
+              content: "6.  Apply dressings to the area"
+            },
+            {
+              id: 9, 
+              isNote: false, 
+              isInstruction: false, 
+              isImage: true, 
+              title: "Intercostal Insertion", 
+              timeStamp: "1:40", 
+              content: "selderingTechnique.jpg"
+            },
         ];
       },
 
@@ -267,6 +313,14 @@
       Polymer.RenderStatus.afterNextRender(this, () => {
         this.$.ironList.scrollTop = this.$.ironList.scrollHeight;
       });
+    },
+
+    expandNotepad: function() {
+      this.style.height = null;
+    },
+
+    collapseNotepad: function() {
+      this.style.height = "375px";
     }
 
 })
