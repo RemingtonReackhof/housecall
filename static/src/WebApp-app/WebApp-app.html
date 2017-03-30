@@ -147,7 +147,8 @@
                   if(e.successful){
                     var type = "note";
                     if (e.is_instruction) { type = "instruction";}
-                    else if (e.is_status) { type = "status";}
+                    else if(e.is_note) { type = "note";}
+                    else if (e.is_image) { type = "image";}
 
                     console.log('added from interval id before is ' + last_note_id);
                     if(last_note_id != e.note_id){
