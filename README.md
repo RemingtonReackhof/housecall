@@ -1,6 +1,6 @@
 Beta Release Special Instructions
 
-To Run Remotely On Our Server (Recommended): https://ambulancestream.herokuapp.com/
+To Run Remotely On Our Server On Chrome (Recommended): https://ambulancestream.herokuapp.com/
 
 To Run Locally: 
 1. Install the necessary libraries:
