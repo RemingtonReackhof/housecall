@@ -87,6 +87,7 @@
 
       #createMessageContainer {
         position: relative;
+        display: block;
         width: 95%;
         left: 2.5%;
         margin-top: 20px;
@@ -185,6 +186,25 @@
         text-align: center;
       }
 
+      #exportDoc {
+        position: relative;
+        width: 95%;
+        height: 50px;
+        left: 2.5%;
+        margin-top: 10px;
+        /* Rectangle 2: */
+        background: #65737e;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* End Call: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+        text-align: center;
+      }
+
       #endCall {
         position: relative;
         width: 95%;
@@ -201,6 +221,47 @@
         font-size: 20px;
         color: #FFFFFF;
         letter-spacing: 0;
+        text-align: center;
+      }
+
+      #printDoc {
+        position: relative;
+        display: 'none';
+        width: 95%;
+        height: 50px;
+        left: 2.5%;
+        margin-top: 10px;
+        /* Rectangle 2: */
+        background: #4f5b66;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* End Call: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+        text-align: center;
+      }
+
+      #returnToCall {
+        position: relative;
+        display: 'none';
+        width: 95%;
+        height: 50px;
+        left: 2.5%;
+        margin-top: 10px;
+        /* Rectangle 2: */
+        background: #343d46;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* End Call: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+        text-align: center;
       }
 
       #endCallText {
@@ -223,37 +284,73 @@
     <div id = "createMessageContainer">
     	<iron-autogrow-textarea id = "textBox">
 	  	</iron-autogrow-textarea>
-      <vaadin-upload id = photoUpload class="thick-border" max-files="1" target = "/static/images"></vaadin-upload>
-      <div id = "textButtons" class = "layout horizontal">
-        <paper-radio-group id = "messageType" selected="noteButton" class = "layout horizontal">
-          <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
-          <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
-        </paper-radio-group>
-        <paper-button id = "sendButton"> Send </paper-button>
+      <!-- <form id="upload-file" method="post" enctype="multipart/form-data">
+        <fieldset>
+          <input id= chooseFile type=file name=file>
+        </fieldset> -->
+        <form method="post" enctype="multipart/form-data" onSubmit= "return uploadImageClicked()">
+          <input id = "chooseFile" type=file name=file>
+          <input id= uploadButton type=submit name=upload>
+        </form>
+        <div id = "textButtons" class = "layout horizontal">
+          <paper-radio-group id = "messageType" selected="noteButton" class = "layout horizontal">
+            <paper-radio-button name = "noteButton" id = "noteType"> Note </paper-radio-button>
+            <paper-radio-button name = "instructionButton" id = "instructionType"> Instruction </paper-radio-button>
+          </paper-radio-group>
+            <paper-button id = "sendButton"> Send </paper-button>
+        </div>
+      <!-- </form> -->
+    </div>
+
+    <div id = "theseAreMyButtons">
+      <div id = "buttonsContainer" class = "layout horizontal">
+          <paper-button id = "skypeButton"> Switch to Skype</paper-button>
+          <paper-button id = "filterButton"> Filter: All</paper-button>
       </div>
     </div>
 
-    <!-- Temporary Image Upload Form -->
-    <form method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
-
-
-    <div id = "buttonsContainer" class = "layout horizontal">
-        <paper-button id = "skypeButton"> Switch to Skype</paper-button>
-        <paper-button id = "filterButton"> Filter: All</paper-button>
-    </div>
-
+    <paper-button id = "exportDoc"> Export Document </paper-button>
     <paper-button id = "endCall"> End Call </paper-button>
+    <paper-button id = "printDoc" style = "display: none"> Print Document </paper-button>
+    <paper-button id = "returnToCall" style = "display: none"> Return To Call </paper-button>
 
   </template>
   <!-- Creates the element's prototype and registers it -->
   <script>
+
+  function uploadImageClicked() {
+    
+
+    var thisImage = ($('#chooseFile')[0]);
+    var theRealImage = thisImage.files[0];
+    var textInput = document.getElementById("textBox").value;
+
+    setTimeout(function() {
+      messageType = "image";
+      messageContent = theRealImage.name;
+
+      if (textInput != null)
+      {
+        messageTitle = textInput;
+      }
+
+      addingNote = true;
+      document.getElementById("notesList").addMessage(false, messageType, messageContent, messageTitle, "");
+      addingNote = false;
+      console.log("added message");
+      alert("We did it!");
+    },
+    3000);
+    
+  }
+
     Polymer({
       is: 'my-notes',
       listeners: {
       	"sendButton.click": 'sendMessage',
+        "exportDoc.click" : 'exportDocument',
+        "printDoc.click" : 'printDocument',
+        "returnToCall.click" : 'returnToCall',
       },
 
       sendMessage: function (){
@@ -265,24 +362,46 @@
         var textInput = document.getElementById("textBox").value;
         document.getElementById("textBox").value = null;
 
-        var photoInput = document.getElementById("photoUpload");
+        var thisImage = ($('#chooseFile')[0]);
+        
 
-         if (photoInput.files.length != 0)
+         if (thisImage.files.length != 0)
          {
           // Upload photo
-            if (photoInput.files[0].complete)
-            {
               // add to notesList and database
-              messageType = "image";
-              messageContent = photoInput.files[0].name;
+            var theRealImage = thisImage.files[0];
+            var form_data = new FormData(theRealImage);
 
-              if (textInput != null)
-              {
-                messageTitle = textInput;
-              }
-              shouldSend = true;
-            }
+            $.ajax({
+              url: '/notes',
+              type: 'POST',
+              enctype: 'multipart/form-data',
+              data: form_data,
+              //dataType: "image",
+              //data: theRealImage,
+              contentType: false,
+              cache: false,
+              processData: false,
+              async: false,
+              success: function(e){
+                messageType = "image";
+                messageContent = imageName;
 
+                if (textInput != null)
+                {
+                  messageTitle = textInput;
+                }
+
+                addingNote = true;
+                document.getElementById("notesList").addMessage(false, messageType, messageContent, messageTitle, "");
+                addingNote = false;
+                console.log("added message");
+
+                photoInput = null;
+                imageName = "";
+              },
+              error: function(){},
+            });
          }
          else
          {
@@ -302,7 +421,7 @@
               messageContent = textInput;
               shouldSend = true
             }
-          
+
          }
 
          if (shouldSend)
@@ -313,10 +432,51 @@
             console.log("added message");
          }
         
-      }
+      },
    		 
+      exportDocument: function (){
+        var notepad = document.getElementById('notesContainer');
+        var textInputContainer = document.getElementById('createMessageContainer');
+        var buttonsContainer = document.getElementById('theseAreMyButtons');
+        var exportDocument = document.getElementById('exportDoc');
+        var endCall = document.getElementById('endCall')
+        var printDoc = document.getElementById('printDoc');
+        var returnToCall = document.getElementById('returnToCall')
+
+        textInputContainer.style.display = 'none';
+        buttonsContainer.style.display = 'none';
+        exportDocument.style.display = 'none';
+        endCall.style.display = 'none';
+
+        printDoc.style.display = 'block';
+        returnToCall.style.display = 'block';
+      },
+
+      printDocument: function () {
+        window.print()
+      },
+
+      returnToCall: function() {
+        var notepad = document.getElementById('notesContainer');
+        var textInputContainer = document.getElementById('createMessageContainer');
+        var buttonsContainer = document.getElementById('theseAreMyButtons');
+        var exportDocument = document.getElementById('exportDoc');
+        var endCall = document.getElementById('endCall')
+        var printDoc = document.getElementById('printDoc');
+        var returnToCall = document.getElementById('returnToCall')
+
+        textInputContainer.style.display = 'block';
+        buttonsContainer.style.display = 'inline';
+        exportDocument.style.display = 'block';
+        endCall.style.display = 'block';
+
+        printDoc.style.display = 'none';
+        returnToCall.style.display = 'none';
+      },
 
     });
+
+    
 
 
 
