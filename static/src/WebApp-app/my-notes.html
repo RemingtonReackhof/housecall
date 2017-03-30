@@ -87,6 +87,7 @@
 
       #createMessageContainer {
         position: relative;
+        display: block;
         width: 95%;
         left: 2.5%;
         margin-top: 20px;
@@ -201,6 +202,7 @@
         font-size: 20px;
         color: #FFFFFF;
         letter-spacing: 0;
+        text-align: center;
       }
 
       #endCall {
@@ -219,6 +221,47 @@
         font-size: 20px;
         color: #FFFFFF;
         letter-spacing: 0;
+        text-align: center;
+      }
+
+      #printDoc {
+        position: relative;
+        display: 'none';
+        width: 95%;
+        height: 50px;
+        left: 2.5%;
+        margin-top: 10px;
+        /* Rectangle 2: */
+        background: #4f5b66;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* End Call: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+        text-align: center;
+      }
+
+      #returnToCall {
+        position: relative;
+        display: 'none';
+        width: 95%;
+        height: 50px;
+        left: 2.5%;
+        margin-top: 10px;
+        /* Rectangle 2: */
+        background: #343d46;
+        border: 1px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+        /* End Call: */
+        font-family: .SFNSText-Bold;
+        font-size: 20px;
+        color: #FFFFFF;
+        letter-spacing: 0;
+        text-align: center;
       }
 
       #endCallText {
@@ -246,7 +289,7 @@
           <input id= chooseFile type=file name=file>
         </fieldset> -->
         <form method="post" enctype="multipart/form-data" onSubmit= "return uploadImageClicked()">
-          <input type=file name=file>
+          <input id = "chooseFile" type=file name=file>
           <input id= uploadButton type=submit name=upload>
         </form>
         <div id = "textButtons" class = "layout horizontal">
@@ -259,13 +302,17 @@
       <!-- </form> -->
     </div>
 
-    <div id = "buttonsContainer" class = "layout horizontal">
-        <paper-button id = "skypeButton"> Switch to Skype</paper-button>
-        <paper-button id = "filterButton"> Filter: All</paper-button>
+    <div id = "theseAreMyButtons">
+      <div id = "buttonsContainer" class = "layout horizontal">
+          <paper-button id = "skypeButton"> Switch to Skype</paper-button>
+          <paper-button id = "filterButton"> Filter: All</paper-button>
+      </div>
     </div>
 
     <paper-button id = "exportDoc"> Export Document </paper-button>
     <paper-button id = "endCall"> End Call </paper-button>
+    <paper-button id = "printDoc" style = "display: none"> Print Document </paper-button>
+    <paper-button id = "returnToCall" style = "display: none"> Return To Call </paper-button>
 
   </template>
   <!-- Creates the element's prototype and registers it -->
@@ -302,6 +349,8 @@
       listeners: {
       	"sendButton.click": 'sendMessage',
         "exportDoc.click" : 'exportDocument',
+        "printDoc.click" : 'printDocument',
+        "returnToCall.click" : 'returnToCall',
       },
 
       sendMessage: function (){
@@ -386,8 +435,44 @@
       },
    		 
       exportDocument: function (){
+        var notepad = document.getElementById('notesContainer');
+        var textInputContainer = document.getElementById('createMessageContainer');
+        var buttonsContainer = document.getElementById('theseAreMyButtons');
+        var exportDocument = document.getElementById('exportDoc');
+        var endCall = document.getElementById('endCall')
+        var printDoc = document.getElementById('printDoc');
+        var returnToCall = document.getElementById('returnToCall')
 
-      }
+        textInputContainer.style.display = 'none';
+        buttonsContainer.style.display = 'none';
+        exportDocument.style.display = 'none';
+        endCall.style.display = 'none';
+
+        printDoc.style.display = 'block';
+        returnToCall.style.display = 'block';
+      },
+
+      printDocument: function () {
+        window.print()
+      },
+
+      returnToCall: function() {
+        var notepad = document.getElementById('notesContainer');
+        var textInputContainer = document.getElementById('createMessageContainer');
+        var buttonsContainer = document.getElementById('theseAreMyButtons');
+        var exportDocument = document.getElementById('exportDoc');
+        var endCall = document.getElementById('endCall')
+        var printDoc = document.getElementById('printDoc');
+        var returnToCall = document.getElementById('returnToCall')
+
+        textInputContainer.style.display = 'block';
+        buttonsContainer.style.display = 'inline';
+        exportDocument.style.display = 'block';
+        endCall.style.display = 'block';
+
+        printDoc.style.display = 'none';
+        returnToCall.style.display = 'none';
+      },
 
     });
 
