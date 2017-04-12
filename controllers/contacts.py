@@ -23,16 +23,16 @@ def my_route():
 
 
 
-	if request.method == 'GET':
-
-		cur = mysql.connection.cursor()
-		cur.execute("SELECT user_id, skype_username, firstname, lastname, specialty FROM User WHERE Doctor = 1;")
-		rows = cur.fetchall()
-		print rows
-		if rows is None:
-			return jsonify(successful=False)
-		else:
-			return jsonify(successful=True, rows=rows)
+	# if request.method == 'GET':
+	# 	print "contacts getting"
+	# 	cur = mysql.connection.cursor()
+	# 	cur.execute("SELECT user_id, skype_username, firstname, lastname, specialty FROM User WHERE Doctor = 1;")
+	# 	rows = cur.fetchall()
+	# 	print rows
+	# 	if rows is None:
+	# 		return jsonify(successful=False)
+	# 	else:
+	# 		return jsonify(successful=True, rows=rows)
 
 
 	if request.method == 'POST':
@@ -48,3 +48,20 @@ def my_route():
 
 
 	return render_template("index.html", name='contacts')
+
+
+@contacts.route('/contacts-info', methods=['GET'])
+def my_route_1():
+
+	if request.method == 'GET':
+		print "contacts getting"
+		cur = mysql.connection.cursor()
+		cur.execute("SELECT user_id, skype_username, firstname, lastname, specialty FROM User WHERE Doctor = 1;")
+		rows = cur.fetchall()
+		print rows
+		if rows is None:
+			return jsonify(successful=False)
+		else:
+			return jsonify(successful=True, rows=rows)
+
+	
