@@ -59,6 +59,8 @@
         </paper-toolbar>
       </paper-header-panel>
 
+       <audio id="audio" src="/static/sounds/Boop.mp3"></audio>
+
       <iron-pages
           selected="[[page]]"
           attr-for-selected="name"
@@ -155,6 +157,8 @@
                       document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
                       last_note_id = e.note_id;
                       console.log('added from interval id after is ' + last_note_id);
+                      var audio = document.getElementById("audio");
+                      audio.play();
                     }
                   }
                 },
