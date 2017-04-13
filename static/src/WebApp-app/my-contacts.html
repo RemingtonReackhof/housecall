@@ -96,13 +96,53 @@
           <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "Radiology" style = "cursor:pointer">Radiology</a>
           </div>
         </div>
-        <button onclick="return clearFilters();" id="clearFilters"> Clear Filters </button>
+        <button onclick="clearFilters();createBoxes();" id="clearFilters"> Clear Filters </button>
         </div>
-      <!-- </div> -->
-  <!-- <template is="imported-template" content="static/js/skype-uri.js" type="text/javascript"></template> -->
-  <div id = "skypeButtons">
+     <div id = "skypeButtons">
 
-    <div id="SkypeButton1" >
+    <script>
+    function createBoxes(){
+	$.ajax({ 
+		    type: 'GET', 
+		    url: '/contacts-info', 
+		    dataType: 'json',
+		    success: function (data) { 
+		    	console.log(data)
+		    	var counter = 1;
+		        // $.each(data, function(index, element) {
+		        // 	console.log(element.specialty)
+		        // 	$('skypeButtons').append(`<div id="SkypeButton`+ counter +`" ><script type="text/javascript">
+		        // 	Skype.ui({
+	         //        name: "call",
+	         //        element: "SkypeButton`+ counter +` ",
+	         //        listParticipants: true,
+	         //        participants: ["`+ element.skype_username +`"],
+	         //        video: true,
+	         //        imageSize: 32,
+	         //        imageColor: "white"
+          //  		 }): <`+`/`+`script> 
+          //  		 Click Below to Call <div class="name">Dr. `+ element.firstname + ` ` + element.lastname  +`</div><div class="specialty">` + element.specialty +`</div> </div>`)
+		        // counter = counter + 1;
+
+		        //     // $('body').append($('<div>', {
+		        //     //     text: element.name
+		        //     // })); 
+		        // }
+		        // );
+		    },
+		    error: function(jqXHR, textStatus, errorThrown) {
+        		console.log(textStatus)
+        		console.log(errorThrown)
+    		}
+		});
+
+	}
+	</script>
+
+
+  
+
+<!--     <div id="SkypeButton1" >
        <script type="text/javascript">
             Skype.ui({
                 name: "call",
@@ -169,7 +209,7 @@
             
         </script>
         Click Below to Call <div class="name">Dr. Kayla Fedewa</div><div class="specialty">Radiology</div>
-    </div>
+    </div> -->
 
   </div>
 
