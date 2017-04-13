@@ -3,12 +3,12 @@ function contactsFilterFunctionByName() {
     input = document.getElementById("contactsInputByName");
     filter = input.value.toUpperCase();
     div = document.getElementById("skypeButtons").children;
-    a = document.getElementsByClassName("name");
+    a = document.getElementsByClassName("theName");
     for (i = 0; i < a.length; i++) {
         if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            div[i].style.display = "";
+            div[i + 1].style.display = "";
         } else {
-            div[i].style.display = "none";
+            div[i + 1].style.display = "none";
         }
     }
 }
@@ -18,12 +18,12 @@ function contactsFilterFunctionBySpecialty() {
     input = document.getElementById("contactsInputBySpecialty");
     filter = input.value.toUpperCase();
     div = document.getElementById("skypeButtons").children;
-    a = document.getElementsByClassName("specialty");
+    a = document.getElementsByClassName("theSpecialty");
     for (i = 0; i < a.length; i++) {
         if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            div[i].style.display = "";
+            div[i + 1].style.display = "";
         } else {
-            div[i].style.display = "none";
+            div[i + 1].style.display = "none";
         }
     }
 }
@@ -38,12 +38,12 @@ function contactsSend(id) {
     input = document.getElementById(id).innerHTML;
     filter = input.toUpperCase();
     div = document.getElementById("skypeButtons").children;
-    a = document.getElementsByClassName("specialty");
+    a = document.getElementsByClassName("theSpecialty");
     for (i = 0; i < a.length; i++) {
         if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            div[i].style.display = "";
+            div[i + 1].style.display = "";
         } else {
-            div[i].style.display = "none";
+            div[i + 1].style.display = "none";
         }
     }
 }
