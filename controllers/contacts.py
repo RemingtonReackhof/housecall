@@ -35,15 +35,16 @@ def my_route():
 	# 		return jsonify(successful=True, rows=rows)
 
 
-	if request.method == 'POST':
+	# if request.method == 'POST':
 
-		data = ast.literal_eval(request.data)
+	# 	data = ast.literal_eval(request.data)
 
-		cur = mysql.connection.cursor()
-		cur.execute("INSERT INTO Call (emt_id, dr_id, time_stamp, call_length) VALUES (%s, %s, %s, %s)", [ data['emt_id'], data['dr_id'], data['time_stamp'], data['call_length'] ])
-		mysql.connection.commit()
 
-		return render_template("index.html", name='notes')
+	# 	cur = mysql.connection.cursor()
+	# 	cur.execute("INSERT INTO Call (emt_id, dr_id, time_stamp, call_length) VALUES (%s, %s, %s, %s)", [ data['emt_id'], data['dr_id'], data['time_stamp'], data['call_length'] ])
+	# 	mysql.connection.commit()
+
+	# 	return render_template("index.html", name='notes')
 
 
 
@@ -64,4 +65,27 @@ def my_route_1():
 		else:
 			return jsonify(successful=True, rows=rows)
 
-	
+
+@contacts.route('/contacts-call', methods=['POST'])
+def my_route_2():
+
+	if request.method == 'POST':
+
+		data = ast.literal_eval(request.data)
+
+		emtUsername = data[0]
+		cur = mysql.connection.cursor()
+		cur.execute("SELECT user_id FROM User WHERE username = 1;")
+		emt_id = cur.fetchone()
+
+		# query to get emt_id using their username
+
+
+		cur = mysql.connection.cursor()
+		cur.execute("INSERT INTO Call (emt_id, dr_id, time_stamp, call_length) VALUES (%s, %s, %s, %s)", [ data['emt_id'], data['dr_id'], data['time_stamp'], data['call_length'] ])
+		mysql.connection.commit()
+
+
+		# Return JSON with call id to Garett
+		#return render_template("index.html", name='notes')
+
