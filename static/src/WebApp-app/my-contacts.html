@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<script type="text/javascript">var user;</script>
 <dom-module id="my-contacts">
-
+<script type="text/javascript" src="user_data.js"></script>
   <!-- Defines the element's style and local DOM -->
   <body>
   <template>
@@ -93,10 +94,13 @@
           <div class = "dropChoices">
           <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "genSurg" style = "cursor:pointer">General Surgery</a>
           <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "Urology" style = "cursor:pointer">Urology</a>
+          <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "plastic" style = "cursor:pointer">Plastic Surgery</a>
+          <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "Dermatology" style = "cursor:pointer">Dermatology</a>
+          <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "Cardiology" style = "cursor:pointer">Cardiology</a>
           <a onclick = "javascript:contactsSend(this.id);contactsFunction();" id = "Radiology" style = "cursor:pointer">Radiology</a>
           </div>
         </div>
-        <button onclick="clearFilters();createBoxes();" id="clearFilters"> Clear Filters </button>
+        <button onclick="return clearFilters();" id="clearFilters"> Clear Filters </button>
         </div>
      <div id = "skypeButtons">
 
@@ -107,28 +111,14 @@
 		    url: '/contacts-info', 
 		    dataType: 'json',
 		    success: function (data) { 
-		    	console.log(data)
 		    	var counter = 1;
-		        // $.each(data, function(index, element) {
-		        // 	console.log(element.specialty)
-		        // 	$('skypeButtons').append(`<div id="SkypeButton`+ counter +`" ><script type="text/javascript">
-		        // 	Skype.ui({
-	         //        name: "call",
-	         //        element: "SkypeButton`+ counter +` ",
-	         //        listParticipants: true,
-	         //        participants: ["`+ element.skype_username +`"],
-	         //        video: true,
-	         //        imageSize: 32,
-	         //        imageColor: "white"
-          //  		 }): <`+`/`+`script> 
-          //  		 Click Below to Call <div class="name">Dr. `+ element.firstname + ` ` + element.lastname  +`</div><div class="specialty">` + element.specialty +`</div> </div>`)
-		        // counter = counter + 1;
+		    	$.each(data.rows, function( index, value ) {
+		        	$('#skypeButtons').append(`<div id="SkypeButton`+ counter +`" style="max-width: 450px;padding: 10px;font-family: noir;color: white;font-size: 25px;text-align: center;margin: 0 auto;background-color: #EC7070;border: 5px solid #EDEDF4;border-radius: 5px;"><button type="button" onclick="
+						$.post("/contacts-call",[user.username, ` + value[0] + `],function(data,status){
+							user.callID = data;});">Start Conversation</button>  Click Below to Call <div class="theName">Dr. `+ value[2]+ ` ` + value[3]  +`</div><div class="theSpecialty">` + value[4] +`</div> </div>`);
+		        	counter = counter + 1;
 
-		        //     // $('body').append($('<div>', {
-		        //     //     text: element.name
-		        //     // })); 
-		        // }
-		        // );
+		    	});
 		    },
 		    error: function(jqXHR, textStatus, errorThrown) {
         		console.log(textStatus)
@@ -138,7 +128,10 @@
 
 	}
 	</script>
-
+    <script type="text/javascript">
+        createBoxes();
+        //alert(user.username)
+    </script>
 
   
 
