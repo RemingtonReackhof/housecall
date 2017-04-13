@@ -34,6 +34,7 @@ def my_route():
 # 		username = session['username']
 	print "here"
 	#print data['isImage']
+	print ""
 
 	if request.method == 'GET':
 		if len(request.args) == 0:
@@ -42,25 +43,33 @@ def my_route():
 		#print 'GETTING'
 		content = {}
 		note_id = request.args['note_id']
+		toSend = []
 
 		if note_id == '1':
-			print 'note id is 1'
+			note_id = int(note_id)
+			note_id = 170
 			cur = mysql.connection.cursor()
-			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes  ORDER BY note_id DESC LIMIT 1;")
-			content = cur.fetchone()
-			print content
+			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id > '"+str(note_id)+"'")
+			content = cur.fetchall()
+			if content is not None:
+				num_notes = len(content)
+				for i in range(0,num_notes):
+					toSend.append({'content':content[i][1], 'time_stamp':content[i][2], 'note_id':content[i][0], 'is_note':content[i][3], 'is_instruction':content[i][4], 'is_image':content[i][5]})
+				print content
 
 		else:
 			print 'note id is greater than 1'
 			cur = mysql.connection.cursor()
 			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id = '"+note_id+"'")
 			content = cur.fetchone()
+			if content is not None:
+				toSend.append({'content':content[1], 'time_stamp':content[2], 'note_id':content[0], 'is_note':content[3], 'is_instruction':content[4], 'is_image':content[5]})
 			print content
 
-		if content is None:
+		if content is None and len(toSend) == 0:
 			return jsonify(successful=False)
 		else:
-			return jsonify(successful=True, content=content[1], time_stamp=content[2], note_id=content[0], is_note=content[3], is_instruction=content[4], is_image=content[5])
+			return jsonify(successful=True, content=toSend)
 
 
 	if request.method == 'POST':	
@@ -106,7 +115,8 @@ def my_route():
 				cur.execute("SELECT note_id FROM Notes WHERE content = %s", [filename])
 				recent_note_id = max(cur.fetchall())
 
-				return render_template("index.html", name="notes")
+				#return render_template("index.html", name="notes")
+				return redirect("/notes", code=302)
 
 
 	return render_template("index.html", name="notes")

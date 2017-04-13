@@ -146,20 +146,26 @@
             $.ajax({
                 url: '/notes',
                 success: function(e){
+                  console.log(e);
                   if(e.successful){
-                    var type = "note";
-                    if (e.is_instruction) { type = "instruction";}
-                    else if(e.is_note) { type = "note";}
-                    else if (e.is_image) { type = "image";}
+                    list_len = e.content.length
+                    for (var i = 0; i <  list_len; i++) {
+                      var mes = e.content[i];
+                      var type = "note";
+                      if (mes.is_instruction) { type = "instruction";}
+                      else if(mes.is_note) { type = "note";}
+                      else if (mes.is_image) { type = "image";}
 
-                    console.log('added from interval id before is ' + last_note_id);
-                    if(last_note_id != e.note_id){
-                      document.getElementById("notesList").addMessage(true, type, e.content, '', e.time_stamp);
-                      last_note_id = e.note_id;
-                      console.log('added from interval id after is ' + last_note_id);
-                      var audio = document.getElementById("audio");
-                      audio.play();
+                      console.log('added from interval id before is ' + last_note_id);
+                      if(last_note_id != mes.note_id){
+                        document.getElementById("notesList").addMessage(true, type, mes.content, '', mes.time_stamp);
+                        last_note_id = mes.note_id;
+                        console.log('added from interval id after is ' + last_note_id);
+                        var audio = document.getElementById("audio");
+                        audio.play();
+                      }
                     }
+                    
                   }
                 },
                 error: function(e){},
