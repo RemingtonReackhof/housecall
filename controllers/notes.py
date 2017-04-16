@@ -47,7 +47,7 @@ def my_route():
 
 		if note_id == '1':
 			note_id = int(note_id)
-			note_id = 170
+			note_id = 1
 			cur = mysql.connection.cursor()
 			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id > '"+str(note_id)+"'")
 			content = cur.fetchall()
@@ -83,7 +83,7 @@ def my_route():
 				data['messageTitle'] = "no title"
 
 			cur = mysql.connection.cursor()
-			cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content) VALUES (%s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isImage'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent']])
+			cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content, call_id) VALUES (%s, %s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isImage'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent'], '1'])
 			mysql.connection.commit()
 
 			cur.execute("SELECT note_id FROM Notes WHERE content = %s", [data['messageContent']])
@@ -109,7 +109,7 @@ def my_route():
 				file.save(name_of_file)
 
 				cur = mysql.connection.cursor()
-				cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content) VALUES (%s, %s, %s, %s, %s, %s)", [ False, False, True, filename, '0:00', filename ])
+				cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content, call_id) VALUES (%s, %s, %s, %s, %s, %s, %s)", [ False, False, True, filename, '0:00', filename , '1'])
 				mysql.connection.commit()
 
 				cur.execute("SELECT note_id FROM Notes WHERE content = %s", [filename])

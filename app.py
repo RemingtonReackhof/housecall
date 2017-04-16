@@ -35,7 +35,7 @@ app.register_blueprint(controllers.signup)
 app.register_blueprint(controllers.dashboard)
 app.register_blueprint(controllers.notes)
 app.register_blueprint(controllers.contacts)
-app.register_blueprint(controllers.vitals)
+app.register_blueprint(controllers.log)
 
 class HelloWorld(Resource):
     def get(self):
