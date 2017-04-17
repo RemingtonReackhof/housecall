@@ -114,7 +114,7 @@
 		    	var counter = 1;
 		    	$.each(data.rows, function( index, value ) {
 		        	$('#skypeButtons').append(`<div id="SkypeButton`+ counter +`" style="max-width: 450px;padding: 10px;font-family: noir;color: white;font-size: 25px;text-align: center;margin: 0 auto;background-color: #EC7070;border: 5px solid #EDEDF4;border-radius: 5px;"><button type="button" onclick="
-						$.post("/contacts-call",[user.username, ` + value[0] + `],function(data,status){
+						$.post('/contacts-call',{ emtEmail:user.username, doctorID: ` + value[0] + `},function(data,status){
 							user.callID = data;});">Start Conversation</button>  Click Below to Call <div class="theName">Dr. `+ value[2]+ ` ` + value[3]  +`</div><div class="theSpecialty">` + value[4] +`</div> </div>`);
 		        	counter = counter + 1;
 
