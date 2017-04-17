@@ -137,15 +137,7 @@
   <script>
     Polymer({
       is: 'my-dashboard',
-      listeners: {
-        'notes.mouseover': 'highlight',
-        'notes.mouseout': 'unhighlight',
-        'contacts.mouseover': 'highlight',
-        'contacts.mouseout': 'unhighlight',
-        'log.mouseover': 'highlight',
-        'log.mouseout': 'unhighlight',
 
-      },
       ready: function() {
         this.contactsList = [
             {name: 'Dr. Matthew Fox', specialty: 'Urology'},
@@ -153,14 +145,6 @@
             {name: 'Dr. Colin Lockareff', specialty: 'Radiology'},
             {name: 'Dr. Kayla Fedewa', specialty: 'Radiology'},
         ];
-      },
-      highlight: function(e){
-        if(e.target.id != "")
-          this.$$('#' + e.target.id).toggleClass('bold', true);
-      },
-      unhighlight: function(e){
-        if(e.target.id != "")
-          this.$$('#' + e.target.id).toggleClass('bold', false);
       },
     });
   </script>

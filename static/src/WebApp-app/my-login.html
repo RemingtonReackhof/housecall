@@ -108,6 +108,8 @@
                 url: '/log',
                 success: function(e){
                   user.callList = e;
+                  console.log('call log is: \n');
+                  console.log(user.callList);
                 },
                 error: function(e){ alert('error')},
                 type: 'GET',
