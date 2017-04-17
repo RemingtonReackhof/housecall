@@ -1,7 +1,9 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
 <link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
+<link rel="import" href="call-list.html">
 
 <dom-module id="my-log">
   <!-- Defines the element's style and local DOM -->
@@ -20,11 +22,50 @@
         height: 32px;
         width: 32px;
       }
+
+      #header {
+        position: relative;
+        font-family: .SFNSText-Bold;
+        left: 2.5%;
+      }
+
+      #logContainer {
+        /* Rectangle 2: */
+        position: relative;
+        width: 95%;
+        height: 700px;
+        left: 2.5%;
+        padding-left: 1%;
+        padding-right: 1%;
+        background: #E9E9E9;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .text {
+        position: relative;
+        width: 30%;
+        text-align: center;
+      }
+
     </style>
 
-    <h1>Log page coming in a future release.<paper-icon-button icon="help-outline" id="calllog-help"></paper-icon-button></h1>
+    <h1 id = "header"> Call Log </h1>
+
+    <paper-card id = "logContainer">
+      <div class = "layout horizontal">
+        <h4 class = "text"> Call With </h5>
+        <h4 class = "text"> Date </h5>
+        <h4 class = "text"> Call Duration </h5>
+      </div>
+      <call-list id = "callList"></call-list>
+    </paper-card>
+
+
 
     <paper-tooltip for="calllog-help" position="right" offset="0" style="width: 200px; font-size: 40px;">On this page, you can view all of your past calls. Click on a call to see the archived notes associated with that call. </paper-tooltip>
+    
   </template>
   <!-- Creates the element's prototype and registers it -->
   <script>

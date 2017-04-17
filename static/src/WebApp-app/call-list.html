@@ -1,0 +1,193 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../../bower_components/iron-scroll-target-behavior/iron-scroll-target-behavior.html">
+<link rel="import" href="../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<script type="text/javascript"> 
+  var user;
+</script>
+<script type="text/javascript" src="user_data.js"></script>
+
+
+<dom-module id="call-list">
+  <!-- Defines the element's style and local DOM -->
+  <template>
+    <style>
+      :host {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .inactiveCall {
+        width: 100%;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        background: #FFFFFF;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .activeCall {
+        /* Rectangle 2: */
+        position: relative;
+        width: 100%;
+        padding-left: 10px;
+        margin-bottom: 10px;
+        background: #FFB5B5;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .text {
+        position: relative;
+        width: 30%;
+        text-align: center;
+      }
+
+      :host {
+        display: flex;
+        height: 620px;
+        flex-direction: column-reverse;
+        align-items: space-around;
+      }
+      
+      iron-list {
+       
+      }
+
+      .ironList #items.iron-list{
+        padding: 10px;
+        margin: 10;
+        position: relative;
+        top: 20;
+        will-change: transform;
+      }
+        
+}
+
+    </style>
+
+  <iron-list id ='ironList' class ='ironList' items="[[callList]]" style="height:100%;width:100%">
+    <template style="height:100%;width:100%">
+    <div>
+
+      <template is="dom-if" if="{{item.isDoctor}}">
+
+        <template is="dom-if" if="{{item.isActive}}">
+
+          <paper-card id = "log{{item.call_id}}" class = "activeCall">
+            <div id = callContainer class = "layout horizontal">
+              <h5 class = "text"> {{item.emt_id[3]}} + " " + {{item.emt_id[4]}} </h5>
+              <h5 class = "text"> {{item.date}} </h5>
+              <h5 class = "text"> Active </h5>
+            </div>
+          </paper-card>
+
+        </template>
+
+        <template is="dom-if" if="{{item.isNotActive}}">
+
+          <paper-card id = "log{{item.call_id}}" class = "inactiveCall">
+            <div id = callContainer class = "layout horizontal">
+              <h5 class = "text"> {{item.emt_id[3]}} + " " + {{item.emt_id[4]}} </h5>
+              <h5 class = "text"> {{item.date}} </h5>
+              <h5 class = "text"> {{item.call_length}} </h5>
+            </div>
+          </paper-card>
+         </template>
+
+       </template>
+
+       <template is="dom-if" if="{{item.isEMT}}">
+
+        <template is="dom-if" if="{{item.isActive}}">
+
+          <paper-card id = "log{{item.call_id}}" class = "activeCall">
+            <div id = callContainer class = "layout horizontal">
+              <h5 class = "text"> {{item.dr_id[3]}} + " " + {{item.dr_id[4]}} </h5>
+              <h5 class = "text"> {{item.date}} </h5>
+              <h5 class = "text"> Active </h5>
+            </div>
+          </paper-card>
+
+        </template>
+
+        <template is="dom-if" if="{{item.isNotActive}}">
+
+          <paper-card id = "log{{item.call_id}}" class = "inactiveCall">
+            <div id = callContainer class = "layout horizontal">
+              <h5 class = "text"> {{item.dr_id[3]}} + " " + {{item.dr_id[4]}} </h5>
+              <h5 class = "text"> {{item.date}} </h5>
+              <h5 class = "text"> {{item.call_length}} </h5>
+            </div>
+          </paper-card>
+         </template>
+
+       </template>
+
+
+      </div>
+
+      </template>
+
+    </iron-list>
+
+  </template>
+  <!-- Creates the element's prototype and registers it -->
+  <script>
+
+    Polymer({
+      is: 'call-list',
+      ready: function() {
+        this.callList = [
+            {
+              call_id: 0, 
+              dr_id: [0,0,0,"Colin", "Lockareff"],
+              emt_id: [0,0,0,"Garrett", "Zelin"], 
+              date: "10-27-1994 3:35", 
+              call_length: "25:20", 
+              is_active: 0, 
+              timeStamp: "1:37", 
+            },
+            {
+              call_id: 1, 
+              dr_id: [0,0,0,"Kayla", "Fedewa"],
+              emt_id: [0,0,0,"Matt", "Fox"], 
+              date: "6-28-1995 12:00", 
+              call_length: "25:20", 
+              is_active: 1, 
+              timeStamp: "1:37", 
+            },
+        ];
+      },
+
+      isActive: function(item){
+        console.log('In an iff');
+        console.log(item);
+        return item.is_active == 1;
+      },
+      isNotActive: function(item){
+        console.log('In an iff');
+        console.log(item);
+        return item.is_active == 0;
+      },
+      isDoctor: function(item){
+        console.log('In an iff');
+        console.log(user.type);
+        return user.type == "dr";
+      },
+      isEMT: function(item){
+        console.log('In an iff');
+        console.log(user.type);
+        return user.type == "emt";
+      },
+
+
+})
+  </script>
+</dom-module>
