@@ -10,6 +10,9 @@
 <link rel="import" href="../../bower_components/vaadin-upload/vaadin-upload.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="notes-list.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <script type="text/javascript"> 
   var user;
 </script>
@@ -22,6 +25,9 @@
       :host {
         display: block;
         padding: 16px;
+        --paper-tooltip: {
+          font-size: 14pt;
+        };
       }
 
       #header {
@@ -236,12 +242,17 @@
         text-align: center; 
         bottom: 30px
       }
+      paper-icon-button{
+        color: gray;
+        height: 32px;
+        width: 32px;
+      }
 
       <style is="custom-style" include="iron-flex"></style>
 
     </style>
 
-    <h1 id = "header"> Notepad </h1>
+    <h1 id = "header"> Notepad<paper-icon-button icon="help-outline" id="notepad-help"></h1>
 
     <paper-card id = "notesContainer">
       
@@ -273,6 +284,8 @@
     <paper-button id = "endCall"> End Call </paper-button>
     <paper-button id = "printDoc" style = "display: none"> Print Document </paper-button>
     <paper-button id = "returnToCall" style = "display: none"> Return To Call </paper-button>
+
+    <paper-tooltip for="notepad-help" position="right" offset="0" style="width: 400px; font-size: 40px;"> On this page you can send and receive messages. Send a message by typing out text, selecting either note or instruction, and pressing the "Send" button. You can also send an image by clicking the "Choose File" button, selecting your image, and then hitting "Submit". Finally, a printer friendly version of the page is created by clicking "Export Document". </paper-tooltip>
 
   </template>
   <!-- Creates the element's prototype and registers it -->

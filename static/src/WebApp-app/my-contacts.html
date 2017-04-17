@@ -1,4 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <script type="text/javascript">var user;</script>
 <dom-module id="my-contacts">
 <script type="text/javascript" src="user_data.js"></script>
@@ -6,6 +9,12 @@
   <body>
   <template>
   <style type="text/css">
+    :host{
+      padding: 16px;
+         --paper-tooltip: {
+          font-size: 14pt;
+        };
+    }
     @font-face {
         font-family: noir;
         src: url(Noir_medium.otf);
@@ -25,6 +34,7 @@
         font-family: noir;
         font-size: 48px;
         text-align: center;
+        background: inherit;
     }
 
     #skypeButtons > * {
@@ -80,10 +90,15 @@
     width: 218px;
 
   }
+  paper-icon-button{
+        color: gray;
+        height: 32px;
+        width: 32px;
+  }
 
   </style>
 
-  <div id="header"></br>Displaying Doctors at The University of Michigan Hospital</div></br>
+  <div id="header"></br>Displaying Doctors at The University of Michigan Hospital<paper-icon-button icon="help-outline" id="contacts-help"></paper-icon-button></div></br>
   <input type="text" placeholder="Filter By Name..." id="contactsInputByName" onkeyup="contactsFilterFunctionByName()"></br>
 
       <!-- <div class="contactsDropdown"> -->
@@ -102,6 +117,9 @@
         </div>
         <button onclick="return clearFilters();" id="clearFilters"> Clear Filters </button>
         </div>
+
+        <paper-tooltip for="contacts-help" position="right" offset="0" style="width: 200px; font-size: 40px;"> Call a contact by pressing the "Start Conversation" button.  Filter contacts by specialty or name using the search box below.  </paper-tooltip>
+        
      <div id = "skypeButtons">
 
     <script>
@@ -114,7 +132,7 @@
 		    	var counter = 1;
 		    	$.each(data.rows, function( index, value ) {
 		        	$('#skypeButtons').append(`<div id="SkypeButton`+ counter +`" style="max-width: 450px;padding: 10px;font-family: noir;color: white;font-size: 25px;text-align: center;margin: 0 auto;background-color: #EC7070;border: 5px solid #EDEDF4;border-radius: 5px;"><button type="button" onclick="
-						$.post("/contacts-call",[user.username, ` + value[0] + `],function(data,status){
+						$.post('/contacts-call',{ emtEmail:user.username, doctorID: ` + value[0] + `},function(data,status){
 							user.callID = data;});">Start Conversation</button>  Click Below to Call <div class="theName">Dr. `+ value[2]+ ` ` + value[3]  +`</div><div class="theSpecialty">` + value[4] +`</div> </div>`);
 		        	counter = counter + 1;
 
