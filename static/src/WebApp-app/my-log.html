@@ -1,4 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="call-list.html">
 
 <dom-module id="my-log">
   <!-- Defines the element's style and local DOM -->
@@ -9,9 +11,47 @@
 
         padding: 16px;
       }
+
+      #header {
+        position: relative;
+        font-family: .SFNSText-Bold;
+        left: 2.5%;
+      }
+
+      #logContainer {
+        /* Rectangle 2: */
+        position: relative;
+        width: 95%;
+        height: 700px;
+        left: 2.5%;
+        padding-left: 1%;
+        padding-right: 1%;
+        background: #E9E9E9;
+        border: 2px solid #9B9B9B;
+        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
+        border-radius: 8px;
+      }
+
+      .text {
+        position: relative;
+        width: 30%;
+        text-align: center;
+      }
+
     </style>
 
-    <h1>Log page coming in a future release.</h1>
+    <h1 id = "header"> Call Log </h1>
+
+    <paper-card id = "logContainer">
+      <div class = "layout horizontal">
+        <h4 class = "text"> Call With </h5>
+        <h4 class = "text"> Date </h5>
+        <h4 class = "text"> Call Duration </h5>
+      </div>
+      <call-list id = "callList"></call-list>
+    </paper-card>
+
+
   </template>
   <!-- Creates the element's prototype and registers it -->
   <script>
