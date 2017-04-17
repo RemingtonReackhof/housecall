@@ -93,6 +93,6 @@ def index_route():
 		#	return redirect(prevURL)
 		#return redirect(url_for('main.main_route'))
 
-	return jsonify(message="Success!", user_type=usertype, username=session['email']) 
+	return jsonify(message="Success!", user_type=usertype, username=session['email'], user_id=email[0][0]) 
 
 	#return render_template("index.html", prevURL=prevURL)

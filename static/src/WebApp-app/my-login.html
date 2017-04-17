@@ -103,20 +103,36 @@
           doc.appendChild(p);
       };
 
+      function get_past_calls(){
+        $.ajax({
+                url: '/log',
+                success: function(e){
+                  user.callList = e;
+                },
+                error: function(e){ alert('error')},
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json",
+                data: {'username': user.username, 'user_id': user.userID, 'user_type': user.type}, 
+            });
+      }
+
       function make_ajax_call(data) {
         $.ajax({
             //url: url,       // SHOULD BE window.location !!
             url: '/',
             success:  function(data){
-              console.log(user);
               user.type = data.user_type;
               user.username = data.username;
+              user.userID = data.user_id;
+
               if(user.type == 'emt'){
                 $('#createMessageContainer').hide();
               }
               else{
                 $('#createMessageContainer').show();
               }
+              get_past_calls();
               document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
               document.getElementsByTagName('webapp-app')[0].username = user.username;
               $('.needsLogin').show();
@@ -130,5 +146,6 @@
             data: data,
           });
       }
+
   </script>
 </dom-module>
