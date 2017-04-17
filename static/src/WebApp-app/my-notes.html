@@ -10,6 +10,9 @@
 <link rel="import" href="../../bower_components/vaadin-upload/vaadin-upload.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="notes-list.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <script type="text/javascript"> 
   var user;
 </script>
@@ -22,6 +25,9 @@
       :host {
         display: block;
         padding: 16px;
+        --paper-tooltip: {
+          font-size: 14pt;
+        };
       }
 
       #header {
@@ -153,38 +159,6 @@
         text-align: center;
       }
 
-      #skypeButton {
-        width: 98%;
-        height: 50px;
-        background: #1EB0ED;
-        border: 1px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-        /* Switch to: */
-        font-family: .SFNSText-Bold;
-        font-size: 20px;
-        color: #FFFFFF;
-        letter-spacing: 0;
-        text-align: center;
-      }
-
-      #filterButton {
-        width: 98%;
-        height: 50px;
-        right: 0px;
-        /* Rectangle 2: */
-        background: #8FD567;
-        border: 1px solid #9B9B9B;
-        box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
-        border-radius: 8px;
-        /* Filter: All: */
-        font-family: .SFNSText-Bold;
-        font-size: 20px;
-        color: #FFFFFF;
-        letter-spacing: 0;
-        text-align: center;
-      }
-
       #exportDoc {
         position: relative;
         width: 95%;
@@ -268,12 +242,17 @@
         text-align: center; 
         bottom: 30px
       }
+      paper-icon-button{
+        color: gray;
+        height: 32px;
+        width: 32px;
+      }
 
       <style is="custom-style" include="iron-flex"></style>
 
     </style>
 
-    <h1 id = "header"> Notepad </h1>
+    <h1 id = "header"> Notepad<paper-icon-button icon="help-outline" id="notepad-help"></h1>
 
     <paper-card id = "notesContainer">
       
@@ -301,17 +280,12 @@
       <!-- </form> -->
     </div>
 
-    <div id = "theseAreMyButtons">
-      <div id = "buttonsContainer" class = "layout horizontal">
-          <paper-button id = "skypeButton"> Switch to Skype</paper-button>
-          <paper-button id = "filterButton"> Filter: All</paper-button>
-      </div>
-    </div>
-
     <paper-button id = "exportDoc"> Export Document </paper-button>
     <paper-button id = "endCall"> End Call </paper-button>
     <paper-button id = "printDoc" style = "display: none"> Print Document </paper-button>
     <paper-button id = "returnToCall" style = "display: none"> Return To Call </paper-button>
+
+    <paper-tooltip for="notepad-help" position="right" offset="0" style="width: 400px; font-size: 40px;"> On this page you can send and receive messages. Send a message by typing out text, selecting either note or instruction, and pressing the "Send" button. You can also send an image by clicking the "Choose File" button, selecting your image, and then hitting "Submit". Finally, a printer friendly version of the page is created by clicking "Export Document". </paper-tooltip>
 
   </template>
   <!-- Creates the element's prototype and registers it -->

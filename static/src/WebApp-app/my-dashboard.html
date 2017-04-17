@@ -2,8 +2,11 @@
 <link rel="import" href="../../bower_components/paper-styles/paper-styles.html">
 <link rel="import" href="../../bower_components/paper-styles/shadow.html">
 <link rel="import" href="../../bower_components/paper-card/paper-card.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
 <link rel="import" href="notes-list.html">
 
 <dom-module id="my-dashboard">
@@ -14,6 +17,9 @@
         display: block;
 
         padding: 16px;
+         --paper-tooltip: {
+          font-size: 14pt;
+        };
       }
       #pages {
           @apply(--layout-horizontal);
@@ -56,13 +62,26 @@
           box-shadow: 1px 3px 4px 0 rgba(0,0,0,0.50);
           border-radius: 8px;
       }
+      .notes-header{
+        font-size: 20pt;
+        font-weight: 400;
+        color: black;
+      }
+      paper-icon-button{
+        color: gray;
+        height: 32px;
+        width: 32px;
+      }
     </style>
 
   
     <div id="pages">
       <a href="/notes" tabindex="-1">
-        <paper-card id="notes" name="notes" heading="Notes" style="height:600px;width:500px;">
+        <paper-card id="notes" name="notes" style="height:600px;width:500px;">
           <div id="notes" class="card-content">
+            <div class="notes-header">
+              Notes<paper-icon-button icon="help-outline" id="notes-help"></paper-icon-button>
+            </div>
             <notes-list id = "my-notesList"></notes-list>
           </div>
           <div id="notes" class="card-actions">
@@ -73,8 +92,11 @@
 
       <div id="side">
         <a href="/contacts" tabindex="-1">
-          <paper-card id="contacts" name="contacts" heading="Contacts" style="height:290px;width:500px;margin-bottom:10px;margin-left:15px;">
+          <paper-card id="contacts" name="contacts" style="height:290px;width:500px;margin-bottom:10px;margin-left:15px;">
             <div id="contacts" class="card-content">
+              <div class="notes-header">
+                Contacts<paper-icon-button icon="help-outline" id="contacts-help"></paper-icon-button>
+              </div>
               <iron-list id ='ironList' class ='ironList' items="[[contactsList]]" style="height:150px;width:100%">
                 <template>
                   <div> 
@@ -91,14 +113,23 @@
         </a>
 
         <a href="/log" tabindex="-1">
-          <paper-card name="log" id="log" heading="Call Log" style="height:300px;width:500px;margin-left:15px;">
-            <div id="log" class="card-content">Click here to see call log.</div>
+          <paper-card name="log" id="log" style="height:300px;width:500px;margin-left:15px;">
+            <div id="log" class="card-content">
+              <div class="notes-header">
+                Call Log<paper-icon-button icon="help-outline" id="log-help"></paper-icon-button>
+              </div>
+            Click here to see call log.</div>
             <div id="log" class="card-actions">
             </div>
           </paper-card>
         </a>
       </div>
     </div>
+
+    <paper-tooltip for="notes-help" position="right" offset="0" style="width: 200px; font-size: 40px;">By clicking this button, you can view and send notes to the doctor you are connected to or that you have sent.  A preview your notes page is available on the button. Feel free to scroll through to see what the doctor has ordered. </paper-tooltip>
+     <paper-tooltip for="contacts-help" position="right" offset="0" style="width: 200px">By clicking this button, you can view your contacts and make a call.  A preview of your contacts is available on the button. Contacts can be searched by name and specialty once on the page. </paper-tooltip>
+     <paper-tooltip for="log-help" position="right" offset="0" style="width: 200px">View your previous notes and calls by clicking this button.  A preview of your most recent calls is available on the button. </paper-tooltip>
+
 
 
   </template>
