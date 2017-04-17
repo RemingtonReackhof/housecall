@@ -1,4 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
 
 <dom-module id="my-log">
   <!-- Defines the element's style and local DOM -->
@@ -8,10 +11,20 @@
         display: block;
 
         padding: 16px;
+        --paper-tooltip: {
+          font-size: 14pt;
+        };
+      }
+      paper-icon-button{
+        color: gray;
+        height: 32px;
+        width: 32px;
       }
     </style>
 
-    <h1>Log page coming in a future release.</h1>
+    <h1>Log page coming in a future release.<paper-icon-button icon="help-outline" id="calllog-help"></paper-icon-button></h1>
+
+    <paper-tooltip for="calllog-help" position="right" offset="0" style="width: 200px; font-size: 40px;">On this page, you can view all of your past calls. Click on a call to see the archived notes associated with that call. </paper-tooltip>
   </template>
   <!-- Creates the element's prototype and registers it -->
   <script>
