@@ -80,7 +80,7 @@
       <div>
         <template is="dom-if" if="{{isActive(item)}}">
 
-          <paper-card id = "log{{item.call_id}}" class = "activeCall" tagName = "a">
+          <paper-card id = "log{{item.call_id}}" on-click='activeClicked' class = "activeCall">
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.emt_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -92,7 +92,8 @@
 
         <template is="dom-if" if="{{isNotActive(item)}}">
 
-          <paper-card id = "log{{item.call_id}}" class = "inactiveCall" tagName = "a">
+          <paper-card id = "log{{item.call_id}}" on-click='inactiveClicked' class = "inactiveCall">
+
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.emt_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -107,7 +108,8 @@
        <div>
         <template is="dom-if" if="{{isActive(item)}}">
 
-          <paper-card id = "log{{item.call_id}}" class = "activeCall" tagName = "a">
+          <paper-card id = "log{{item.call_id}}" on-click='activeClicked' class = "activeCall">
+
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.dr_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -119,7 +121,9 @@
 
         <template is="dom-if" if="{{isNotActive(item)}}">
 
-          <paper-card id = "log{{item.call_id}}" class = "inactiveCall" tagName = "a">
+
+          <paper-card id = "log{{item.call_id}}" on-click='inactiveClicked' class = "inactiveCall">
+
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.dr_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -150,29 +154,55 @@
 
 
       isActive: function(item){
-        console.log('In an iff');
-        console.log(item);
         return item.is_active == 1;
       },
       isNotActive: function(item){
-        console.log('In an iff');
-        console.log(item);
         return item.is_active == 0;
       },
       isDoctor: function(item){
-        console.log('In an iff');
-        console.log(user.type);
         return user.type == "dr";
       },
       isEMT: function(item){
-        console.log('In an iff');
-        console.log(user.type);
         return user.type == "emt";
       },
 
       fullName: function(item){
         return item[3] + " " + item[4];
-      }
+      },
+
+      inactiveClicked: function(e, detail){ 
+        document.getElementById("archivedNotesList").set('notesList', []);
+        $.ajax({
+                url: '/log',
+                success: function(e){
+                  console.log('got the notes!');
+                  console.log(e.content);
+                  for (var i = 0; i < e.content.length; i++) {
+                    var newMessage = {
+                      id: e.content[i].note_id, 
+                      isNote: e.content[i].is_note, 
+                      isInstruction: e.content[i].is_instruction, 
+                      isImage: e.content[i].is_image, 
+                      title: '', 
+                      timeStamp: e.content[i].time_stamp, 
+                      content: e.content[i].content,
+                      };
+                    document.getElementById("archivedNotesList").push('notesList', newMessage);
+                  }
+                  document.getElementsByTagName('webapp-app')[0].page = 'archived-notepad';
+                },
+                error: function(e){ console.log('there was an error')},
+                type: 'GET',
+                dataType: 'json',
+                contentType: "application/json",
+                data: {'username': user.username,'get_notes': true,'call_id': e.path[e.path.length - 14].id.substring(3)}, 
+         });
+      },
+
+      activeClicked: function(e, detail){
+          document.getElementsByTagName('webapp-app')[0].page = 'notes';
+      },
+
 
 
 })

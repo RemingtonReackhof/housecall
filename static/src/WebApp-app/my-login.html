@@ -110,6 +110,9 @@
                   for (i = 0; i < e.content.length; i++)
                   {
                     document.getElementById("callList").push("callList", e.content[i]);
+                    if(i < 5){
+                      document.getElementById("callListPreview").push("callList", e.content[i]);
+                    }
                   }
                   user.callList = e.content;
                   console.log('call log is: \n');
@@ -119,7 +122,7 @@
                 type: 'GET',
                 dataType: 'json',
                 contentType: "application/json",
-                data: {'username': user.username, 'user_id': user.userID, 'user_type': user.type}, 
+                data: {'get_notes': false, 'username': user.username, 'user_id': user.userID, 'user_type': user.type}, 
             });
       }
 
