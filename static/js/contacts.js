@@ -6,9 +6,9 @@ function contactsFilterFunctionByName() {
     a = document.getElementsByClassName("theName");
     for (i = 0; i < a.length; i++) {
         if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            div[i + 1].style.display = "";
+            div[i + 2].style.display = "";
         } else {
-            div[i + 1].style.display = "none";
+            div[i + 2].style.display = "none";
         }
     }
 }
@@ -21,9 +21,9 @@ function contactsFilterFunctionBySpecialty() {
     a = document.getElementsByClassName("theSpecialty");
     for (i = 0; i < a.length; i++) {
         if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            div[i + 1].style.display = "";
+            div[i + 2].style.display = "";
         } else {
-            div[i + 1].style.display = "none";
+            div[i + 2].style.display = "none";
         }
     }
 }
@@ -41,9 +41,9 @@ function contactsSend(id) {
     a = document.getElementsByClassName("theSpecialty");
     for (i = 0; i < a.length; i++) {
         if (a[i].innerHTML.toUpperCase().indexOf(filter) > -1) {
-            div[i + 1].style.display = "";
+            div[i + 2].style.display = "";
         } else {
-            div[i + 1].style.display = "none";
+            div[i + 2].style.display = "none";
         }
     }
 }
