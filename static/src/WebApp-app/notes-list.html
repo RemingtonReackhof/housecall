@@ -8,6 +8,7 @@
 
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<script type="text/javascript">var user;</script>
 
 <dom-module id="notes-list">
   <!-- Defines the element's style and local DOM -->
@@ -268,7 +269,7 @@
             type: 'POST',
             dataType: 'json',
             contentType: "application/json",
-            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isImage':isNewImage.toString(), 'username': 'emt@emt.com'}),
+            data: JSON.stringify({'messageTime': currTime.toString(), 'messageContent': messageContent, 'messageTitle': messageTitle, 'isNote': isNewNote.toString(), 'isInstruction': isNewInstruction.toString(), 'isImage':isNewImage.toString(), 'username': 'emt@emt.com', 'callID': user.callID}),
           });
 
         }

@@ -253,6 +253,20 @@
     </style>
 
     <h1 id = "header"> Notepad<paper-icon-button icon="help-outline" id="notepad-help"></h1>
+    <div id = "SkypeButton">
+      <div>Start a Skype Video Chat Call By Clicking The Skype Button Below</div>
+      <script type="text/javascript">
+        //alert(user.drSkypeID);
+        Skype.ui({
+            name: "call",
+            element: "SkypeButton",
+            participants: [user.drSkypeID],
+            imageSize: 32,
+            imageColor: "white"
+        });
+      </script>
+
+    </div>
 
     <paper-card id = "notesContainer">
       
@@ -293,7 +307,6 @@
 
   function uploadImageClicked() {
     
-
     var thisImage = ($('#chooseFile')[0]);
     var theRealImage = thisImage.files[0];
     var textInput = document.getElementById("textBox").value;

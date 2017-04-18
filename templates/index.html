@@ -35,6 +35,12 @@
   {% else %}
     <h1>Hello, World!</h1>
   {% endif %}
+  {% if callID %}
+    <script type="text/javascript">
+      var user;
+      user.callID = '{{callID}}';
+    </script>
+  {% endif %}
 
   </body>
 </html>

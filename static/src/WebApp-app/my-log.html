@@ -72,17 +72,7 @@
     Polymer({
       is: 'my-log',
       ready: function(){
-        $.ajax({
-                url: '/log',
-                success: function(e){
-                  console.log(e);
-                },
-                error: function(e){ alert('error')},
-                type: 'GET',
-                dataType: 'json',
-                contentType: "application/json",
-                data: {'username': 'email@umich.edu', 'user_id': 2, 'user_type': 'emt'}, // TODO: update this to get rid of default info.
-            });
+        
       }
     });
   </script>
