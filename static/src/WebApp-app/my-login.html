@@ -110,6 +110,9 @@
                   for (i = 0; i < e.content.length; i++)
                   {
                     document.getElementById("callList").push("callList", e.content[i]);
+                    if(i < 5){
+                      document.getElementById("callListPreview").push("callList", e.content[i]);
+                    }
                   }
                   user.callList = e.content;
                   console.log('call log is: \n');

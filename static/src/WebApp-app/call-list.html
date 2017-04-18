@@ -51,7 +51,7 @@
 
       :host {
         display: flex;
-        height: 620px;
+        height: 420px;
         flex-direction: column-reverse;
         align-items: space-around;
       }
@@ -93,6 +93,7 @@
         <template is="dom-if" if="{{isNotActive(item)}}">
 
           <paper-card id = "log{{item.call_id}}" on-click='inactiveClicked' class = "inactiveCall">
+
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.emt_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -108,6 +109,7 @@
         <template is="dom-if" if="{{isActive(item)}}">
 
           <paper-card id = "log{{item.call_id}}" on-click='activeClicked' class = "activeCall">
+
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.dr_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -119,7 +121,9 @@
 
         <template is="dom-if" if="{{isNotActive(item)}}">
 
+
           <paper-card id = "log{{item.call_id}}" on-click='inactiveClicked' class = "inactiveCall">
+
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.dr_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -145,63 +149,20 @@
       is: 'call-list',
       ready: function() {
         this.callList = [
-            /*
-            {
-              call_id: 0, 
-              dr_id: [0,0,0,"Colin", "Lockareff"],
-              emt_id: [0,0,0,"Garrett", "Zelin"], 
-              date: "4-17-2017 8:35", 
-              call_length: "25:20", 
-              is_active: 1, 
-            },
-            {
-              call_id: 1, 
-              dr_id: [0,0,0,"Kayla", "Fedewa"],
-              emt_id: [0,0,0,"Matt", "Fox"], 
-              date: "4-13-2017 14:00", 
-              call_length: "10:20", 
-              is_active: 0, 
-            },
-            {
-              call_id: 2, 
-              emt_id: [0,0,0,"Colin", "Lockareff"],
-              dr_id: [0,0,0,"Garrett", "Zelin"], 
-              date: "3-29-2017 3:35", 
-              call_length: "13:12", 
-              is_active: 0,  
-            },
-            {
-              call_id: 3, 
-              emt_id: [0,0,0,"Kayla", "Fedewa"],
-              dr_id: [0,0,0,"Matt", "Fox"], 
-              date: "3-28-2017 18:39 ", 
-              call_length: "9:43", 
-              is_active: 0,  
-            },
-            */
         ];
       },
 
 
-
       isActive: function(item){
-        console.log('In an iff');
-        console.log(item);
         return item.is_active == 1;
       },
       isNotActive: function(item){
-        console.log('In an iff');
-        console.log(item);
         return item.is_active == 0;
       },
       isDoctor: function(item){
-        console.log('In an iff');
-        console.log(user.type);
         return user.type == "dr";
       },
       isEMT: function(item){
-        console.log('In an iff');
-        console.log(user.type);
         return user.type == "emt";
       },
 
@@ -210,12 +171,23 @@
       },
 
       inactiveClicked: function(e, detail){ 
+        document.getElementById("archivedNotesList").set('notesList', []);
         $.ajax({
                 url: '/log',
                 success: function(e){
-                  console.log(e);
+                  console.log('got the notes!');
+                  console.log(e.content);
                   for (var i = 0; i < e.content.length; i++) {
-                    document.getElementById("archivedNotesList").push('notesList', e.content[i]);
+                    var newMessage = {
+                      id: e.content[i].note_id, 
+                      isNote: e.content[i].is_note, 
+                      isInstruction: e.content[i].is_instruction, 
+                      isImage: e.content[i].is_image, 
+                      title: '', 
+                      timeStamp: e.content[i].time_stamp, 
+                      content: e.content[i].content,
+                      };
+                    document.getElementById("archivedNotesList").push('notesList', newMessage);
                   }
                   document.getElementsByTagName('webapp-app')[0].page = 'archived-notepad';
                 },
@@ -234,5 +206,7 @@
 
 
 })
+      
+
   </script>
 </dom-module>

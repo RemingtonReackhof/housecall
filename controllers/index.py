@@ -16,65 +16,42 @@ def my_route():
 
 @index.route('/', methods=['POST'])
 def index_route():
-	#print "POSTING"
+
 	if "username" in session:
 	 	return redirect(url_for('main.main_route'))    ### Have to change
 
-	# prevURL = request.referrer
-
 	if request.method == 'POST':
 		
-		#print request.data
+		# Get user information
 		request.form = ast.literal_eval(request.data)
 		emailIn = request.form['email']
 		passIn = request.form['password'] #get input
 		prevURL = request.form.get("prevURL") #redirect address
-		# Check if Emt or Doctor
-		#Emt = request.form['emt_button']
-		#Doctor = request.form['doctor_button']
+	
 
 		#Check if username exists
 		cur = mysql.connection.cursor()
 		cur.execute("SELECT * FROM User WHERE email = '"+emailIn+"'")
 		email = cur.fetchall()
-		#print email
 		if len(email) == 0:
-			print "wrong email"
-			#flash("Incorrect email", "error_email")
 			return redirect(url_for('index.index_route'))
+
 
 		#Salt and hash check
 		algorithm = 'sha512'
-
 		user_pass = email[0][5] #usernames password info
-		#print email[0]
-		#print "USER_PASS", user_pass
-
 		user_pass = user_pass.split('$')
 
 		m = hashlib.new(algorithm)
 		m.update(user_pass[1] + passIn)
-		# m.update(user_pass[0] + passIn)
 		password_hash = m.hexdigest()
-		#print "PASSWORD_HASH", password_hash
-		#print "USER_PASS[2]", user_pass[2]
 
 		#Check if passed in password matches actual password
 		if password_hash != user_pass[2]:
-			#flash("Incorrect username/password combination", "error_combo")
 			return redirect(url_for('index.index_route'))
 
-		#if passIn != user_pass[0]:
-		#	print "THIS FAILS"
-		#	flash("Incorrect username/password combination", "error_combo")
-		#	return redirect(url_for('index.index_route'))
 
-		# if passIn != email[0][5]:
-		# 	print "wrong password"
-		# 	flash("Incorrect email/password combination", "error_combo")
-		# 	return redirect(url_for('index.index_route'))
-
-		#if user/pass is valid
+		# Set up user session
 		session['email'] = email[0][1] 
 		session['skype_username'] = email[0][2]
 		session['firstname'] = email[0][3]
@@ -82,17 +59,11 @@ def index_route():
 		session['specialty'] = email[0][6]
 		session['hospital_id'] = email[0][7]
 		session['dr_or_emt'] = email[0][8]
-		print session
+
 
 		usertype = 'emt'
 		if session['dr_or_emt']:
 			usertype = 'dr'
 
-		#print prevURL
-		#if prevURL != None:
-		#	return redirect(prevURL)
-		#return redirect(url_for('main.main_route'))
 
 	return jsonify(message="Success!", user_type=usertype, username=session['email'], user_id=email[0][0]) 
-
-	#return render_template("index.html", prevURL=prevURL)
