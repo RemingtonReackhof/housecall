@@ -236,6 +236,10 @@
         letter-spacing: 0;
         text-align: center;
       }
+      #SkypeButton {
+        max-width: 450px;height: 120px; padding: 10px;font-family: noir;color: white;font-size: 25px;text-align: center;margin: 0 auto;background-color: #EC7070;border: 5px solid #EDEDF4;border-radius: 5px;display: none; 
+
+      }
 
       #endCallText {
         position: relative; 
@@ -255,17 +259,6 @@
     <h1 id = "header"> Notepad<paper-icon-button icon="help-outline" id="notepad-help"></h1>
     <div id = "SkypeButton">
       <div>Start a Skype Video Chat Call By Clicking The Skype Button Below</div>
-      <script type="text/javascript">
-        //alert(user.drSkypeID);
-        Skype.ui({
-            name: "call",
-            element: "SkypeButton",
-            participants: [user.drSkypeID],
-            imageSize: 32,
-            imageColor: "white"
-        });
-      </script>
-
     </div>
 
     <paper-card id = "notesContainer">
@@ -293,9 +286,18 @@
         </div>
       <!-- </form> -->
     </div>
+    <script type="text/javascript">
+    function endCallPost(){
+      $.post('/notes-endcall', {userID:user.userID},function(data,status){      
+        document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
+    }
+    </script>
+
+
+
 
     <paper-button id = "exportDoc"> Export Document </paper-button>
-    <paper-button id = "endCall"> End Call </paper-button>
+    <paper-button id = "endCall" onclick="$.post("> End Call </paper-button>
     <paper-button id = "printDoc" style = "display: none"> Print Document </paper-button>
     <paper-button id = "returnToCall" style = "display: none"> Return To Call </paper-button>
 

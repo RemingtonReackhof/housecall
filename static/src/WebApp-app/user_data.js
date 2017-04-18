@@ -4,7 +4,7 @@ function user_data () {
 	this.userID = 0;
 	this.callID = 0;
 	this.callList = {};
-	this.drSkypeID = "";
+	this.drSkypeID;
 }; 
 
 var user = new user_data();
