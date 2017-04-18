@@ -123,6 +123,22 @@
      <div id = "skypeButtons">
 
     <script>
+    function createPost(value){
+      $.post('/contacts-call', {emtEmail:user.username,doctorID: value},function(data,status){      
+            user.callID = data['callID'];
+            user.drSkypeID = data['doctorSkypeUsername'];
+            document.getElementById("SkypeButton").style.display = "block";
+            document.getElementsByTagName('webapp-app')[0].page = 'notes';
+            $('#SkypeButton').append(`<script type='text/javascript'>
+                        Skype.ui({
+                            name: 'call',
+                            element: 'SkypeButton',
+                            participants: [user.drSkypeID],
+                            imageSize: 32,
+                            imageColor: 'white'});` + `</scr`+`ipt>`);});
+    }
+
+
     function createBoxes(){
 	$.ajax({ 
 		    type: 'GET', 
@@ -131,9 +147,8 @@
 		    success: function (data) { 
 		    	var counter = 1;
 		    	$.each(data.rows, function( index, value ) {
-		        	$('#skypeButtons').append(`<div id="SkypeButton`+ counter +`" style="max-width: 450px;padding: 10px;font-family: noir;color: white;font-size: 25px;text-align: center;margin: 0 auto;background-color: #EC7070;border: 5px solid #EDEDF4;border-radius: 5px;"><button type="button" onclick="
-						$.post('/contacts-call',{ emtEmail:user.username, doctorID: ` + value[0] + `},function(data,status){
-							user.callID = data;});">Start Conversation</button>  Click Below to Call <div class="theName">Dr. `+ value[2]+ ` ` + value[3]  +`</div><div class="theSpecialty">` + value[4] +`</div> </div>`);
+		        	$('#skypeButtons').append(`<div id="SkypeButton`+ counter +`" style="max-width: 450px;padding: 10px;font-family: noir;color: white;font-size: 25px;text-align: center;margin: 0 auto;background-color: #EC7070;border: 5px solid #EDEDF4;border-radius: 5px;">Click Below to Call <div class="theName">Dr. `+ value[2]+ ` ` + value[3]  +`</div><div class="theSpecialty">` + value[4] +`</div><button type="button" style="width: 300px;padding: 10px;font-family: noir;color: white;font-size: 25px;text-align: center;margin: 0 auto;background-color: #696969" onclick="createPost(`+value[0]+`);"
+                      >Start Conversation</button></div>`);
 		        	counter = counter + 1;
 
 		    	});
