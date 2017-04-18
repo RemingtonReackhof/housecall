@@ -290,14 +290,15 @@
     function endCallPost(){
       $.post('/notes-endcall', {userID:user.userID},function(data,status){      
         document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
-    }
+    });
+  }
     </script>
 
 
 
 
     <paper-button id = "exportDoc"> Export Document </paper-button>
-    <paper-button id = "endCall" onclick="$.post("> End Call </paper-button>
+    <paper-button id = "endCall" onclick="endCallPost()"> End Call </paper-button>
     <paper-button id = "printDoc" style = "display: none"> Print Document </paper-button>
     <paper-button id = "returnToCall" style = "display: none"> Return To Call </paper-button>
 
