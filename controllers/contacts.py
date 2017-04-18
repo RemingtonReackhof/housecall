@@ -30,7 +30,6 @@ def my_route_1():
 	if request.method == 'GET':
 
 		# Retrieve all the doctors to display on Contacts page
-
 		cur = mysql.connection.cursor()
 		cur.execute("SELECT user_id, skype_username, firstname, lastname, specialty FROM User WHERE Doctor = 1;")
 		rows = cur.fetchall()
@@ -67,7 +66,15 @@ def my_route_2():
 		cur.execute("SELECT `call_id` FROM `Call` ORDER BY `call_id` DESC LIMIT 1")
 		callID = cur.fetchall()[0][0]
 
+		# Get Doctor's Skype username using their ID
+		cur = mysql.connection.cursor()
+		cur.execute("SELECT skype_username FROM User WHERE user_id = (%s)", [doctorID])
+		doctorSkypeUsername = cur.fetchone()[0]
+
 		# Return JSON with call id to Garett
-		return jsonify(successful=True, callID=callID)
+		return jsonify(successful=True, callID=callID, doctorSkypeUsername=doctorSkypeUsername)
 		#return render_template("index.html", name='notes')
+		#return render_template("index.html", name='notes', callID=callID)
+		#return redirect("/notes", code=302)
+		#return redirect(url_for('notes.my_route'))
 
