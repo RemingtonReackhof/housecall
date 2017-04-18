@@ -51,7 +51,7 @@
 
       :host {
         display: flex;
-        height: 620px;
+        height: 420px;
         flex-direction: column-reverse;
         align-items: space-around;
       }
@@ -80,7 +80,7 @@
       <div>
         <template is="dom-if" if="{{isActive(item)}}">
 
-          <paper-card id = "log{{item.call_id}}" class = "activeCall">
+          <paper-card id = "log{{item.call_id}}" class = "activeCall" tagName = "a">
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.emt_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -92,7 +92,7 @@
 
         <template is="dom-if" if="{{isNotActive(item)}}">
 
-          <paper-card id = "log{{item.call_id}}" class = "inactiveCall">
+          <paper-card id = "log{{item.call_id}}" class = "inactiveCall" tagName = "a">
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.emt_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -107,7 +107,7 @@
        <div>
         <template is="dom-if" if="{{isActive(item)}}">
 
-          <paper-card id = "log{{item.call_id}}" class = "activeCall">
+          <paper-card id = "log{{item.call_id}}" class = "activeCall" tagName = "a">
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.dr_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -119,7 +119,7 @@
 
         <template is="dom-if" if="{{isNotActive(item)}}">
 
-          <paper-card id = "log{{item.call_id}}" class = "inactiveCall">
+          <paper-card id = "log{{item.call_id}}" class = "inactiveCall" tagName = "a">
             <div id = callContainer class = "layout horizontal">
               <h5 class = "text"> {{fullName(item.dr_id)}} </h5>
               <h5 class = "text"> {{item.timestamp}} </h5>
@@ -145,43 +145,8 @@
       is: 'call-list',
       ready: function() {
         this.callList = [
-            /*
-            {
-              call_id: 0, 
-              dr_id: [0,0,0,"Colin", "Lockareff"],
-              emt_id: [0,0,0,"Garrett", "Zelin"], 
-              date: "4-17-2017 8:35", 
-              call_length: "25:20", 
-              is_active: 1, 
-            },
-            {
-              call_id: 1, 
-              dr_id: [0,0,0,"Kayla", "Fedewa"],
-              emt_id: [0,0,0,"Matt", "Fox"], 
-              date: "4-13-2017 14:00", 
-              call_length: "10:20", 
-              is_active: 0, 
-            },
-            {
-              call_id: 2, 
-              emt_id: [0,0,0,"Colin", "Lockareff"],
-              dr_id: [0,0,0,"Garrett", "Zelin"], 
-              date: "3-29-2017 3:35", 
-              call_length: "13:12", 
-              is_active: 0,  
-            },
-            {
-              call_id: 3, 
-              emt_id: [0,0,0,"Kayla", "Fedewa"],
-              dr_id: [0,0,0,"Matt", "Fox"], 
-              date: "3-28-2017 18:39 ", 
-              call_length: "9:43", 
-              is_active: 0,  
-            },
-            */
         ];
       },
-
 
 
       isActive: function(item){
@@ -211,5 +176,7 @@
 
 
 })
+      
+
   </script>
 </dom-module>

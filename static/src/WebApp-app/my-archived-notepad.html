@@ -18,7 +18,7 @@
 </script>
 <script type="text/javascript" src="user_data.js"></script>
 
-<dom-module id="my-archivedNote">
+<dom-module id="my-archived-notepad">
   <!-- Defines the element's style and local DOM -->
   <template>
     <style>
@@ -83,7 +83,7 @@
     <h1 id = "header"> Archived Notepad<paper-icon-button icon="help-outline" id="notepad-help"></h1>
 
     <paper-card id = "notesContainer">
-      <notes-list id = "notesList"></notes-list>
+      <notes-list id = "archivedNotesList"></notes-list>
     </paper-card>
 
     <paper-button id = "printDoc" style = "display: none"> Print Document </paper-button>
@@ -95,7 +95,13 @@
   <script>
 
     Polymer({
-      is: 'my-notes',
+      is: 'my-archived-notepad',
+
+      ready: function() {
+        this.archivedNotesList = [
+        ];
+      },
+
       listeners: {
         "printDoc.click" : 'printDocument',
       },
