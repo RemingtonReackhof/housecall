@@ -23,15 +23,23 @@ def allowed_file(filename):
 @notes.route('/notes', methods=['GET', 'POST'])
 def my_route():
 
-# 	# if not logged in
-# 	username = request.args.get("username")
-# 	if username is None: 
-# 		if "username" not in session:
-# 			return redirect(url_for("index.index_route"))
-# 		username = session['username']
-	print "here"
-	#print data['isImage']
-	print ""
+	# # if not logged in
+	# username = request.args.get("username")
+	# if username is None: 
+	# 	if "username" not in session:
+	# 		return redirect(url_for("index.index_route"))
+	# 	username = session['username']
+
+
+	# Get callID regardless
+	user = session['skype_username']
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT user_id FROM User WHERE skype_username = (%s)", [user])
+	userID = cur.fetchone()[0]
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT `call_id` FROM `Call` WHERE `emt_id` = '"+str(userID)+"' OR `dr_id` = '"+str(userID)+"' ORDER BY `call_id` DESC LIMIT 1")
+	callID = cur.fetchall()[0][0]
+	print callID
 
 	if request.method == 'GET':
 		if len(request.args) == 0:
@@ -42,11 +50,14 @@ def my_route():
 		note_id = request.args['note_id']
 		toSend = []
 
+
 		if note_id == '1':
+			print 'note id is 1'
 			note_id = int(note_id)
 			note_id = 1
 			cur = mysql.connection.cursor()
-			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id > '"+str(note_id)+"'")
+			#cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id > '"+str(note_id)+"'")
+			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE call_id = '"+str(callID)+"'")
 			content = cur.fetchall()
 			if content is not None:
 				num_notes = len(content)
@@ -57,7 +68,8 @@ def my_route():
 		else:
 			print 'note id is greater than 1'
 			cur = mysql.connection.cursor()
-			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id = '"+note_id+"'")
+			#cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id = '"+note_id+"'")
+			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE call_id = '"+str(callID)+"'")
 			content = cur.fetchone()
 			if content is not None:
 				toSend.append({'content':content[1], 'time_stamp':content[2], 'note_id':content[0], 'is_note':content[3], 'is_instruction':content[4], 'is_image':content[5]})
@@ -71,17 +83,18 @@ def my_route():
 
 	if request.method == 'POST':	
 
-
 		# If data is a Note or Instruction
 		if not request.files:
 
 			data = ast.literal_eval(request.data)
-
+			print data
 			if(data['messageTitle'] == ""):
 				data['messageTitle'] = "no title"
 
+			print data['callID']
+
 			cur = mysql.connection.cursor()
-			cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content, call_id) VALUES (%s, %s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isImage'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent'], '1'])
+			cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content, call_id) VALUES (%s, %s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isImage'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent'], str(callID) ])
 			mysql.connection.commit()
 
 			cur.execute("SELECT note_id FROM Notes WHERE content = %s", [data['messageContent']])
@@ -92,7 +105,7 @@ def my_route():
 
 		# If data is an Image
 		else:
-
+			print request.data
 			# check if the post request has the file part
 			if 'file' not in request.files:
 				flash('No file part')
@@ -106,13 +119,13 @@ def my_route():
 				return redirect(request.url)
 
 			if file and allowed_file(file.filename):
-				
+
 				filename = secure_filename(file.filename)
 				name_of_file = UPLOAD_FOLDER + filename
 				file.save(name_of_file)
 
 				cur = mysql.connection.cursor()
-				cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content, call_id) VALUES (%s, %s, %s, %s, %s, %s, %s)", [ False, False, True, filename, '0:00', filename , '1'])
+				cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content, call_id) VALUES (%s, %s, %s, %s, %s, %s, %s)", [ False, False, True, filename, '0:00', filename , str(callID)])
 				mysql.connection.commit()
 
 				cur.execute("SELECT note_id FROM Notes WHERE content = %s", [filename])
@@ -120,6 +133,7 @@ def my_route():
 
 				#return render_template("index.html", name="notes")
 				return redirect("/notes", code=302)
+				#return redirect(url_for(notes.my_route))
 
 
 	return render_template("index.html", name="notes")
