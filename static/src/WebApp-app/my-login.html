@@ -135,12 +135,12 @@
               user.username = data.username;
               user.userID = data.user_id;
 
-              if(user.type == 'emt'){
+             /* if(user.type == 'emt'){
                 $('#createMessageContainer').hide();
               }
               else{
                 $('#createMessageContainer').show();
-              }
+              }*/
               get_past_calls();
               document.getElementsByTagName('webapp-app')[0].page = 'dashboard';
               document.getElementsByTagName('webapp-app')[0].username = user.username;

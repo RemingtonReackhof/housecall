@@ -145,6 +145,7 @@
       start_interval: function(){
         console.log("starting interval");
         this.interval = setInterval(function() {
+          if(user.callID != 0){
             $.ajax({
                 url: '/notes',
                 success: function(e){
@@ -176,7 +177,7 @@
                 contentType: "application/json",
                 data: {'note_id': last_note_id+1},
             });
-
+          }
 
         }, 1000);
       },
