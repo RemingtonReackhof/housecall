@@ -17,19 +17,16 @@ def signup_route():
 		return redirect(url_for('main.main_route'))
 
 	prevURL = request.referrer
-	#print "at signup route"
+	
 	if request.method == 'POST':
 
-		#print "post"
 		try:
-			#emailIn = request.form['email']
 			emailIn = request.json.get('email')
 		except:
 			print "error"
-		# skypeUsernameIn = request.form['skype_username']
-		# passIn = request.form['password']
-		# firstnameIn = request.form['firstname']
-		# lastnameIn = request.form['lastname']
+
+		
+		# Get all user information
 		skypeUsernameIn = request.json.get('skype_username')
 		passIn = request.json.get('password')
 		firstnameIn = request.json.get('firstname')
@@ -38,37 +35,12 @@ def signup_route():
 		specialtyIn = request.json.get('specialty')
 		doctorIn = request.json.get('doc')
 
-		#if doctorIn == 0:
-		#	doctorIn = False
-		#else:
-		#	doctorIn = True
-		#print "after!!"
-		#print "hello", emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn, hospitalIn, specialtyIn, doctorIn
-
-
-		# emailIn = "email@umich.edu"
-		# skypeUsernameIn = "username"
-		# passIn = "ppppp"
-		# firstnameIn = "greatest"
-		# lastnameIn = "ever"
-		# hospitalIn = "Med Inn Building"
-		# specialtyIn = "Neurology"
-		# doctorIn = True
-
-		#print emailIn, skypeUsernameIn, passIn, firstnameIn, lastnameIn
 
 		# Get Hospital Id
-		#print hospitalIn
 		cur = mysql.connection.cursor()
 		cur.execute("SELECT hospital_id FROM Hospital WHERE name = %s", [hospitalIn])
 		hospitalIdIn = cur.fetchone()
 
-
-		# They'll click one of two buttons indicating if they are doctor or emt
-
-		# Hospital will have to be one from a drop down list
-
-		#specialtyIn = request.form['specialty']
 
 		#Salt and hash password
 		algorithm = 'sha512'
@@ -79,18 +51,14 @@ def signup_route():
 		password_hash = m.hexdigest()
 
 		password = "$".join([algorithm,salt,password_hash])
-		#print hospitalIdIn
-		#Insert user into table
 
+
+		#Insert user into table
 		cur = mysql.connection.cursor()
 		cur.execute("INSERT INTO User (email, skype_username, firstname, lastname, password, specialty, hospital_id, Doctor) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", [emailIn, skypeUsernameIn, firstnameIn, lastnameIn, password, specialtyIn, hospitalIdIn, doctorIn])
 		mysql.connection.commit()
 
-		#Redirect to /login to try new credentials!
-		#prevURL = request.form.get("prevURL") #redirect address
-		#return redirect(redirect_url())
-		#return render_template("index.html")
-		#print "finshing"
+
 		usertype = 'emt'
 		if doctorIn == '1':
 			usertype = 'dr'
