@@ -69,7 +69,7 @@ def my_route():
 			print 'note id is greater than 1'
 			cur = mysql.connection.cursor()
 			#cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id = '"+note_id+"'")
-			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE call_id = '"+str(callID)+"'")
+			cur.execute("SELECT note_id,content,time_stamp, is_note, is_instruction, is_image FROM Notes WHERE note_id = '"+note_id+"' AND call_id = '"+str(callID)+"'")
 			content = cur.fetchone()
 			if content is not None:
 				toSend.append({'content':content[1], 'time_stamp':content[2], 'note_id':content[0], 'is_note':content[3], 'is_instruction':content[4], 'is_image':content[5]})
