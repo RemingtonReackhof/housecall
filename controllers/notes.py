@@ -87,11 +87,9 @@ def my_route():
 		if not request.files:
 
 			data = ast.literal_eval(request.data)
-			print data
+			
 			if(data['messageTitle'] == ""):
 				data['messageTitle'] = "no title"
-
-			print data['callID']
 
 			cur = mysql.connection.cursor()
 			cur.execute("INSERT INTO Notes (is_note, is_instruction, is_image, title, time_stamp, content, call_id) VALUES (%s, %s, %s, %s, %s, %s, %s)", [ True if data['isNote'] == 'true' else False, True if data['isInstruction'] == 'true' else False, True if data['isImage'] == 'true' else False, data['messageTitle'], data['messageTime'], data['messageContent'], str(callID) ])
@@ -105,17 +103,15 @@ def my_route():
 
 		# If data is an Image
 		else:
-			print request.data
+			
 			# check if the post request has the file part
 			if 'file' not in request.files:
-				flash('No file part')
 				return redirect(request.url)
 			file = request.files['file']
 
 			# if user does not select file, browser also
 			# submit a empty part without filename
 			if file.filename == '':
-				flash('No selected file')
 				return redirect(request.url)
 
 			if file and allowed_file(file.filename):
@@ -138,3 +134,28 @@ def my_route():
 
 	return render_template("index.html", name="notes")
 
+
+@notes.route('/notes-endcall', methods=['POST'])
+def my_route_1():
+
+	# Get callID
+	# user = session['skype_username']
+	# cur = mysql.connection.cursor()
+	# cur.execute("SELECT user_id FROM User WHERE skype_username = (%s)", [user])
+	# userID = cur.fetchone()[0]
+
+	userID = request.form['userID']
+	cur = mysql.connection.cursor()
+	cur.execute("SELECT `call_id` FROM `Call` WHERE `emt_id` = '"+str(userID)+"' OR `dr_id` = '"+str(userID)+"' ORDER BY `call_id` DESC LIMIT 1")
+	callID = cur.fetchall()[0][0]
+	print callID
+
+
+	# Update Call table to make this call inactive
+	cur = mysql.connection.cursor()
+	cur.execute("UPDATE `Call` SET `is_active` = 0 WHERE `call_id` = '"+str(callID)+"'")
+	mysql.connection.commit()
+
+
+	# Redirect to dashboard
+	return jsonify(successful=True)
