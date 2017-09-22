@@ -18,10 +18,10 @@ app = Flask(__name__, template_folder='templates')
 api = Api(app)
 
 # Initialize MySQL database connector
-app.config['MYSQL_HOST'] = 'sql9.freemysqlhosting.net'
-app.config['MYSQL_USER'] = 'sql9165703'
-app.config['MYSQL_PASSWORD'] = 'KCZnhSwu6L'
-app.config['MYSQL_DB'] = 'sql9165703'
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'root'
+app.config['MYSQL_DB'] = 'eecs481'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 mysql.init_app(app)

@@ -114,4 +114,4 @@ VALUES ('25', "Michigan Heart & Vascular Institute");
 INSERT INTO Hospital
 VALUES ('26', "South Main Orthopaedics");
 
-insert into Notes values (1,1,0,0,’Notes’, '4:23', ‘Put Your Notes Here!!’);  
+insert into Notes values (1,1,0,0,"Notes", '4:23', "Put Your Notes Here!!");  
