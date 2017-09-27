@@ -35,6 +35,16 @@ CREATE TABLE eecs481.Notes (
     PRIMARY KEY (note_id)
 );
 
+CREATE TABLE eecs481.Calls (
+    call_id INT AUTO_INCREMENT,
+    emt_id INT,
+    doctor_id INT,
+    timestamp VARCHAR(100),
+    call_length INT,
+    PRIMARY KEY (call_id)
+);
+
+
 
 INSERT INTO Hospital
 VALUES ('1', "University Hospital");
