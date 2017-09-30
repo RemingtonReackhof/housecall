@@ -1,4 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+`<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="/static/js/contacts.js"></script>
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-header-panel/paper-header-panel.html">
@@ -48,19 +48,19 @@
     <body class="fullbleed layout vertical">
       <paper-header-panel class="flex">
         <paper-toolbar>
-          <div>AmbulanceStream</div>
+          <div>HouseCall</div>
           <a href="/dashboard" tabindex="-1">
             <paper-button raised class="white" id="home_button">HOME</paper-button>
           </a>
           <span style="flex: 1;"></span>
-          <p class="needsLogin"> Welcome, {{username}}!</p>
+          <p class="needsLogin"> Welcome, {{firstname}}</p>
           <a href="/login" tabindex="-1">
             <paper-button raised class="white needsLogin" id="logoutButton">LOGOUT</paper-button>
           </a>
         </paper-toolbar>
       </paper-header-panel>
 
-       <audio id="audio" src="/static/sounds/Boop.mp3"></audio>
+       <!-- <audio id="audio" src="/static/sounds/Boop.mp3"></audio> -->
 
       <iron-pages
           selected="[[page]]"

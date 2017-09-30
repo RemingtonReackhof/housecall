@@ -11,7 +11,6 @@ dashboard = Blueprint('dashboard', __name__, template_folder='templates') #, url
 
 @dashboard.route('/dashboard', methods=['GET'])
 def my_route():
-	#print 'GETTING'
 
 	username = request.args.get("username")
 	if username is None:    
