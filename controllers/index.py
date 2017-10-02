@@ -6,12 +6,10 @@ import uuid
 import ast
 
 
-index = Blueprint('index', __name__, template_folder='templates') #, url_prefix="/04d8ee3a8730446aa2b4/pa3")
-
+index = Blueprint('index', __name__, template_folder='templates')
 
 @index.route('/', methods=['GET'])
 def my_route():
-	#print 'GETTING'
 	return render_template("index.html", name='login')
 
 @index.route('/', methods=['POST'])
@@ -20,6 +18,7 @@ def index_route():
 	if "username" in session:
 	 	return redirect(url_for('main.main_route'))    ### Have to change
 
+	# TODO: this is redundant
 	if request.method == 'POST':
 		
 		# Get user information
