@@ -2,3 +2,10 @@ venv/
 *.DS_Store
 *.pyc
 virtual/
+.vagrant*
+vagrant*
+app.py
+npm-debug.log
+node_modules
+Vagrantfile
+bower_components

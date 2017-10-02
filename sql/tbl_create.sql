@@ -46,6 +46,9 @@ CREATE TABLE eecs481.Calls (
 
 
 
+/* CREATE TABLE eecs481.Call( */
+/* ) */
+
 INSERT INTO Hospital
 VALUES ('1', "University Hospital");
 
